@@ -1,0 +1,24 @@
+<!-- @dsCard group="Spacing" viewport="700x180" name="Radius scale" subtitle="From 4 → 25 · cards 25, buttons 12, pills 999" -->
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:20px;background:var(--surface-paper);font-family:var(--font-sans);color:var(--text-body)}
+  .row{display:flex;gap:14px;align-items:flex-end}
+  .r{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .b{width:96px;height:96px;background:var(--neutral-0);outline:1px solid var(--border-soft);position:relative}
+  .b::after{content:"";position:absolute;inset:14px;background:var(--orange-200)}
+  .lbl{font-size:11px;color:var(--text-muted);font-weight:300}
+  .lbl b{color:var(--neutral-ink);font-weight:500;display:block}
+  .meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+</style></head><body>
+  <div class="meta">Border radius</div>
+  <div class="row">
+    <div class="r"><div class="b" style="border-radius:4px"></div><div class="b" style="display:none"></div><div class="lbl"><b>xs · 4</b>chip</div></div>
+    <div class="r"><div class="b" style="border-radius:8px"></div><div class="lbl"><b>sm · 8</b>index</div></div>
+    <div class="r"><div class="b" style="border-radius:12px"></div><div class="lbl"><b>md · 12</b>button</div></div>
+    <div class="r"><div class="b" style="border-radius:20px"></div><div class="lbl"><b>lg · 20</b>media</div></div>
+    <div class="r"><div class="b" style="border-radius:24px"></div><div class="lbl"><b>xl · 24</b>tile</div></div>
+    <div class="r"><div class="b" style="border-radius:25px"></div><div class="lbl"><b>card · 25</b>project</div></div>
+    <div class="r"><div class="b" style="border-radius:999px"></div><div class="lbl"><b>pill · 999</b>avatar</div></div>
+  </div>
+</body></html>

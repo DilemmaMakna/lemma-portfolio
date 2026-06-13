@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
+  
+  <defs>
+    <linearGradient id="lemma-barrel-outer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFC3A7"></stop>
+      <stop offset="100%" stop-color="#FFC3A7" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="lemma-barrel-inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFDCCB"></stop>
+      <stop offset="100%" stop-color="#FFDCCB" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+
+  
+  <g>
+    
+    <rect x="0" y="0" width="170" height="720" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="0" y="0" width="170" height="610" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="170" y="0" width="170" height="585" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="170" y="0" width="170" height="495" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="340" y="0" width="170" height="400" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="340" y="0" width="170" height="340" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="510" y="0" width="170" height="260" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="510" y="0" width="170" height="220" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="760" y="0" width="170" height="260" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="760" y="0" width="170" height="220" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="930" y="0" width="170" height="400" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="930" y="0" width="170" height="340" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="1100" y="0" width="170" height="585" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="1100" y="0" width="170" height="495" fill="url(#lemma-barrel-inner)"></rect>
+    
+    <rect x="1270" y="0" width="170" height="720" fill="url(#lemma-barrel-outer)"></rect>
+    <rect x="1270" y="0" width="170" height="610" fill="url(#lemma-barrel-inner)"></rect>
+  </g>
+</svg>

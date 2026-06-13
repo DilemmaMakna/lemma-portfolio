@@ -1,0 +1,26 @@
+/* Lemma Effects — shadows, blurs, decorative gradients.
+   Shadow usage is RESTRAINED. Lemma's depth comes from layered radial
+   gradients and the "barrel" peach columns, not heavy drop shadows. */
+
+:root {
+  /* Soft elevation (rarely used; project cards are flat with hairline) */
+  --shadow-none: 0 0 0 0 transparent;
+  --shadow-xs:   0 1px 2px rgba(14, 13, 12, 0.04);
+  --shadow-sm:   0 2px 8px rgba(14, 13, 12, 0.06);
+  --shadow-md:   0 8px 24px rgba(14, 13, 12, 0.08);
+  --shadow-lg:   0 24px 64px rgba(14, 13, 12, 0.12);
+
+  /* Inner halo around the hero "red card" — distinctive Lemma motif */
+  --halo-orange: 0 0 0 7px rgba(249, 124, 22, 0.15);
+  --halo-orange-thin: 0 0 0 6.3px rgba(249, 113, 22, 0.15);
+
+  /* Glass / blur */
+  --blur-nav: blur(2px);  /* @kind other */
+  --blur-card: blur(20px); /* @kind other */
+
+  /* Service-tile dark veil */
+  --veil-service: rgba(30, 30, 30, 0.68);
+
+  /* Decorative gradient: dark fade-to-deep used in footer */
+  --grad-footer-bottom: linear-gradient(180deg, rgba(70, 32, 0, 0) 0%, #462000 100%); /* @kind color */
+}

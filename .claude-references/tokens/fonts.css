@@ -1,0 +1,3 @@
+/* General Sans — Lemma's primary typeface, loaded from Fontshare CDN.
+   If shipping offline, swap to local .ttf/.woff2 in /assets/fonts and update src urls. */
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700,1&display=swap");

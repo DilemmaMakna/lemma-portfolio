@@ -1,0 +1,17 @@
+<!-- @dsCard group="Brand" viewport="700x260" name="Halo card" subtitle="Off-stage red rectangle behind orange card with halo outline — the hero artwork" -->
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;padding:0;background:var(--surface-paper);font-family:var(--font-sans);height:260px;display:flex;align-items:center;justify-content:center;position:relative}
+  .stage{position:relative;width:380px;height:180px}
+  .red{position:absolute;left:-18px;top:24px;width:230px;height:148px;background:var(--red-spot);border-radius:24px;transform:rotate(13deg);box-shadow:var(--halo-orange-thin)}
+  .orange{position:absolute;right:0;top:0;width:280px;height:180px;background:var(--grad-orange-radial);border-radius:28px;box-shadow:var(--halo-orange);overflow:hidden}
+  .orange::before{content:"";position:absolute;inset:0;background:url("../assets/barrel-pattern.svg") center/cover}
+  .lbl{position:absolute;left:24px;bottom:14px;color:var(--text-muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+</style></head><body>
+  <div class="stage">
+    <div class="red"></div>
+    <div class="orange"></div>
+  </div>
+  <div class="lbl">--halo-orange · 7px outer ring</div>
+</body></html>
