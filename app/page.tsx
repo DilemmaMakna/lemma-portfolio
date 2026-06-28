@@ -390,7 +390,7 @@ export default function Page() {
 
         {/* Content */}
         <div style={{ position: "relative", zIndex: 1, maxWidth: "var(--container-inner)", marginInline: "auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <div className="mb-section" style={{ display: "flex", flexDirection: "row", gap: "clamp(24px, 12vw, 100px)", alignItems: "flex-start" }}>
+          <div className="mb-section md-flex-col" style={{ display: "flex", flexDirection: "row", gap: "clamp(24px, 12vw, 100px)", alignItems: "flex-start" }}>
             {/* Heading */}
             <h2 style={{
               margin: "0 0 clamp(16px, 2vw, 24px)",
@@ -436,7 +436,7 @@ export default function Page() {
                 }}>
                   {p.num}
                 </span>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(24px, 4vw, 48px)" }}>
+                <div className="md-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(24px, 4vw, 48px)" }}>
                   <div className="prinsip-title" style={{
                     fontSize: "clamp(20px, 2vw, 32px)", // Scaled down
                     fontWeight: 400,
@@ -548,7 +548,7 @@ export default function Page() {
               <Link
                 href={`/karya/${story.slug}`}
                 key={story.id}
-                className="karya-list-item group"
+                className="karya-list-item group md-karya-list"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "80px 1fr auto",
@@ -599,7 +599,7 @@ export default function Page() {
                   </p>
                 </div>
 
-                <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 16 }}>
+                <div className="md-karya-arrow" style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 16 }}>
                   {/* Subtle Tags (only visible on desktop) */}
                   <div className="hidden md:flex" style={{ flexWrap: "wrap", gap: 8, justifyContent: "flex-end", maxWidth: 280, marginRight: 24 }}>
                     {story.tags.slice(0, 2).map(tag => (

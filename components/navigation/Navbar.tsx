@@ -71,7 +71,7 @@ export function Navbar({ className, style }: NavbarProps) {
   return (
     <nav
       ref={navRef}
-      className={`transition-all duration-300 ease-in-out ${className || ""}`}
+      className={`transition-all duration-300 ease-in-out mobile-bottom-nav ${className || ""}`}
       style={{
         position: "fixed",
         top: 0,
@@ -86,6 +86,7 @@ export function Navbar({ className, style }: NavbarProps) {
       }}
     >
       <div
+        className="mobile-nav-inner"
         style={{
           width: "100%",
           maxWidth: 900,
@@ -106,25 +107,25 @@ export function Navbar({ className, style }: NavbarProps) {
         }}
       >
         {/* Logo Text (Left) */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", gap: 8 }}>
-          <img src="/icons/lemma-logo.svg" alt="Logo" style={{ width: 24, height: 24 }} />
-          <span style={{
+        <Link href="/" className="mobile-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none", gap: 4 }}>
+          <img src="/icons/lemma-logo.svg" alt="Logo" style={{ width: 28, height: 28, filter: "brightness(0) invert(1)" }} />
+          <span className="mobile-logo-text hover:opacity-70" style={{
             fontFamily: "var('General Sans', sans-serif)",
-            fontSize: 16,
+            fontSize: 24,
             fontWeight: 500,
             color: "#F4F0EB",
             letterSpacing: 0.3,
             lineHeight: 1,
             transition: "opacity 0.3s ease",
-          }} className="hover:opacity-70">
+          }}>
             Lemma
           </span>
         </Link>
 
         {/* Links, Lang & CTA (Right) */}
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+        <div className="mobile-right-panel" style={{ display: "flex", alignItems: "center", gap: 24 }}>
           {/* Navigation Links */}
-          <ul className="hidden md:flex" style={{ gap: 28, margin: 0, padding: 0, listStyle: "none" }}>
+          <ul className="nav-links" style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {GLOBAL_NAV_LINKS.map((l) => {
               const isActive = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
               return (
@@ -162,6 +163,7 @@ export function Navbar({ className, style }: NavbarProps) {
             href="https://wa.me/6281234567890"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:bg-white/20 group mobile-wa-btn"
             style={{
               display: "flex",
               alignItems: "center",
@@ -177,15 +179,14 @@ export function Navbar({ className, style }: NavbarProps) {
               fontFamily: "var(--font-sans, 'General Sans', sans-serif)",
               transition: "all 0.3s ease"
             }}
-            className="hover:bg-white/20 group"
           >
-            <span style={{ color: "var(--neutral-ink)" }}>WhatsApp</span>
+            <span style={{ color: "var(--neutral-ink)" }} className="mobile-wa-text">WhatsApp</span>
             <div
-              className="flex items-center justify-center overflow-hidden transition-all duration-300 ease-out w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 group-hover:ml-1.5"
+              className="mobile-wa-icon flex items-center justify-center overflow-hidden transition-all duration-300 ease-out w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 group-hover:ml-1.5"
             >
               <svg
                 className="transform -rotate-45 group-hover:rotate-0 transition-transform duration-300 ease-out"
-                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" rotate="45"
+                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--neutral-ink)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
               >
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -198,6 +199,54 @@ export function Navbar({ className, style }: NavbarProps) {
       {/* Basic Media Queries */}
       <style dangerouslySetInnerHTML={{
         __html: `
+        .nav-links {
+          display: flex;
+          gap: 28px;
+        }
+        @media (max-width: 767px) {
+          .mobile-bottom-nav {
+            top: auto !important;
+            bottom: 0 !important;
+            padding: 12px !important;
+            padding-bottom: 24px !important;
+          }
+          .mobile-nav-inner {
+            padding: 0 12px !important;
+            gap: 12px !important;
+          }
+          .mobile-logo-text { display: none !important; }
+          .mobile-right-panel {
+            gap: 12px !important;
+            flex: 1 !important;
+            justify-content: space-between !important;
+          }
+          .nav-links {
+            gap: 16px !important;
+            flex: 1 !important;
+            justify-content: center !important;
+          }
+          .nav-links a {
+            font-size: 14px !important;
+          }
+          .mobile-wa-text { display: none !important; }
+          .mobile-wa-btn {
+            padding: 0 !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            min-width: 36px !important;
+          }
+          .mobile-wa-icon {
+            width: auto !important;
+            opacity: 1 !important;
+            margin: 0 !important;
+          }
+          .mobile-wa-icon svg {
+            transform: rotate(0) !important;
+            width: 18px !important;
+            height: 18px !important;
+          }
+        }
         @media (min-width: 768px) {
           .md\\:flex { display: flex !important; }
           .md\\:hidden { display: none !important; }

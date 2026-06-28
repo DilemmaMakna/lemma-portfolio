@@ -329,4 +329,19 @@ button {
   .hero-display {
     font-size: clamp(60px, 16vw, 120px) !important;
   }
+  
+  /* Responsive utility classes overriding inline styles */
+  .md-grid-1 {
+    grid-template-columns: 1fr !important;
+  }
+  .md-flex-col {
+    flex-direction: column !important;
+  }
+  .md-karya-list {
+    grid-template-columns: 48px 1fr !important;
+    padding-block: 24px !important;
+  }
+  .md-karya-arrow {
+    display: none !important; /* Hide arrow on small screens to save space */
+  }
 }

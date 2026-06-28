@@ -82,7 +82,7 @@ export function ServiceTile({
       }} />
 
       {/* Full-height two-column content layout */}
-      <div style={{
+      <div className="md-grid-1" style={{
         position: "absolute", inset: 0,
         paddingTop: "var(--gutter)",
         paddingRight: "var(--gutter)",

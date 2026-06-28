@@ -139,7 +139,7 @@ export default function KaryaDetailSlug({ params }: { params: Promise<{ slug: st
           )}
 
           {/* MAIN IMAGE SPREAD (Asymmetrical Parallax Grid) */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(24px, 4vw, 48px)", marginBottom: 160, alignItems: "start" }}>
+          <div className="md-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(24px, 4vw, 48px)", marginBottom: 160, alignItems: "start" }}>
             {Array.from({ length: story.imageCount }).map((_, idx) => (
               <div 
                 key={idx} 
@@ -163,7 +163,7 @@ export default function KaryaDetailSlug({ params }: { params: Promise<{ slug: st
           {/* CONTENT SECTIONS WITH PINNING */}
           <div style={{ display: "flex", flexDirection: "column", gap: 120 }}>
             {story.sections.map((sec, idx) => (
-              <div key={idx} className="content-section" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, position: "relative" }}>
+              <div key={idx} className="content-section md-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, position: "relative" }}>
                 
                 {/* Left Column - Pinned Title */}
                 <div className="section-title-col" style={{ alignSelf: "start" }}>

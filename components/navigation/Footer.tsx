@@ -32,7 +32,7 @@ export function Footer() {
       {/* CTA block */}
       <div style={{ paddingInline: "var(--gutter)", paddingTop: 100, paddingBottom: 60 }}>
         <div style={{ maxWidth: "var(--container-inner)", marginInline: "auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+          <div className="md-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
             <div>
               <Eyebrow tone="warm" style={{ marginBottom: 20 }}>Mulai Kolaborasi</Eyebrow>
               <h2 style={{ font: "var(--type-section-title)", color: "#fff", fontSize: "clamp(28px, 3vw, 48px)", marginBottom: 20 }}>

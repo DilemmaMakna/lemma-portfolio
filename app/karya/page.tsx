@@ -64,7 +64,7 @@ export default function KaryaIndex() {
             <Link 
               href={`/karya/${story.slug}`} 
               key={story.id}
-              className="karya-list-item group"
+              className="karya-list-item group md-karya-list"
               style={{ 
                 textDecoration: "none", 
                 color: "inherit",
@@ -112,7 +112,7 @@ export default function KaryaIndex() {
                 </div>
               </div>
               
-              <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 16 }}>
+              <div className="md-karya-arrow" style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: 16 }}>
                 <div style={{ 
                   width: 48, height: 48, borderRadius: "50%", background: "var(--neutral-ink)", color: "var(--text-on-dark)",
                   display: "flex", alignItems: "center", justifyContent: "center",
