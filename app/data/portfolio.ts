@@ -6,6 +6,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Logo & Brand Identity System · 2025",
     tags: ["Brand Identity", "Brand Guideline", "Design System"],
     imageCount: 2,
+    metrics: [
+      { value: "3", label: "Konfigurasi Logo Utama" },
+      { value: "1", label: "Brand Guideline Book" },
+      { value: "100%", label: "Adopsi Lintas Divisi" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -32,6 +37,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Logo & Brand Identity System · 2025",
     tags: ["Brand Identity", "Brand Guideline", "Visual Identity"],
     imageCount: 2,
+    metrics: [
+      { value: "3", label: "Pilar Nilai Harmoni" },
+      { value: "1", label: "Sistem Utuh Multi-Platform" },
+      { value: "∞", label: "Konsistensi Visual" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -58,6 +68,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Logo & Brand Guideline · Ed-Tech Startup · 2025",
     tags: ["Startup Branding", "Ed-Tech", "Brand Guideline"],
     imageCount: 2,
+    metrics: [
+      { value: "4", label: "Kuadran Simbolik" },
+      { value: "0", label: "Redundancy Visual" },
+      { value: "100%", label: "Skalabilitas Brand" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -84,6 +99,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Laporan & Website Interaktif · Direktorat Kemahasiswaan IPB University · 2025",
     tags: ["Data Visualization", "Web App", "Report Design", "Data Storytelling"],
     imageCount: 2,
+    metrics: [
+      { value: "6", label: "Dimensi Analisis Data" },
+      { value: "1", label: "Platform Web Interaktif" },
+      { value: "100%", label: "Akses Transparansi" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -110,6 +130,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Visual Identity — Logo System · 2024–2025",
     tags: ["Brand Identity", "Logo Design", "Philosophy-Driven Design"],
     imageCount: 2,
+    metrics: [
+      { value: "3", label: "Konsep Desain Filosofis" },
+      { value: "1", label: "Initial Condition" },
+      { value: "∞", label: "Potensi Skala Limit" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -132,6 +157,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "AI-Assisted Student Development · IPB University × Diktisaintek Berdampak · 2025–2026",
     tags: ["Research & Engineering", "AI/ML", "Product Development", "EdTech"],
     imageCount: 3,
+    metrics: [
+      { value: "4", label: "Modul Cerdas AI" },
+      { value: "3", label: "Dimensi Retrieval Data" },
+      { value: "300+", label: "Partisipan User Study" }
+    ],
     sections: [
       {
         title: "Konteks",
@@ -158,6 +188,11 @@ export const PORTFOLIO_STORIES = [
     subtitle: "Corporate Control System for Multi-Kitchen MBG · 2025–2026",
     tags: ["Engineering", "ERP", "Data Systems", "Food Industry"],
     imageCount: 2,
+    metrics: [
+      { value: "6", label: "Modul ERP Utama" },
+      { value: "Real-time", label: "Risk Monitoring" },
+      { value: "Multi", label: "Skala Dapur Mitra" }
+    ],
     sections: [
       {
         title: "Konteks",

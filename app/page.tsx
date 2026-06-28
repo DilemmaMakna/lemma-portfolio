@@ -84,9 +84,9 @@ function DigitalDecor() {
 
 // ── Prinsip data ───────────────────────────────────────────────
 const PRINSIP = [
-  { num: "01", title: "Proven before the theorem.", body: "Sistem dan fondasi harus berdiri kokoh terlebih dahulu. Bagi kami, solusi digital yang baik memecahkan masalah mendasar sebelum membangun fitur kosmetik di atasnya." },
-  { num: "02", title: "Rigorous by nature. Creative by choice.", body: "Pendekatan kami bertumpu pada ketelitian analitik yang kaku, dipadukan dengan kebebasan kreatif. Pemecahan masalah butuh disiplin, eksekusinya butuh imajinasi." },
-  { num: "03", title: "The work before the work.", body: "Kami menghabiskan banyak waktu di fase yang tidak terlihat — memahami konteks dan merumuskan struktur data — agar hasil akhir bekerja tanpa celah." },
+  { num: "01", title: "Struktur adalah kebebasan.", body: "Sistem yang baik bukan penjara — ia adalah landasan yang membuat eksperimen berani jadi mungkin." },
+  { num: "02", title: "Makna sebelum metode.", body: "Sebelum bertanya bagaimana, kami bertanya mengapa — dan kami tidak berhenti di jawaban pertama." },
+  { num: "03", title: "Bagian kecil menopang keseluruhan.", body: "Seperti lemma dalam matematika, setiap detail dalam sebuah proyek punya peran struktural. Tidak ada yang dekoratif semata." },
 ];
 
 // ── Service tile right-panel data ─────────────────────────────
@@ -371,7 +371,7 @@ export default function Page() {
         overflow: "hidden",
         minHeight: "100vh",
         paddingInline: "var(--gutter)",
-        paddingBlock: "clamp(80px, 15vw, 160px)", // Increased padding
+        paddingBlock: "clamp(60px, 15vw, 160px)", // Increased padding
         boxSizing: "border-box",
       }}>
         {/* Barrel columns — top AND bottom */}
@@ -390,7 +390,7 @@ export default function Page() {
 
         {/* Content */}
         <div style={{ position: "relative", zIndex: 1, maxWidth: "var(--container-inner)", marginInline: "auto", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <div className="mb-section" style={{ display: "flex", flexDirection: "row", gap: "clamp(24px, 4vw, 40px)", alignItems: "flex-start" }}>
+          <div className="mb-section" style={{ display: "flex", flexDirection: "row", gap: "clamp(24px, 12vw, 100px)", alignItems: "flex-start" }}>
             {/* Heading */}
             <h2 style={{
               margin: "0 0 clamp(16px, 2vw, 24px)",
@@ -399,15 +399,15 @@ export default function Page() {
               letterSpacing: "-0.02em",
               color: "#fff",
             }}>
-              <span style={{ fontWeight: 500 }}>P</span>rinsip{" "}
-              <span style={{ fontWeight: 500 }}>K</span>ami
+              <span style={{ fontWeight: 500 }}>V</span>enture
+              <br />
+              <span style={{ fontWeight: 500 }}>S</span>tudio
             </h2>
 
-            {/* Large philosophy text — scrub: dim → bright */}
             <div style={{ flex: 1, marginBottom: "clamp(32px, 4vw, 48px)" }}>
               <p style={{ margin: 0, fontSize: "clamp(16px, 1.5vw, 26px)", lineHeight: 1.45, fontWeight: 400, textAlign: "right", width: "100%", flex: 1, justifyItems: "end" }}>
                 <span className="prinsip-big-white" style={{ color: "#fff", opacity: 0.15, flex: 1 }}>
-                  Kami memadukan pendekatan kreatif dengan pemikiran sistematis dalam memecahkan masalah. Bagi kami, solusi digital yang baik harus berfungsi sebagai satu kesatuan sistem yang utuh, bukan sekadar kumpulan fitur yang terpisah-pisah.
+                  Lebih dari sekadar agensi, kami adalah venture studio yang bergerak di perpaduan desain, teknologi, dan sistem. Visi kami adalah membangun ekosistem digital yang memberdayakan pelajar dan mahasiswa, dengan misi menghadirkan solusi esensial yang memecahkan masalah pengguna secara implisit dan tepat guna.
                 </span>
               </p>
             </div>

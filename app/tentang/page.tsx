@@ -151,6 +151,30 @@ export default function TentangPage() {
         </div>
       </section>
 
+      {/* VISI & MISI */}
+      <section style={{ paddingBlock: 120, paddingInline: "var(--gutter)", background: "var(--surface-paper)", borderTop: "1px solid var(--border-hairline)" }}>
+        <div style={{ maxWidth: "var(--container-inner)", marginInline: "auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 64 }}>
+          <div>
+            <Eyebrow tone="accent" style={{ marginBottom: 24 }}>Visi</Eyebrow>
+            <h2 style={{ font: "var(--type-section-title)", fontSize: "clamp(32px, 4vw, 48px)", color: "var(--neutral-ink)", margin: "0 0 24px 0", lineHeight: 1.2 }}>
+              Ekosistem digital untuk pelajar dan mahasiswa.
+            </h2>
+            <p style={{ font: "var(--type-lead)", color: "var(--text-muted)", fontSize: 18, lineHeight: 1.6 }}>
+              Visi utama kami adalah membangun infrastruktur dan ekosistem digital yang secara khusus didesain untuk memahami, mendukung, dan memberdayakan perjalanan akademik serta personal dari pelajar dan mahasiswa.
+            </p>
+          </div>
+          <div>
+            <Eyebrow tone="accent" style={{ marginBottom: 24 }}>Misi</Eyebrow>
+            <h2 style={{ font: "var(--type-section-title)", fontSize: "clamp(32px, 4vw, 48px)", color: "var(--neutral-ink)", margin: "0 0 24px 0", lineHeight: 1.2 }}>
+              Esensial, dekat, dan tepat guna.
+            </h2>
+            <p style={{ font: "var(--type-lead)", color: "var(--text-muted)", fontSize: 18, lineHeight: 1.6 }}>
+              Kami percaya bahwa solusi terbaik adalah yang tidak membebani. Misi kami adalah menghadirkan produk dengan pendekatan MVP yang sangat dekat dengan pengguna—memecahkan masalah nyata secara implisit di latar belakang, tanpa fitur dekoratif yang tidak perlu.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* BIG QUOTE PINNED SECTION */}
       <section className="quote-section" style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-cream)", paddingInline: "var(--gutter)" }}>
         <h2 style={{ font: "var(--type-section-title)", fontSize: "clamp(32px, 5vw, 72px)", maxWidth: 1200, textAlign: "center", lineHeight: 1.2, margin: 0, color: "var(--neutral-ink)" }}>
@@ -187,7 +211,7 @@ export default function TentangPage() {
       <section className="vs-section" style={{ paddingBlock: 200, paddingInline: "var(--gutter)", background: "var(--surface-paper)" }}>
         <div style={{ maxWidth: "var(--container-inner)", marginInline: "auto" }}>
           <div style={{ marginBottom: 120, textAlign: "center" }}>
-            <Eyebrow tone="accent" style={{ marginBottom: 24, justifyContent: "center" }}>Model Bisnis</Eyebrow>
+            <Eyebrow tone="accent" style={{ marginBottom: 24, justifyContent: "center" }}>Layanan</Eyebrow>
             <h2 style={{ font: "var(--type-hero)", fontSize: "clamp(40px, 5vw, 72px)", color: "var(--neutral-ink)", margin: 0 }}>Venture Studio</h2>
             <p style={{ font: "var(--type-body)", color: "var(--text-muted)", maxWidth: 600, marginInline: "auto", marginTop: 24, fontSize: 18 }}>
               Kami beroperasi dengan dua jalur yang saling memperkuat. Proyek klien menjadi sumber stabil dan lab uji, sementara produk internal membangun nilai mandiri.
@@ -244,6 +268,7 @@ export default function TentangPage() {
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "150%", height: "150%", background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)", zIndex: 0 }} />
 
         <div style={{ position: "relative", zIndex: 1, maxWidth: 800, marginInline: "auto" }}>
+          <Eyebrow tone="warm" style={{ marginBottom: 24, justifyContent: "center" }}>Kontak</Eyebrow>
           <h2 style={{ font: "var(--type-hero)", fontSize: "clamp(48px, 6vw, 80px)", lineHeight: 1.1, marginBottom: 48 }}>
             Apa yang sedang kamu<br/>coba buktikan?
           </h2>

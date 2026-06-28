@@ -33,6 +33,11 @@ export default function KaryaDetailSlug({ params }: { params: Promise<{ slug: st
         y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out", delay: 0.4
       });
 
+      // Metrics animation
+      gsap.from(".metric-item", {
+        y: 40, opacity: 0, stagger: 0.1, duration: 1, ease: "power4.out", delay: 0.6
+      });
+
       // Pin the section titles on the left while content scrolls on the right
       gsap.utils.toArray<HTMLElement>(".content-section").forEach((section) => {
         const title = section.querySelector(".section-title-col");
@@ -116,6 +121,22 @@ export default function KaryaDetailSlug({ params }: { params: Promise<{ slug: st
               {story.subtitle}
             </p>
           </div>
+
+          {/* METRICS SECTION */}
+          {story.metrics && (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 32, marginBottom: 120, borderTop: "1px solid var(--border-hairline)", paddingTop: 48 }}>
+              {story.metrics.map((metric, i) => (
+                <div key={i} className="metric-item">
+                  <div style={{ font: "var(--type-hero)", fontSize: "clamp(48px, 6vw, 64px)", color: "var(--neutral-ink)", lineHeight: 1, marginBottom: 8 }}>
+                    {metric.value}
+                  </div>
+                  <div style={{ fontSize: 16, color: "var(--text-muted)", fontWeight: 500, letterSpacing: "0.02em" }}>
+                    {metric.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* MAIN IMAGE SPREAD (Asymmetrical Parallax Grid) */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(24px, 4vw, 48px)", marginBottom: 160, alignItems: "start" }}>
