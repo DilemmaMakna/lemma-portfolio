@@ -1,26 +1,332 @@
-@import "tailwindcss";
+/* ============================================================
+   Lemma Design System — globals.css
+   All tokens inlined (no Tailwind — Lemma uses CSS custom properties)
+   ============================================================ */
 
+/* ── Fonts ─────────────────────────────────────────────────── */
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap");
+
+/* ── Color Tokens ───────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Neutrals */
+  --neutral-0:   #ffffff;
+  --neutral-50:  #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-ink: #0e0d0c;
+
+  /* Cream / beige */
+  --beige-0:    #ffffff;
+  --beige-50:   #fff8f3;
+  --beige-100:  #f7f5f1;
+  --beige-200:  #f1ece4;
+
+  /* Orange */
+  --orange-50:   #fff4ec;
+  --orange-100:  #ffdecb;
+  --orange-200:  #ffc7a7;
+  --orange-300:  #ffaa7c;
+  --orange-400:  #fb8839;
+  --orange-500:  #f97316;
+  --orange-600:  #e05e01;
+  --orange-700:  #c34c00;
+  --orange-800:  #913300;
+  --orange-900:  #46200a;
+  --orange-ink:  #0e0d0c;
+
+  --orange-hero-from: #d76300;
+  --orange-hero-to:   #d72f00;
+  --red-spot:         #c60000;
+
+  /* Service accents */
+  --magenta-from:  #d700d4;
+  --magenta-to:    #a900d7;
+  --magenta-glow:  #f7a7ff;
+  --olive-from:    #d0d700;
+  --olive-to:      #d7ac00;
+  --olive-glow:    #fa9c3d;
+  --teal-from:     #017988;
+  --teal-to:       #01d5dd;
+  --teal-glow:     #3dfad1;
+
+  /* Semantic text */
+  --text-strong:    var(--neutral-ink);
+  --text-body:      var(--neutral-800);
+  --text-muted:     var(--neutral-600);
+  --text-soft:      var(--neutral-500);
+  --text-on-dark:   var(--beige-100);
+  --text-on-orange: var(--beige-100);
+  --text-accent:    var(--orange-500);
+
+  /* Surfaces */
+  --surface-page:   var(--neutral-0);
+  --surface-paper:  var(--beige-50);
+  --surface-cream:  var(--beige-100);
+  --surface-card:   var(--neutral-0);
+  --surface-tile:   var(--neutral-100);
+  --surface-dark:   var(--neutral-800);
+  --surface-deep:   var(--orange-900);
+
+  /* Borders */
+  --border-hairline: rgba(14, 13, 12, 0.12);
+  --border-soft:     var(--neutral-200);
+  --border-strong:   var(--neutral-400);
+  --border-on-dark:  rgba(255, 255, 255, 0.16);
+
+  /* Actions */
+  --action-primary-bg:     var(--neutral-700);
+  --action-primary-fg:     var(--beige-100);
+  --action-primary-border: var(--neutral-500);
+  --action-accent-bg:      var(--orange-500);
+  --action-accent-fg:      var(--beige-100);
+  --action-accent-border:  var(--neutral-400);
+  --action-ghost-bg:       transparent;
+  --action-ghost-fg:       var(--neutral-ink);
+  --action-ghost-border:   var(--neutral-400);
+  --action-on-deep-bg:     var(--orange-800);
+  --action-on-deep-border: var(--orange-700);
+
+  /* Gradients */
+  --grad-orange-radial:  radial-gradient(ellipse 70.71% 53.85% at 50% 50%, var(--orange-hero-from) 0%, var(--orange-hero-to) 100%);
+  --grad-magenta-radial: radial-gradient(ellipse 70.71% 53.85% at 50% 50%, var(--magenta-from) 0%, var(--magenta-to) 100%);
+  --grad-olive-radial:   radial-gradient(ellipse 70.71% 53.85% at 50% 50%, var(--olive-from) 0%, var(--olive-to) 100%);
+  --grad-footer-fade:    linear-gradient(180deg, rgba(70,32,0,0) 0%, var(--orange-900) 100%);
+  --grad-barrel-peach:   linear-gradient(180deg, #ffc7a7 0%, rgba(255,199,167,0) 100%);
+  --grad-barrel-cream:   linear-gradient(180deg, #ffdfcb 0%, rgba(255,199,167,0) 100%);
+  --grad-service-veil:   rgba(30, 30, 30, 0.68);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Typography Tokens ──────────────────────────────────────── */
+:root {
+  --font-sans:    "General Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);
+  --font-body:    var(--font-sans);
+  --font-mono:    ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+
+  --fs-mega:    clamp(80px, 12vw, 196px);
+  --fs-display: clamp(36px, 4vw, 56px);
+  --fs-h1:      52px;
+  --fs-h2:      48px;
+  --fs-h3:      42px;
+  --fs-h4:      32px;
+  --fs-stat:    24px;
+  --fs-lead:    20px;
+  --fs-body:    18px;
+  --fs-base:    16px;
+  --fs-meta:    15px;
+  --fs-small:   14px;
+
+  --lh-mega:    1.1;
+  --lh-display: 1.1;
+  --lh-tight:   1.05;
+  --lh-snug:    1.15;
+  --lh-body:    1.625;
+  --lh-prose:   1.5;
+
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-eyebrow: 0.13em;
+
+  --type-hero:          var(--fw-regular) var(--fs-mega)/var(--lh-mega) var(--font-display);
+  --type-display:       var(--fw-regular) var(--fs-display)/var(--lh-display) var(--font-display);
+  --type-section-title: var(--fw-medium) var(--fs-h2)/var(--lh-tight) var(--font-display);
+  --type-tile-title:    var(--fw-medium) var(--fs-h3)/1.05 var(--font-sans);
+  --type-card-title:    var(--fw-medium) var(--fs-h4)/1.1 var(--font-sans);
+  --type-stat:          var(--fw-medium) var(--fs-stat)/1.45 var(--font-sans);
+  --type-lead:          var(--fw-regular) var(--fs-lead)/1.625 var(--font-sans);
+  --type-body:          var(--fw-regular) var(--fs-body)/1.625 var(--font-sans);
+  --type-meta:          var(--fw-regular) var(--fs-meta)/1.7 var(--font-sans);
+  --type-eyebrow:       var(--fw-regular) var(--fs-meta)/1.7 var(--font-sans);
+  --type-button:        var(--fw-regular) var(--fs-base)/1.625 var(--font-sans);
+  --type-tabular:       var(--fw-light) var(--fs-base)/1 var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Spacing & Layout Tokens ────────────────────────────────── */
+:root {
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  --gutter:          64px;
+  --stack:           42px;
+  --stack-tight:     16px;
+  --stack-loose:     63px;
+  --container-max:   1440px;
+  --container-inner: 1312px;
+
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   24px;
+  --radius-2xl:  28px;
+  --radius-card: 25px;
+  --radius-pill: 999px;
+
+  --border-thin:   1px;
+  --border-soft:   1.12px;
+  --border-mid:    1.5px;
+  --border-strong: 2px;
+
+  --nav-height: 60px;
+  --tile-h:     100vh;
+}
+
+/* ── Effects Tokens ─────────────────────────────────────────── */
+:root {
+  --shadow-none: 0 0 0 0 transparent;
+  --shadow-xs:   0 1px 2px rgba(14,13,12,0.04);
+  --shadow-sm:   0 2px 8px rgba(14,13,12,0.06);
+  --shadow-md:   0 8px 24px rgba(14,13,12,0.08);
+  --shadow-lg:   0 24px 64px rgba(14,13,12,0.12);
+  --halo-orange:      0 0 0 7px rgba(249,124,22,0.15);
+  --halo-orange-thin: 0 0 0 6.3px rgba(249,113,22,0.15);
+  --blur-nav:  blur(2px);
+  --blur-card: blur(20px);
+  --veil-service: rgba(30, 30, 30, 0.68);
+  --grad-footer-bottom: linear-gradient(180deg, rgba(70,32,0,0) 0%, #462000 100%);
+}
+
+/* ── Motion Tokens ──────────────────────────────────────────── */
+:root {
+  --duration-instant: 80ms;
+  --duration-fast:    160ms;
+  --duration-base:    240ms;
+  --duration-slow:    420ms;
+  --duration-reveal:  680ms;
+
+  --ease-out:      cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --press-scale: 0.98;
+  --hover-lift:  -1px;
+}
+
+/* ── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font: var(--type-body);
+  font-family: var(--font-sans);
+  background: var(--surface-paper);
+  color: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-sans);
+}
+
+/* ── Layout Utilities ───────────────────────────────────────── */
+.container {
+  max-width: var(--container-inner);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: 100px;
+}
+
+/* ── Reveal animation start state ─────────────────────────── */
+.reveal-up {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Navbar sticky ──────────────────────────────────────────── */
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+/* ── Hero section ───────────────────────────────────────────── */
+.hero-section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(var(--nav-height) + 40px);
+  padding-bottom: 60px;
+  overflow: hidden;
+}
+
+/* ── Section — Prinsip (orange radial) ──────────────────────── */
+.prinsip-section {
+  background: var(--grad-orange-radial);
+  color: var(--text-on-orange);
+}
+
+/* ── Footer deep ────────────────────────────────────────────── */
+.footer-section {
+  background: var(--orange-900);
+  color: var(--text-on-dark);
+  overflow: hidden;
+}
+
+/* ── Mobile responsive ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --gutter: 24px;
+    --fs-h3: 32px;
+    --fs-h4: 24px;
+    --tile-h: 600px;
+  }
+  .hero-display {
+    font-size: clamp(60px, 16vw, 120px) !important;
+  }
 }
