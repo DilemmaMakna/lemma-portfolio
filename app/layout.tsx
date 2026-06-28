@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lemma — Creative-First, System-Oriented",
+  title: "Lemma - Masih di sini. Masih bermakna",
   description:
     "Lemma adalah venture studio Indonesia (Bogor/IPB) yang membangun solusi kreatif, data, dan digital untuk organisasi, bisnis, dan komunitas mahasiswa.",
   keywords: ["venture studio", "creative", "digital", "Bogor", "IPB", "Lemma"],
   openGraph: {
-    title: "Lemma — Creative-First, System-Oriented",
+    title: "Lemma - Masih di sini. Masih bermakna",
     description: "Kami bantu menyusun sistemnya, bukan cuma desainnya.",
     siteName: "Lemma",
     locale: "id_ID",

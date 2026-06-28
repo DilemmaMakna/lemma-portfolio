@@ -107,7 +107,7 @@ export function Navbar({ className, style }: NavbarProps) {
         }}
       >
         {/* Logo Text (Left) */}
-        <Link href="/" className="mobile-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none", gap: 4 }}>
+        <Link href="/" className="mobile-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none", gap: 8 }}>
           <img src="/icons/lemma-logo.svg" alt="Logo" style={{ width: 28, height: 28, filter: "brightness(0) invert(1)" }} />
           <span className="mobile-logo-text hover:opacity-70" style={{
             fontFamily: "var('General Sans', sans-serif)",
