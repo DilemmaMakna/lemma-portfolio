@@ -16,9 +16,6 @@
 # next.js
 /.next/
 /out/
-.claude-references/
-.agents/
-.claude-references/
 
 # production
 /build

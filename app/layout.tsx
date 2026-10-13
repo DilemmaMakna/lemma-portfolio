@@ -1,41 +1,54 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { generalSans, mono } from "./fonts";
+import { Providers } from "@/components/Providers";
+import { messages } from "@/lib/messages";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lemma - Masih di sini. Masih bermakna",
-  description:
-    "Lemma adalah venture studio Indonesia (Bogor/IPB) yang membangun solusi kreatif, data, dan digital untuk organisasi, bisnis, dan komunitas mahasiswa.",
-  keywords: ["venture studio", "creative", "digital", "Bogor", "IPB", "Lemma"],
+  metadataBase: new URL("https://lemma.studio"),
+  title: messages.en.meta.title,
+  description: messages.en.meta.description,
   openGraph: {
-    title: "Lemma - Masih di sini. Masih bermakna",
-    description: "Kami bantu menyusun sistemnya, bukan cuma desainnya.",
+    title: "The work before the work.",
+    description: messages.en.meta.description,
     siteName: "Lemma",
-    locale: "id_ID",
     type: "website",
   },
+  twitter: { card: "summary_large_image", title: "The work before the work." },
 };
 
-import { Navbar } from "@/components/navigation/Navbar";
-import { Footer } from "@/components/navigation/Footer";
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Dijalankan sebelum paint: tentukan bahasa awal dan status intro tanpa flash.
+const bootScript = `(function(){try{
+var d=document.documentElement;
+var m=document.cookie.match(/(?:^|; )NEXT_LOCALE=(id|en)/);
+var l=m?m[1]:((navigator.language||'en').toLowerCase().indexOf('id')===0?'id':'en');
+d.lang=l;d.setAttribute('data-locale',l);d.classList.add('is-booting');
+var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!r&&!sessionStorage.getItem('lemma-intro'))d.classList.add('is-loading');
+}catch(e){}})();`;
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${generalSans.variable} ${mono.variable}`}
+    >
       <head>
-        {/* Fontshare General Sans */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap"
-          rel="stylesheet"
+        <script
+          id="lemma-boot"
+          async
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: bootScript }}
         />
       </head>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
-
-import type React from "react";
