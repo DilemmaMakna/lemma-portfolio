@@ -3,10 +3,12 @@
 import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
 import DotGrid from "@/components/ui/DotGrid";
+import { useContactModal } from "@/components/ui/ContactModal";
 import { scrollToId } from "@/lib/lenis";
 
 export default function Hero() {
   const { t } = useLocale();
+  const { open: openContact } = useContactModal();
   const h = t.hero;
   const lines = [h.line1, h.line2, h.line3];
 
@@ -46,7 +48,12 @@ export default function Hero() {
               </span>
             ))}
           </h1>
-          <img src="/lemma-logo-hero.svg" alt="Hero Image" className="absolute top-40 right-20" />
+          <img
+            src="/lemma-logo-hero.svg"
+            alt="LEMMA"
+            data-intro="fade"
+            className="absolute right-20 top-40 hidden lg:block"
+          />
 
         </div>
 
@@ -55,7 +62,7 @@ export default function Hero() {
             {h.lead}
           </p>
           <div data-intro="fade">
-            <Button id="hero-cta" href="#contact" onClick={(e) => { e.preventDefault(); scrollToId("contact"); }}>
+            <Button id="hero-cta" onClick={() => openContact("hero")}>
               {t.nav.cta}
             </Button>
           </div>

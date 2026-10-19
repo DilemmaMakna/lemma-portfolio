@@ -4,9 +4,11 @@ import { useEffect, useRef } from "react";
 import { useLocale } from "./LocaleProvider";
 import SmoothScroll from "./SmoothScroll";
 import Cursor from "./ui/Cursor";
+import PageTransition from "./ui/PageTransition";
 import { LocaleProvider } from "./LocaleProvider";
 import { reducedMotion } from "@/lib/gsap";
 import { playIntro } from "@/lib/intro";
+import { ContactModalProvider } from "@/components/ui/ContactModal";
 
 function Shell({ children }: { children: React.ReactNode }) {
   const { ready } = useLocale();
@@ -49,6 +51,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       </div>
       <div className="grain" aria-hidden="true" />
       <Cursor />
+      <PageTransition />
       <div id="page">{children}</div>
     </>
   );
@@ -58,7 +61,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <LocaleProvider>
       <SmoothScroll>
-        <Shell>{children}</Shell>
+        <ContactModalProvider>
+          <Shell>{children}</Shell>
+        </ContactModalProvider>
       </SmoothScroll>
     </LocaleProvider>
   );

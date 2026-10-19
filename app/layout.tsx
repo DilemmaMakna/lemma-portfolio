@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { generalSans, mono } from "./fonts";
+import { generalSans, mono, serif } from "./fonts";
 import { Providers } from "@/components/Providers";
 import { messages } from "@/lib/messages";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lemma.studio"),
-  title: messages.en.meta.title,
-  description: messages.en.meta.description,
+  title: messages.id.meta.title,
+  description: messages.id.meta.description,
   openGraph: {
     title: "The work before the work.",
     description: messages.en.meta.description,
@@ -25,7 +25,7 @@ export const viewport: Viewport = {
 const bootScript = `(function(){try{
 var d=document.documentElement;
 var m=document.cookie.match(/(?:^|; )NEXT_LOCALE=(id|en)/);
-var l=m?m[1]:((navigator.language||'en').toLowerCase().indexOf('id')===0?'id':'en');
+var l=m?m[1]:'id';
 d.lang=l;d.setAttribute('data-locale',l);d.classList.add('is-booting');
 var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!r&&!sessionStorage.getItem('lemma-intro'))d.classList.add('is-loading');
@@ -34,9 +34,9 @@ if(!r&&!sessionStorage.getItem('lemma-intro'))d.classList.add('is-loading');
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="id"
       suppressHydrationWarning
-      className={`${generalSans.variable} ${mono.variable}`}
+      className={`${generalSans.variable} ${mono.variable} ${serif.variable}`}
     >
       <head>
         <script

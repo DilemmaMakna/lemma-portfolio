@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import { scrollToId } from "@/lib/lenis";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import SocialLinks from "@/components/ui/SocialLinks";
 
 const NAV_LINKS = [
   { key: "work", id: "work" },
@@ -13,7 +14,11 @@ const NAV_LINKS = [
   { key: "contact", id: "contact" },
 ] as const;
 
-const GLOW_RADIUS = 160; // Radius lebih kecil & padat, fokus di dalam bentuk teks
+const GLOW_RADIUS = 320; // Radius lebar agar sorotan menyebar halus, bukan lingkaran tegas
+
+// Falloff bertahap (mirip kurva gaussian): tanpa inti solid, tanpa tepi tajam.
+// Satu string dipakai untuk mask standar dan -webkit- supaya hasilnya sama di semua browser.
+const GLOW_MASK = `radial-gradient(circle ${GLOW_RADIUS}px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.72) 14%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.3) 48%, rgba(0, 0, 0, 0.14) 66%, rgba(0, 0, 0, 0.05) 84%, transparent 100%)`;
 
 export default function Footer() {
   const { t, locale, setLocale } = useLocale();
@@ -52,18 +57,46 @@ export default function Footer() {
     { scope: footerRef },
   );
 
+  // Posisi glow mengejar kursor dengan lerp, bukan loncat: lebih lembut saat masuk dan bergerak.
+  const glow = useRef({ x: 0, y: 0, tx: 0, ty: 0, init: false });
+
+  useEffect(() => {
+    if (!isHovered || reducedMotion()) return;
+    let id = 0;
+    const loop = () => {
+      const g = glow.current;
+      g.x += (g.tx - g.x) * 0.1;
+      g.y += (g.ty - g.y) * 0.1;
+      markRef.current?.style.setProperty("--glow-x", `${g.x.toFixed(1)}px`);
+      markRef.current?.style.setProperty("--glow-y", `${g.y.toFixed(1)}px`);
+      id = requestAnimationFrame(loop);
+    };
+    id = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(id);
+  }, [isHovered]);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (!markRef.current) return;
     const rect = markRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    markRef.current.style.setProperty("--glow-x", `${x}px`);
-    markRef.current.style.setProperty("--glow-y", `${y}px`);
-    if (!isHovered) setIsHovered(true);
-  }, [isHovered]);
+    const g = glow.current;
+    g.tx = x;
+    g.ty = y;
+    // Hover pertama (atau reduced motion): langsung di kursor, jangan meluncur dari posisi lama.
+    if (!g.init || reducedMotion()) {
+      g.x = x;
+      g.y = y;
+      g.init = true;
+      markRef.current.style.setProperty("--glow-x", `${x}px`);
+      markRef.current.style.setProperty("--glow-y", `${y}px`);
+    }
+    setIsHovered(true);
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
+    glow.current.init = false;
     setIsHovered(false);
   }, []);
 
@@ -106,15 +139,16 @@ export default function Footer() {
 
             <div className="mt-8">
               <a
-                href="mailto:hello@dilemma-makna.com"
+                href="mailto:marketing@dilemma-makna.com"
                 className="mono inline-flex items-center gap-2 text-fg hover:text-accent transition-colors !normal-case text-sm tracking-[-0.01em]"
               >
-                hello@dilemma-makna.com
+                marketing@dilemma-makna.com
                 <span className="arrow font-mono" aria-hidden="true">↗</span>
               </a>
               <div className="mono mt-2 text-xs text-fg-dim">
-                JAKARTA, ID &middot; GMT+7
+                <a href="https://wa.me/6285144922167">+62 (851) 4492 2167</a>
               </div>
+              <SocialLinks size="sm" className="mt-6" />
             </div>
           </div>
 
@@ -182,7 +216,7 @@ export default function Footer() {
                   onClick={go("products")}
                   className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
                 >
-                  <span>ARAH AI</span>
+                  <span>██████</span>
                   <span className="mono text-[10px] text-fg-dim border border-line-strong rounded-full px-2 py-0.5">
                     STEALTH
                   </span>
@@ -282,13 +316,14 @@ export default function Footer() {
 
         {/* Dynamic Glowing Text Layer: both stroke & fill are masked strictly to the hover gradient */}
         <span
-          className="pointer-events-none absolute inset-0 select-none text-center text-[23vw] font-semibold uppercase leading-none tracking-[0.01em] transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 select-none text-center text-[23vw] font-semibold uppercase leading-none tracking-[0.01em] transition-opacity duration-700 ease-out"
           style={{
             opacity: isHovered ? 1 : 0,
-            color: "#ff5a1f",
-            WebkitTextStroke: "1.5px #ff7440",
-            WebkitMaskImage: `radial-gradient(circle ${GLOW_RADIUS}px at var(--glow-x, 50%) var(--glow-y, 50%), black 0%, black 25%, rgba(0, 0, 0, 0.4) 60%, transparent 10%)`,
-            maskImage: `radial-gradient(circle ${GLOW_RADIUS}px at var(--glow-x, 50%) var(--glow-y, 50%), black 0%, black 25%, rgba(0, 0, 0, 0.4) 60%, transparent 100%)`,
+            // Fill dan garis tepi sedikit tembus pandang supaya oranye tidak menyala keras.
+            color: "rgba(255, 90, 31, 0.8)",
+            WebkitTextStroke: "1.25px rgba(255, 116, 64, 0.7)",
+            WebkitMaskImage: GLOW_MASK,
+            maskImage: GLOW_MASK,
           }}
         >
           LEMMA

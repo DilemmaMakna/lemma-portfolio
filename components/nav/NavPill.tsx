@@ -1,17 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
+import { useContactModal } from "@/components/ui/ContactModal";
+import SocialLinks from "@/components/ui/SocialLinks";
 import { getLenis, scrollToId } from "@/lib/lenis";
 
+// `id` links scroll to a section on the home page; `href` links open their own page.
 const LINKS = [
   { key: "work", id: "work" },
-  { key: "about", id: "about" },
-  { key: "services", id: "services" },
+  { key: "about", href: "/about" },
+  { key: "services", href: "/services" },
   { key: "products", id: "products" },
   { key: "contact", id: "contact" },
 ] as const;
+
+const hrefOf = (l: (typeof LINKS)[number]) => ("href" in l ? l.href : `/#${l.id}`);
+const isCurrent = (l: (typeof LINKS)[number], pathname: string, active: string) =>
+  "href" in l ? pathname === l.href : pathname === "/" && active === l.id;
 
 function LangToggle({ className = "" }: { className?: string }) {
   const { locale, setLocale } = useLocale();
@@ -37,6 +46,9 @@ function LangToggle({ className = "" }: { className?: string }) {
 
 export default function NavPill() {
   const { t } = useLocale();
+  const { open: openContact } = useContactModal();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
@@ -55,6 +67,7 @@ export default function NavPill() {
       { rootMargin: "-45% 0px -50% 0px" },
     );
     LINKS.forEach((l) => {
+      if (!("id" in l)) return;
       const el = document.getElementById(l.id);
       if (el) io.observe(el);
     });
@@ -74,24 +87,26 @@ export default function NavPill() {
     return () => window.removeEventListener("keydown", esc);
   }, [open]);
 
-  const go = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
+  // On the home page, section links scroll in place; everywhere else the Link navigates.
+  const go = (id?: string) => (e: React.MouseEvent) => {
     setOpen(false);
+    if (!id || !onHome) return;
+    e.preventDefault();
     requestAnimationFrame(() => scrollToId(id));
   };
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-[var(--grid-margin)] pt-4 md:pt-5">
-        <a
-          href="#top"
+        <Link
+          href="/"
           onClick={go("top")}
           data-intro="fade"
           className="pointer-events-auto text-[15px] font-light uppercase tracking-[0.18em]"
           aria-label="LEMMA"
         >
           LEMMA
-        </a>
+        </Link>
 
         <nav
           aria-label="Primary"
@@ -103,26 +118,26 @@ export default function NavPill() {
           }}
         >
           {LINKS.map((l) => (
-            <a
+            <Link
               key={l.key}
               id={`nav-${l.key}`}
-              href={`#${l.id}`}
-              onClick={go(l.id)}
-              className={`mono relative px-4 py-2 transition-colors ${active === l.id ? "text-accent" : "text-fg-muted hover:text-fg"
+              href={hrefOf(l)}
+              onClick={go("id" in l ? l.id : undefined)}
+              className={`mono relative px-4 py-2 transition-colors ${isCurrent(l, pathname, active) ? "text-accent" : "text-fg-muted hover:text-fg"
                 }`}
             >
               {t.nav[l.key]}
               <span
-                className={`absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent transition-opacity ${active === l.id ? "opacity-100" : "opacity-0"
+                className={`absolute bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-accent transition-opacity ${isCurrent(l, pathname, active) ? "opacity-100" : "opacity-0"
                   }`}
               />
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div data-intro="fade" className="pointer-events-auto flex items-center gap-3 md:gap-4">
           <LangToggle className="hidden sm:flex" />
-          <Button id="nav-cta" href="#contact" onClick={go("contact")} className="hidden !h-10 md:inline-flex">
+          <Button id="nav-cta" onClick={() => openContact("nav")} className="hidden !h-10 md:inline-flex">
             {t.nav.cta}
           </Button>
           <button
@@ -141,7 +156,7 @@ export default function NavPill() {
         <div
           role="dialog"
           aria-modal="true"
-          className="pointer-events-auto fixed inset-0 z-[65] flex flex-col bg-bg px-[var(--grid-margin)] pb-8 pt-5"
+          className="pointer-events-auto fixed inset-0 z-[65] flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
         >
           <div className="flex items-center justify-between">
             <span className="text-[15px] font-semibold uppercase tracking-[0.18em]">LEMMA</span>
@@ -149,25 +164,43 @@ export default function NavPill() {
               {t.nav.close}
             </button>
           </div>
-          <ul className="mt-16 flex flex-1 flex-col gap-3">
-            {LINKS.map((l, i) => (
-              <li key={l.key}>
-                <a
-                  href={`#${l.id}`}
-                  onClick={go(l.id)}
-                  className="flex items-baseline gap-4 text-[clamp(2.5rem,12vw,4rem)] font-medium tracking-[-0.03em]"
-                >
-                  <span className="mono text-fg-dim">0{i + 1}</span>
-                  {t.nav[l.key]}
-                </a>
-              </li>
-            ))}
+          {/* 1. Tautan: baris berpembatas, halaman aktif diberi warna aksen. */}
+          <ul className="mt-10 flex-1 border-t border-line">
+            {LINKS.map((l, i) => {
+              const current = isCurrent(l, pathname, active);
+              return (
+                <li key={l.key} className="border-b border-line">
+                  <Link
+                    href={hrefOf(l)}
+                    onClick={go("id" in l ? l.id : undefined)}
+                    className={`flex items-baseline gap-4 py-3 text-[clamp(2.25rem,10vw,3.5rem)] font-medium leading-tight tracking-[-0.03em] transition-colors hover:text-accent ${
+                      current ? "text-accent" : "text-fg"
+                    }`}
+                  >
+                    <span className={`mono w-6 shrink-0 ${current ? "text-accent" : "text-fg-dim"}`}>
+                      0{i + 1}
+                    </span>
+                    {t.nav[l.key]}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
-          <div className="flex items-center justify-between">
-            <LangToggle />
-            <Button href="#contact" onClick={go("contact")}>
-              {t.nav.cta}
-            </Button>
+
+          {/* 2. Media sosial. 3. Bahasa dan ajakan kontak. */}
+          <div className="mt-8 flex flex-col gap-6">
+            <SocialLinks label size="sm" />
+            <div className="flex items-center justify-between gap-4 border-t border-line pt-6">
+              <LangToggle />
+              <Button
+                onClick={() => {
+                  setOpen(false);
+                  openContact("nav-mobile");
+                }}
+              >
+                {t.nav.cta}
+              </Button>
+            </div>
           </div>
         </div>
       )}

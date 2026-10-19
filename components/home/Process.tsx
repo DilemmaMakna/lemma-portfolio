@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
+import AsciiProcess from "./AsciiProcess";
 
 export default function Process() {
   const { t } = useLocale();
@@ -24,7 +25,7 @@ export default function Process() {
   }, []);
 
   return (
-    <section id="process" className="section bg-bg-raised" aria-label={p.label}>
+    <section id="process" className="section section-raised" aria-label={p.label}>
       <div className="wrap">
         <SectionLabel rule={false}>{p.label}</SectionLabel>
         <div className="grid12 gap-y-12">
@@ -36,6 +37,8 @@ export default function Process() {
               >
                 0{active + 1}
               </div>
+              {/* Adegan ASCII di bawah angka; berganti mengikuti langkah aktif (desktop saja). */}
+              <AsciiProcess active={active} className="mt-6 hidden lg:block" />
               <div className="mono mt-4 text-fg-dim">
                 {p.steps.map((_, i) => (
                   <span key={i} className={`mr-3 transition-colors ${i === active ? "text-accent" : ""}`}>
@@ -65,9 +68,19 @@ export default function Process() {
                 >
                   {s.title}
                 </h3>
-                <p data-reveal className="mt-6 max-w-[52ch] text-fg-muted">
+                <p data-reveal className="mt-6 max-w-[44ch] text-fg-muted">
                   {s.body}
                 </p>
+                <ul data-reveal className="mt-6 flex flex-wrap gap-2">
+                  {s.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="mono mono-2xs !normal-case rounded-full border border-line-strong px-3 py-1 text-fg-dim"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ol>

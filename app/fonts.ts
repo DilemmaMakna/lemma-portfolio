@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Geist_Mono } from "next/font/google";
+import { Geist_Mono, Instrument_Serif } from "next/font/google";
 
 export const generalSans = localFont({
   src: [{ path: "./fonts/GeneralSans-Variable.woff2", style: "normal" }],
@@ -11,5 +11,13 @@ export const generalSans = localFont({
 export const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+export const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });

@@ -2,239 +2,385 @@
 
 import { useEffect, useRef } from "react";
 import { reducedMotion } from "@/lib/gsap";
+import {
+  INDEX_EVERY,
+  LEVELS,
+  buildField,
+  definition,
+  findRoute,
+  hillshade,
+  placeLabels,
+  pointAt,
+  shapeContours,
+  traceContours,
+  type Field,
+  type Label,
+  type Route,
+  type Shaped,
+} from "@/lib/topography";
 
-export default function TopographicalLines() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+// Metafora "masalah yang belum punya bentuk": pusat peta sudah terdefinisi (kontur utuh,
+// elevasi terukur); ke arah tepi kontur putus jadi serpihan lalu tinggal titik survei dengan
+// elevasi "?", dan seluruhnya memudar ke transparan. Saat pertama terlihat, bentuk itu
+// terbentuk dari pusat ke luar, lalu rute menyusuri dari tepi yang samar menuju puncak.
+//
+// Medan dihitung dan digambar SEKALI per resize. Selama animasi hanya lapisan tipis yang
+// digambar ulang (rute, pejalan, denyut), jadi biaya per frame kecil.
+
+const INTRO_REVEAL_MS = 2200; // bentuk terbentuk dari pusat
+const ROUTE_DELAY_MS = 500;
+const ROUTE_MS = 2600; // rute tergambar
+const WALK_MS = 16000; // satu perjalanan pejalan dari awal sampai akhir rute
+const PING_MS = 2400;
+const FRAME_MS = 1000 / 30;
+const FALLBACK_FONT = 'ui-monospace, "SF Mono", Menlo, monospace';
+
+// Pusat 100% opasitas, tepi 0%.
+const FADE =
+  "radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.97) 30%, rgba(0,0,0,0.8) 55%, rgba(0,0,0,0.42) 78%, rgba(0,0,0,0.12) 92%, rgba(0,0,0,0) 100%)";
+
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+// Menggambar lapisan dasar ke kanvas statis (relief, grid, titik survei, label "?") dan
+// mengembalikan lapisan "terbentuk" (kontur utuh + label elevasi) sebagai kanvas terpisah,
+// supaya bisa diungkap bertahap saat intro lalu ditempel permanen.
+function paintLayers(
+  ctx: CanvasRenderingContext2D,
+  canvas: HTMLCanvasElement,
+  field: Field,
+  def: Float32Array,
+  shaped: Shaped,
+  labels: Label[],
+  dpr: number,
+  font: string,
+) {
+  const { width, height } = field;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // Relief berbayang: gambar kecil (satu piksel per sampel), diperbesar dengan smoothing.
+  const shade = document.createElement("canvas");
+  shade.width = field.cols;
+  shade.height = field.rows;
+  shade.getContext("2d")?.putImageData(new ImageData(hillshade(field, def), field.cols, field.rows), 0, 0);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(shade, 0, 0, field.cols * field.cell, field.rows * field.cell);
+
+  // Tanda silang grid peta tiap 96px.
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let y = 96; y < height; y += 96) {
+    for (let x = 96; x < width; x += 96) {
+      ctx.moveTo(x - 4, y);
+      ctx.lineTo(x + 4, y);
+      ctx.moveTo(x, y - 4);
+      ctx.lineTo(x, y + 4);
+    }
+  }
+  ctx.stroke();
+
+  // Titik survei: sisa kontur yang belum berbentuk, dalam satu path agar murah.
+  ctx.fillStyle = "rgba(240, 242, 245, 0.7)";
+  ctx.beginPath();
+  for (let i = 0; i < shaped.dots.length; i += 2) ctx.rect(shaped.dots[i] - 0.65, shaped.dots[i + 1] - 0.65, 1.3, 1.3);
+  ctx.fill();
+
+  // Label "?": elevasi di zona ini belum diketahui.
+  ctx.font = `500 9px ${font}`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  for (const l of labels) {
+    if (!l.unknown) continue;
+    ctx.save();
+    ctx.translate(l.x, l.y);
+    ctx.rotate(l.angle);
+    ctx.fillStyle = "rgba(10, 10, 10, 0.9)"; // warna latar halaman: melubangi titik di bawahnya
+    ctx.fillRect(-7, -7, 14, 14);
+    ctx.fillStyle = "rgba(245, 245, 245, 0.7)";
+    ctx.fillText(l.text, 0, 0.5);
+    ctx.restore();
+  }
+
+  // Lapisan terbentuk: kontur utuh di kanvas transparan sendiri supaya label bisa melubangi
+  // garisnya (destination-out) tanpa menghapus relief di bawahnya.
+  const formed = document.createElement("canvas");
+  formed.width = canvas.width;
+  formed.height = canvas.height;
+  const fctx = formed.getContext("2d");
+  if (!fctx) return null;
+  fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  fctx.lineJoin = "round";
+  fctx.lineCap = "round";
+
+  // Satu stroke per level; semua ruas satu level berada dalam satu path.
+  for (let k = 1; k <= LEVELS; k++) {
+    const seg = shaped.solid[k];
+    if (!seg.length) continue;
+    const index = k % INDEX_EVERY === 0;
+    const alpha = (index ? 0.5 : 0.2) * (0.4 + (k / LEVELS) * 0.6);
+    fctx.beginPath();
+    for (let i = 0; i < seg.length; i += 4) {
+      fctx.moveTo(seg[i], seg[i + 1]);
+      fctx.lineTo(seg[i + 2], seg[i + 3]);
+    }
+    fctx.strokeStyle = `rgba(240, 242, 245, ${alpha.toFixed(3)})`;
+    fctx.lineWidth = index ? 1.1 : 0.6;
+    fctx.stroke();
+  }
+
+  fctx.font = `500 9px ${font}`;
+  fctx.textAlign = "center";
+  fctx.textBaseline = "middle";
+  for (const l of labels) {
+    if (l.unknown) continue;
+    const w = fctx.measureText(l.text).width + 8;
+    fctx.save();
+    fctx.translate(l.x, l.y);
+    fctx.rotate(l.angle);
+    fctx.globalCompositeOperation = "destination-out";
+    fctx.fillStyle = "#000";
+    fctx.fillRect(-w / 2, -6, w, 12);
+    fctx.globalCompositeOperation = "source-over";
+    fctx.fillStyle = "rgba(245, 245, 245, 0.7)";
+    fctx.fillText(l.text, 0, 0.5);
+    fctx.restore();
+  }
+  return formed;
+}
+
+// scale: zoom medan (1 = ukuran asli, sampai 2 = 200%). Medan yang diperbesar, bukan bitmap,
+// jadi garis tetap tajam dan tidak ada kanvas raksasa di memori.
+export default function TopographicalLines({ scale = 1.8 }: { scale?: number }) {
+  const staticRef = useRef<HTMLCanvasElement>(null);
+  const overlayRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
+    const base = staticRef.current;
+    const over = overlayRef.current;
+    if (!base || !over) return;
+    const bctx = base.getContext("2d");
+    const octx = over.getContext("2d");
+    if (!bctx || !octx) return;
 
-    let animId: number;
+    const zoom = Math.min(2, Math.max(1, scale));
+    const still = reducedMotion();
     let width = 0;
     let height = 0;
     let dpr = 1;
-    let t = 0;
+    let font = FALLBACK_FONT;
+    let route: Route | null = null;
+    let routePath: Path2D | null = null;
+    let formed: HTMLCanvasElement | null = null;
+    let formedOnBase = false;
+    let clock = 0; // ms animasi yang benar-benar terlihat; berhenti saat di luar layar
+    let lastTick = 0;
+    let rafId = 0;
+    let resizeTimer = 0;
+    let cancelled = false;
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
-    };
+    const draw = (time: number) => {
+      if (!route || !routePath || !formed) return;
+      const ctx = octx;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, over.width, over.height);
 
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-
-    // Multi-octave organic wobble function
-    const wobble = (angle: number, time: number, seed: number) => {
-      return (
-        Math.sin(angle * 2.5 + time * 0.8 + seed) * 0.12 +
-        Math.cos(angle * 4.2 - time * 0.6 + seed * 1.5) * 0.08 +
-        Math.sin(angle * 6.0 + time * 1.1 + seed * 2.2) * 0.04
-      );
-    };
-
-    // Main draw loop
-    const render = () => {
-      if (width === 0 || height === 0) {
-        animId = requestAnimationFrame(render);
-        return;
-      }
-
-      ctx.save();
-      ctx.scale(dpr, dpr);
-      ctx.clearRect(0, 0, width, height);
-
-      // Centers for topographic features
-      const p1 = { x: width * 0.38, y: height * 0.58 }; // Main focal peak (sharp)
-      const p2 = { x: width * 0.72, y: height * 0.38 }; // Secondary north peak
-      const p3 = { x: width * 0.82, y: height * 0.76 }; // Southeastern ridge
-      const p4 = { x: width * 0.18, y: height * 0.28 }; // Distant northwestern shoulder
-
-      // 1. Draw broad terrain contours linking the peaks
-      const broadLevels = 7;
-      for (let i = 1; i <= broadLevels; i++) {
-        const radius = (Math.min(width, height) * 0.45 * i) / broadLevels;
-        ctx.beginPath();
-        const steps = 80;
-        for (let j = 0; j <= steps; j++) {
-          const theta = (j / steps) * Math.PI * 2;
-          const w = wobble(theta, t * 0.5, i * 0.7);
-          const r = radius * (1 + w * 1.5);
-          // Elliptical stretch
-          const x = width * 0.52 + Math.cos(theta) * r * 1.35;
-          const y = height * 0.5 + Math.sin(theta) * r * 0.95;
-          if (j === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+      // Bentuk terbentuk dari pusat ke luar. Setelah selesai, lapisannya ditempel permanen ke
+      // kanvas statis dan overlay tidak perlu menggambarnya lagi.
+      const rp = still ? 1 : clamp01(time / INTRO_REVEAL_MS);
+      if (!formedOnBase) {
+        if (rp >= 1) {
+          bctx.setTransform(1, 0, 0, 1, 0, 0);
+          bctx.drawImage(formed, 0, 0);
+          formedOnBase = true;
+        } else if (rp > 0) {
+          ctx.drawImage(formed, 0, 0);
+          const R = Math.max(2, easeOutCubic(rp) * Math.hypot(width, height) * 0.6);
+          const feather = Math.max(40, R * 0.35);
+          const g = ctx.createRadialGradient(width / 2, height / 2, Math.max(0, R - feather), width / 2, height / 2, R);
+          g.addColorStop(0, "rgba(0, 0, 0, 1)");
+          g.addColorStop(1, "rgba(0, 0, 0, 0)");
+          ctx.globalCompositeOperation = "destination-in";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, width, height);
+          ctx.globalCompositeOperation = "source-over";
         }
-        ctx.closePath();
-        ctx.strokeStyle = "rgba(180, 180, 180, 0.14)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
       }
 
-      // Helper to draw a concentric peak
-      const drawPeak = (
-        center: { x: number; y: number },
-        numRings: number,
-        maxR: number,
-        aspectX: number,
-        aspectY: number,
-        rot: number,
-        seedOffset: number,
-        alphaBase: number
-      ) => {
-        for (let k = 1; k <= numRings; k++) {
-          const norm = k / numRings;
-          const rBase = maxR * norm;
-          ctx.beginPath();
-          const steps = 72;
-          for (let s = 0; s <= steps; s++) {
-            const theta = (s / steps) * Math.PI * 2;
-            const w = wobble(theta, t * 0.7, seedOffset + k * 0.35);
-            const r = rBase * (1 + w);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const p = still ? 1 : easeOutCubic(clamp01((time - ROUTE_DELAY_MS) / ROUTE_MS));
+      if (p <= 0) return;
 
-            // Rotate and scale
-            const cosRot = Math.cos(rot);
-            const sinRot = Math.sin(rot);
-            const unrotX = Math.cos(theta) * r * aspectX;
-            const unrotY = Math.sin(theta) * r * aspectY;
-
-            const rx = center.x + (unrotX * cosRot - unrotY * sinRot);
-            const ry = center.y + (unrotX * sinRot + unrotY * cosRot);
-
-            if (s === 0) ctx.moveTo(rx, ry);
-            else ctx.lineTo(rx, ry);
-          }
-          ctx.closePath();
-
-          // Variable line intensity: summit crests are brighter
-          const alpha = alphaBase * (0.35 + (1 - norm) * 0.55);
-          ctx.strokeStyle = `rgba(220, 220, 220, ${alpha})`;
-          ctx.lineWidth = k === 1 || k === 5 || k === 10 ? 1.25 : 0.85;
-          ctx.stroke();
-        }
-      };
-
-      // Draw secondary peaks
-      drawPeak(p4, 8, Math.min(width, height) * 0.22, 1.3, 0.8, -0.4, 11, 0.3);
-      drawPeak(p2, 14, Math.min(width, height) * 0.32, 1.2, 0.85, 0.3, 44, 0.45);
-      drawPeak(p3, 9, Math.min(width, height) * 0.24, 1.1, 0.9, -0.2, 77, 0.35);
-
-      // Draw main focal summit (sharpest, most detailed)
-      drawPeak(p1, 16, Math.min(width, height) * 0.38, 1.15, 0.88, -0.15, 99, 0.65);
-
-      // 2. Draw prominent glowing Orange Path / Ridge Line (as seen in Gambar 2)
-      // The path traces from southern foothills, across main summit, and crests towards eastern pass
-      const pathPoints = [
-        { x: width * 0.12, y: height * 0.32 },
-        { x: width * 0.16, y: height * 0.42 },
-        { x: width * 0.18, y: height * 0.62 },
-        { x: width * 0.24, y: height * 0.78 },
-        { x: width * 0.28, y: height * 0.82 },
-        { x: width * 0.34, y: height * 0.74 },
-        { x: width * 0.42, y: height * 0.68 },
-        { x: width * 0.54, y: height * 0.65 },
-        { x: width * 0.68, y: height * 0.62 },
-        { x: width * 0.84, y: height * 0.56 },
-        { x: width * 0.94, y: height * 0.52 },
-      ];
-
-      // Add gentle live undulation to path points
-      const dynamicPoints = pathPoints.map((pt, idx) => {
-        const offset = Math.sin(t * 1.2 + idx * 0.8) * 3.5;
-        return { x: pt.x, y: pt.y + offset };
-      });
-
-      // Orange path glow pass
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(dynamicPoints[0].x, dynamicPoints[0].y);
-      for (let i = 1; i < dynamicPoints.length - 1; i++) {
-        const xc = (dynamicPoints[i].x + dynamicPoints[i + 1].x) / 2;
-        const yc = (dynamicPoints[i].y + dynamicPoints[i + 1].y) / 2;
-        ctx.quadraticCurveTo(dynamicPoints[i].x, dynamicPoints[i].y, xc, yc);
-      }
-      ctx.lineTo(
-        dynamicPoints[dynamicPoints.length - 1].x,
-        dynamicPoints[dynamicPoints.length - 1].y
-      );
-
-      // Deep orange glow
-      ctx.strokeStyle = "rgba(255, 90, 31, 0.45)";
-      ctx.lineWidth = 5;
+      const L = route.length;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      ctx.shadowColor = "#ff5a1f";
-      ctx.shadowBlur = 14;
-      ctx.stroke();
 
-      // Sharp core orange line
+      // Rute tergambar bertahap lewat dash: pola [L, L] digeser sampai sepanjang p * L terlihat.
+      if (p < 1) {
+        ctx.setLineDash([L, L]);
+        ctx.lineDashOffset = L * (1 - p);
+      }
+      // Glow tiga lapis jauh lebih ringan daripada shadowBlur.
+      ctx.strokeStyle = "rgba(255, 90, 31, 0.16)";
+      ctx.lineWidth = 12;
+      ctx.stroke(routePath);
+      ctx.strokeStyle = "rgba(255, 90, 31, 0.38)";
+      ctx.lineWidth = 5.5;
+      ctx.stroke(routePath);
       ctx.strokeStyle = "#ff5a1f";
       ctx.lineWidth = 2.2;
-      ctx.shadowBlur = 6;
-      ctx.stroke();
+      ctx.stroke(routePath);
+      ctx.setLineDash([]);
 
-      // Origin milestone node
-      ctx.beginPath();
-      ctx.arc(dynamicPoints[0].x, dynamicPoints[0].y, 3.5, 0, Math.PI * 2);
       ctx.fillStyle = "#ff5a1f";
+      ctx.beginPath();
+      ctx.arc(route.start.x, route.start.y, 3.5, 0, Math.PI * 2);
       ctx.fill();
 
-      // Peak waypoint node
-      const summitIdx = 4;
+      if (p * L >= route.summit.dist) {
+        const { x, y, meters } = route.summit;
+        ctx.beginPath();
+        ctx.arc(x, y, 4.2, 0, Math.PI * 2);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.strokeStyle = "#ff5a1f";
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+
+        const left = x > width - 90;
+        ctx.font = `500 10px ${font}`;
+        ctx.textAlign = left ? "right" : "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = "rgba(245, 245, 245, 0.85)";
+        ctx.fillText(`${meters.toLocaleString("en-US")} M`, x + (left ? -10 : 10), y - 10);
+      }
+
+      if (p >= 1) {
+        ctx.fillStyle = "#ff5a1f";
+        ctx.beginPath();
+        ctx.arc(route.end.x, route.end.y, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (still || p < 1) return;
+
+      // Denyut di puncak.
+      const phase = (time % PING_MS) / PING_MS;
       ctx.beginPath();
-      ctx.arc(dynamicPoints[summitIdx].x, dynamicPoints[summitIdx].y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#ffffff";
-      ctx.fill();
-      ctx.strokeStyle = "#ff5a1f";
-      ctx.lineWidth = 2;
+      ctx.arc(route.summit.x, route.summit.y, 6 + 22 * phase, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 90, 31, ${(0.5 * (1 - phase)).toFixed(3)})`;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      ctx.restore();
-
-      ctx.restore();
-
-      if (!reducedMotion()) {
-        t += 0.006;
+      // Pejalan menyusuri rute dengan ekor memudar; muncul dan lenyap dengan halus di ujung.
+      const u = ((time - ROUTE_DELAY_MS - ROUTE_MS) % WALK_MS) / WALK_MS;
+      const d = (u < 0 ? 0 : u) * L;
+      const fade = Math.min(1, Math.sin(Math.PI * clamp01(u)) * 3);
+      for (let i = 9; i >= 0; i--) {
+        const pt = pointAt(route, Math.max(0, d - i * 7));
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, i === 0 ? 3 : 2.4 * (1 - i / 14), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${((i === 0 ? 1 : 0.5 * (1 - i / 10)) * fade).toFixed(3)})`;
+        ctx.fill();
       }
-      animId = requestAnimationFrame(render);
     };
 
-    animId = requestAnimationFrame(render);
+    const tick = (now: number) => {
+      rafId = requestAnimationFrame(tick);
+      const dt = now - lastTick;
+      if (dt < FRAME_MS) return;
+      lastTick = now;
+      clock += Math.min(dt, 100);
+      draw(clock);
+    };
+
+    const start = () => {
+      if (still || rafId) return;
+      lastTick = performance.now();
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const stop = () => {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    };
+
+    const build = (force = false) => {
+      const rect = base.getBoundingClientRect();
+      const w = Math.round(rect.width);
+      const h = Math.round(rect.height);
+      if (w < 2 || h < 2) return;
+      if (!force && w === width && h === height) return;
+      width = w;
+      height = h;
+
+      // DPR boleh sampai 2: lapisan statis hanya digambar sekali, tidak membebani per frame.
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      for (const c of [base, over]) {
+        c.width = Math.floor(w * dpr);
+        c.height = Math.floor(h * dpr);
+      }
+
+      const cell = Math.min(6, Math.max(3, Math.round(Math.sqrt((w * h) / 45000))));
+      // Di kontainer sempit, zoom penuh hanya menampilkan satu lereng; batasi agar puncak tetap terlihat.
+      const field = buildField(w, h, cell, w < 600 ? Math.min(zoom, 1.3) : zoom);
+      const def = definition(field);
+      const contours = traceContours(field);
+      const shaped = shapeContours(field, contours, def);
+      const labels = placeLabels(field, contours, def);
+      route = findRoute(field);
+
+      routePath = new Path2D();
+      routePath.moveTo(route.pts[0], route.pts[1]);
+      for (let i = 2; i < route.pts.length; i += 2) routePath.lineTo(route.pts[i], route.pts[i + 1]);
+
+      const mono = getComputedStyle(base).getPropertyValue("--font-mono").trim();
+      font = mono ? `${mono}, ${FALLBACK_FONT}` : FALLBACK_FONT;
+      formed = paintLayers(bctx, base, field, def, shaped, labels, dpr, font);
+      formedOnBase = false;
+      draw(clock);
+    };
+
+    build();
+    // Label memakai font mono; gambar ulang sekali setelah font siap.
+    document.fonts?.ready.then(() => {
+      if (!cancelled) build(true);
+    });
+
+    const ro = new ResizeObserver(() => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => build(), 150);
+    });
+    ro.observe(base);
+
+    // Hanya animasi saat terlihat; di luar layar tidak ada rAF sama sekali.
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { threshold: 0.05 },
+    );
+    io.observe(base);
 
     return () => {
-      cancelAnimationFrame(animId);
+      cancelled = true;
+      stop();
+      window.clearTimeout(resizeTimer);
       ro.disconnect();
+      io.disconnect();
     };
-  }, []);
+  }, [scale]);
 
   return (
-    <div className="relative w-full h-full min-h-[440px] md:min-h-[520px] pointer-events-none select-none overflow-visible">
-      {/* Base Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ display: "block" }}
-      />
-
-      {/* Tilt-Shift Depth-of-Field Blur Layer */}
-      {/* Blurs background mountains & edges while keeping the focal peak and glowing route sharp */}
-      <div
-        className="absolute inset-0 w-full h-full pointer-events-none backdrop-blur-[7px]"
-        style={{
-          WebkitMaskImage:
-            "radial-gradient(ellipse 68% 54% at 38% 66%, transparent 30%, rgba(0, 0, 0, 0.75) 75%, black 100%)",
-          maskImage:
-            "radial-gradient(ellipse 68% 54% at 38% 66%, transparent 30%, rgba(0, 0, 0, 0.75) 75%, black 100%)",
-        }}
-      />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none relative h-full min-h-[600px] -top-40 w-full select-none md:min-h-[720px]"
+      style={{ maskImage: FADE, WebkitMaskImage: FADE }}
+    >
+      <canvas ref={staticRef} className="absolute inset-0 h-full w-full" style={{ display: "block" }} />
+      <canvas ref={overlayRef} className="absolute inset-0 h-full w-full" style={{ display: "block" }} />
     </div>
   );
 }

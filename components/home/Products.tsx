@@ -8,7 +8,7 @@ export default function Products() {
   const { t } = useLocale();
   const p = t.products;
   return (
-    <section id="products" className="section bg-bg-raised" aria-labelledby="products-title">
+    <section id="products" className="section section-raised" aria-labelledby="products-title">
       <div className="wrap">
         <SectionLabel>{p.label}</SectionLabel>
         <h2 id="products-title" data-reveal="title" className="h-section mb-14 max-w-[16ch] md:mb-20">

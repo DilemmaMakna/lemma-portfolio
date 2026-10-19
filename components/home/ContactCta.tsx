@@ -3,13 +3,19 @@
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
+import { useContactModal } from "@/components/ui/ContactModal";
+import SocialLinks from "@/components/ui/SocialLinks";
+import AsciiPrompt from "./AsciiPrompt";
 
 export default function ContactCta() {
   const { t } = useLocale();
+  const { open: openContact } = useContactModal();
   const c = t.contact;
   return (
-    <section id="contact" className="section bg-bg-raised" aria-labelledby="contact-title">
-      <div className="wrap">
+    <section id="contact" className="section section-raised fade-top-only" aria-labelledby="contact-title">
+      <div className="wrap relative">
+        {/* Variasi: animasi prompt ASCII di sisi kanan (desktop saja; tampilan mobile tidak berubah). */}
+        <AsciiPrompt className="pointer-events-none absolute bottom-0 right-[var(--grid-margin)] hidden w-[420px] lg:block" />
         <SectionLabel>{c.label}</SectionLabel>
         <h2
           id="contact-title"
@@ -30,7 +36,11 @@ export default function ContactCta() {
         </a>
 
         <div className="mt-10" data-reveal>
-          <Button id="contact-cta" href={`mailto:${c.email}`}>{c.cta}</Button>
+          <Button id="contact-cta" onClick={() => openContact("contact")}>{c.cta}</Button>
+        </div>
+
+        <div data-reveal>
+          <SocialLinks label className="mt-14" />
         </div>
       </div>
     </section>

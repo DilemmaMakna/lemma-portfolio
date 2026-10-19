@@ -38,12 +38,12 @@ function apply(l: Locale) {
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
+  const [locale, setLocaleState] = useState<Locale>("id");
   const [ready, setReady] = useState(false);
 
   // Sebelum paint: baca bahasa yang sudah ditentukan skrip boot di <head>.
   useLayoutEffect(() => {
-    const l = (document.documentElement.getAttribute("data-locale") as Locale) || "en";
+    const l = (document.documentElement.getAttribute("data-locale") as Locale) || "id";
     // eslint-disable-next-line react-hooks/set-state-in-effect -- locale harus diketahui sebelum paint
     setLocaleState(l);
     document.title = messages[l].meta.title;

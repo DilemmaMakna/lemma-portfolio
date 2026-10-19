@@ -100,6 +100,21 @@ html.lenis body {
   position: relative;
   padding-block: clamp(4rem, 10vw, 8rem);
 }
+/* Section dengan latar sedikit lebih terang (--bg-raised). Tepi atas dan bawahnya larut ke --bg
+   dengan gradien, sehingga pertemuan dengan section ber-latar --bg tidak berupa garis tajam.
+   Atur panjang pemudaran lewat --fade; .fade-top-only dipakai bila section di bawahnya juga
+   ber-latar raised (mis. langsung bertemu footer). */
+.section-raised {
+  --fade: clamp(5rem, 14vw, 11rem);
+  background-color: var(--bg-raised);
+  background-image:
+    linear-gradient(to bottom, var(--bg), transparent var(--fade)),
+    linear-gradient(to top, var(--bg), transparent var(--fade));
+  background-repeat: no-repeat;
+}
+.section-raised.fade-top-only {
+  background-image: linear-gradient(to bottom, var(--bg), transparent var(--fade));
+}
 .grid12 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -139,11 +154,58 @@ html.lenis body {
   letter-spacing: -0.04em;
   line-height: 0.95;
 }
+.h-display {
+  font-weight: 500;
+  font-size: clamp(2.75rem, 7vw, 6.5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+.h-card {
+  font-weight: 500;
+  font-size: var(--text-md);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+/* Garis putus-putus yang mengalir (diagram alur). */
+.lm-flow {
+  background-image: repeating-linear-gradient(to right, var(--line-strong) 0 6px, transparent 6px 12px);
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+  animation: lm-flow 1.2s linear infinite;
+}
+@keyframes lm-flow {
+  to {
+    background-position: 12px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-flow {
+    animation: none;
+  }
+}
 .lead {
   font-size: var(--text-md);
   letter-spacing: -0.01em;
   line-height: 1.45;
   color: var(--fg-muted);
+}
+
+@keyframes lm-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.lm-float {
+  animation: lm-float 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-float {
+    animation: none;
+  }
 }
 
 /* Buttons */

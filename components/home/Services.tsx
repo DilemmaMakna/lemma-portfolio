@@ -70,31 +70,26 @@ const SERVICE_PREVIEWS = [
     image: "/services/brand.jpg",
     client: "BEM FAHUTAN, Gumatika",
     role: "Identity & Design System",
-    score: "9.2/10",
   },
   {
     image: "/services/ux.jpg",
     client: "LPJ Ormawa IPB & NATA",
     role: "UX Research & HCI Architecture",
-    score: "9.6/10",
   },
   {
     image: "/services/engineering.jpg",
     client: "CRL Consulting",
     role: "Multi-branch Cloud Platform",
-    score: "9.8/10",
   },
   {
     image: "/services/ai.jpg",
-    client: "ARAH Platform (Stealth)",
-    role: "AI Reasoning & Analytics",
-    score: "8.9/10",
+    client: "Lemma Venture Studio",
+    role: "AI & Data",
   },
   {
     image: "/services/strategy.jpg",
     client: "Lemma Venture Studio",
     role: "Venture Systems & Roadmapping",
-    score: "9.0/10",
   },
 ];
 
@@ -321,9 +316,9 @@ export default function Services() {
         }}
       >
         {activeItem && activePreview && (
-          <div className="overflow-hidden rounded-2xl bg-white p-4 text-zinc-900 shadow-[0_24px_60px_-10px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.2)]">
+          <div className="overflow-hidden rounded-[4px] border border-line-strong bg-surface p-4 text-fg shadow-[0_24px_60px_-10px_rgba(0,0,0,0.7)]">
             {/* Top Image Preview */}
-            <div className="relative mb-3.5 aspect-[16/10] w-full overflow-hidden rounded-xl bg-zinc-100 border border-zinc-200/80">
+            <div className="relative mb-3.5 aspect-[16/10] w-full overflow-hidden rounded-[4px] border border-line bg-surface-2">
               <Image
                 src={activePreview.image}
                 alt={activeItem.name}
@@ -331,33 +326,25 @@ export default function Services() {
                 sizes="320px"
                 className="object-cover"
               />
-              <div className="absolute top-2.5 left-2.5 rounded-full bg-black/60 backdrop-blur-md px-2.5 py-1 text-[10px] font-mono font-medium text-white z-10">
+              <div className="mono absolute top-2.5 left-2.5 z-10 rounded-full border border-line-strong bg-bg/70 px-2.5 py-1 text-[10px] text-fg backdrop-blur-md">
                 0{hoveredIdx! + 1} / SERVICE
               </div>
             </div>
 
-            {/* Title & Organization Subtitle */}
+            {/* Title & Client Subtitle */}
             <div>
-              <h4 className="text-[15px] font-semibold tracking-tight text-zinc-950 leading-tight">
+              <h4 className="text-[15px] font-medium leading-tight tracking-tight text-fg">
                 {activeItem.name}
               </h4>
-              <p className="mt-1 text-[11.5px] font-medium text-zinc-500">
+              <p className="mono mt-1 text-[11px] text-fg-dim">
                 {activePreview.client} • {activePreview.role}
               </p>
             </div>
 
             {/* Description */}
-            <p className="mt-2 text-[12px] leading-relaxed text-zinc-600 line-clamp-3">
+            <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-fg-muted">
               {activeItem.summary}
             </p>
-
-            {/* Footer: Impact score / status */}
-            <div className="mt-3 flex items-center justify-between border-t border-zinc-100 pt-2.5 text-[11px]">
-              <span className="italic text-zinc-500">Impact score: {activePreview.score}</span>
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-accent bg-orange-50 px-2 py-0.5 rounded">
-                Verified
-              </span>
-            </div>
           </div>
         )}
       </div>
