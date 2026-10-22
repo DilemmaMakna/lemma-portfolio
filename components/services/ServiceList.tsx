@@ -55,23 +55,6 @@ export default function ServiceList() {
                 <h3 className="mono text-fg-dim">{labels.fit}</h3>
                 <p className="mt-3 max-w-[52ch] text-fg-muted">{s.fit}</p>
               </div>
-
-              {s.proof.length > 0 && (
-                <div data-reveal>
-                  <h3 className="mono text-fg-dim">{labels.proof}</h3>
-                  <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                    {s.proof.map((p) => (
-                      <li
-                        key={p.name}
-                        className="rounded-[4px] border border-line-strong bg-surface p-4 transition-colors hover:border-accent"
-                      >
-                        <p className="text-base font-medium tracking-tight">{p.name}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{p.hook}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
           </article>
         ))}

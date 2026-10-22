@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { studioStats } from "@/lib/work";
 import { useAboutCopy } from "./useAboutCopy";
 
 // "4+" -> hitung naik ke 4 lalu tambahkan "+"; nilai non-angka tampil apa adanya.
@@ -62,7 +63,7 @@ export default function Who() {
         </div>
 
         <div className="mt-16 grid sm:grid-cols-3 md:mt-24">
-          {w.stats.map((s) => (
+          {studioStats(w.stats).map((s) => (
             <Stat key={s.label} value={s.value} label={s.label} />
           ))}
         </div>

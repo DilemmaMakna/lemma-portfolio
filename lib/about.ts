@@ -17,18 +17,14 @@ const id = {
   who: {
     label: "01 / Siapa Kami",
     body: "Kami bekerja di persimpangan desain, teknologi, dan sistem. Bukan agensi yang selesai saat brief selesai, bukan startup yang berlomba burn rate. Klien datang dengan sesuatu yang belum berbentuk, dan kami ikut memegangnya sampai berdiri.",
-    stats: [
-      { value: "4+", label: "tahun" },
-      { value: "12", label: "proyek" },
-      { value: "2", label: "produk aktif" },
-    ],
+    stats: { years: "tahun berjalan", projects: "proyek", products: "produk aktif" },
   },
   beliefs: {
     label: "02 / Yang Kami Yakini",
     items: [
-      { title: "Makna sebelum metode.", body: "Kami bertanya \"untuk apa\" sebelum \"bagaimana\"." },
-      { title: "Struktur adalah kebebasan.", body: "Sistem yang baik membuat eksperimen berani jadi mungkin." },
-      { title: "Detail kecil menopang keseluruhan.", body: "Tidak ada bagian yang hanya dekoratif." },
+      { title: "Tahu tujuannya dulu.", body: "Sebelum membahas caranya, kami pastikan dulu untuk apa sesuatu dibuat. Setelah itu, keputusan lain jadi jauh lebih mudah." },
+      { title: "Fondasi rapi, eksperimen berani.", body: "Kalau dasarnya kuat, mencoba hal baru tidak lagi terasa seperti berjudi." },
+      { title: "Hal kecil itu penting.", body: "Setiap detail ada karena punya fungsi, bukan sekadar pemanis." },
     ],
   },
   model: {
@@ -86,18 +82,14 @@ const en: AboutCopy = {
   who: {
     label: "01 / Who We Are",
     body: "We work where design, technology, and systems meet. Not an agency that stops when the brief does, not a startup racing its burn rate. Clients arrive with something unshaped, and we stay with it until it stands.",
-    stats: [
-      { value: "4+", label: "years" },
-      { value: "12", label: "projects" },
-      { value: "2", label: "active products" },
-    ],
+    stats: { years: "years running", projects: "projects", products: "active products" },
   },
   beliefs: {
     label: "02 / What We Believe",
     items: [
-      { title: "Meaning before method.", body: "We ask \"what for\" before \"how\"." },
-      { title: "Structure is freedom.", body: "A good system makes bold experiments possible." },
-      { title: "Small parts hold the whole.", body: "Nothing is merely decorative." },
+      { title: "Know the why first.", body: "Before we talk about how, we make sure we know what it is for. Every other decision gets easier after that." },
+      { title: "Solid ground, bold moves.", body: "When the foundation is strong, trying something new stops feeling like a gamble." },
+      { title: "Small things matter.", body: "Every detail is there because it does a job, not just to look nice." },
     ],
   },
   model: {

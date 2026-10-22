@@ -3,6 +3,7 @@
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
+import { studioStats } from "@/lib/work";
 
 export default function About() {
   const { t } = useLocale();
@@ -23,7 +24,7 @@ export default function About() {
           </div>
 
           <dl className="col-span-full flex flex-col lg:col-span-4 lg:col-start-9">
-            {a.stats.map((s, i) => (
+            {studioStats(a.stats).map((s, i) => (
               <div
                 key={i}
                 data-reveal

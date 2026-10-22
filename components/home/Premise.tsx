@@ -2,7 +2,7 @@
 
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
-import TopographicalLines from "@/components/ui/TopographicalLines";
+import AsciiShape from "./AsciiShape";
 
 export default function Premise() {
   const { t } = useLocale();
@@ -35,11 +35,9 @@ export default function Premise() {
             </p>
           </div>
 
-          {/* Right Column: Animated Topographical Line with Depth Blur */}
-          <div className="col-span-full lg:col-span-6 xl:col-span-5 relative" data-reveal>
-            <div className="relative w-full aspect-[4/3] lg:aspect-auto lg:h-[520px] lg:-mr-12 xl:-mr-24 lg:translate-x-10 xl:translate-x-16 pointer-events-none">
-              <TopographicalLines />
-            </div>
+          {/* Kolom kanan: ASCII dari tak-berbentuk menjadi terdefinisi (lihat AsciiShape). */}
+          <div className="col-span-full lg:col-span-6 xl:col-span-5" data-reveal>
+            <AsciiShape />
           </div>
         </div>
       </div>

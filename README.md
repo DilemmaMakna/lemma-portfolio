@@ -20,6 +20,21 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run start` | Serve the production build |
 | `npm run lint` | Run ESLint |
 
+## Deploy (Vercel)
+
+Set one environment variable in Vercel (Project → Settings → Environment Variables):
+
+| Variable | Purpose |
+|---|---|
+| `CONTACT_WEBHOOK_URL` | Where the contact form is forwarded (e.g. a Make, Zapier, n8n or Formspree webhook that emails you). Server-only; never exposed to the browser. |
+
+Without it the form does not lose messages: it shows a pre-filled `mailto:` link instead.
+The contact API only accepts same-origin JSON, rate-limits per IP, and silently drops bot submissions (honeypot + fill-time check).
+
+## Work Photos
+
+Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. It converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
+
 ## Project Structure
 
 - `app/` - root layout, home page, global styles, fonts

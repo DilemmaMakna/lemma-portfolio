@@ -11,7 +11,7 @@ import { getLenis, scrollToId } from "@/lib/lenis";
 
 // `id` links scroll to a section on the home page; `href` links open their own page.
 const LINKS = [
-  { key: "work", id: "work" },
+  { key: "work", href: "/work" },
   { key: "about", href: "/about" },
   { key: "services", href: "/services" },
   { key: "products", id: "products" },

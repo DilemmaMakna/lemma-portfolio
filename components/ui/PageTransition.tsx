@@ -28,6 +28,7 @@ export default function PageTransition() {
       "/": "Lemma",
       "/services": t.nav.services,
       "/about": t.nav.about,
+      "/work": t.nav.work,
     };
   }, [t]);
 

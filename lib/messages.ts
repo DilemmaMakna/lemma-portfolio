@@ -39,17 +39,17 @@ export const messages = {
       label: "02 / Cara Kerja",
       steps: [
         {
-          title: "Struktur dulu.",
+          title: "Membangun Struktur.",
           body: "Alur, arsitektur informasi, dan design system disusun sebelum visual. Hasilnya konsisten dan mudah dikembangkan.",
           tags: ["alur", "arsitektur informasi", "design system"],
         },
         {
-          title: "Tujuan sebelum desain.",
+          title: "Menetapkan Tujuan.",
           body: "Setiap keputusan dimulai dari \"untuk apa\". Pesan dan target klien kami rumuskan lebih dulu.",
           tags: ["pesan", "target", "tolok ukur"],
         },
         {
-          title: "Selesai, lalu diserahkan.",
+          title: "Menyelesaikan Makna.",
           body: "Setiap komponen diuji dan didokumentasikan, supaya tim kamu bisa melanjutkan tanpa kami.",
           tags: ["pengujian", "dokumentasi", "serah-terima"],
         },
@@ -78,12 +78,6 @@ export const messages = {
       label: "04 / Karya Terpilih",
       view: "Lihat",
       all: "Lihat semua karya",
-      items: [
-        { name: "CRL Consulting", tag: "Engineering", year: "2025/26", hook: "Satu sistem untuk puluhan dapur." },
-        { name: "LPJ Ormawa IPB", tag: "Product, Data", year: "2025", hook: "Laporan yang dibaca karena isinya." },
-        { name: "Gumatika", tag: "Brand Identity", year: "2024/25", hook: "Logo yang bisa dipertahankan dengan argumen." },
-        { name: "JalanSiswa", tag: "Brand Identity", year: "2025", hook: "Arah sejak langkah pertama." },
-      ],
     },
     products: {
       label: "05 / Produk",
@@ -98,10 +92,10 @@ export const messages = {
           cta: "Pelajari",
         },
         {
-          name: "ARAH ██████",
+          name: "████ ██████",
           badge: "Stealth",
           status: "idle",
-          desc: "Pengembangan mahasiswa berbantuan AI.",
+          desc: "########.",
           tags: ["AI", "B2B SaaS", "EdTech"],
           cta: "Segera hadir",
         },
@@ -111,11 +105,7 @@ export const messages = {
       label: "06 / Tentang Kami",
       title: "Siapa kami, dan kenapa itu penting.",
       body: "Lemma adalah venture studio di Jakarta, di persimpangan desain, teknologi, dan sistem. Bukan agensi yang selesai saat brief selesai, bukan startup yang berlomba burn rate. Proyek klien dan produk kami sendiri tumbuh dalam satu ekosistem, saling menguji dan saling menguatkan.",
-      stats: [
-        { value: "4+", label: "tahun" },
-        { value: "12", label: "proyek" },
-        { value: "2", label: "produk aktif" },
-      ],
+      stats: { years: "tahun berjalan", projects: "proyek", products: "produk aktif" },
       link: "Kenali kami",
     },
     contact: {
@@ -136,6 +126,7 @@ export const messages = {
       sending: "Mengirim...",
       success: "Terima kasih. Pesanmu sudah kami terima.",
       error: "Pesan belum terkirim. Coba lagi sebentar lagi.",
+      fallback: "Atau kirim lewat email, isinya sudah kami siapkan:",
     },
     footer: {
       brand: "Masih Dilemma Makna.",
@@ -228,12 +219,6 @@ export const messages = {
       label: "04 / Selected Work",
       view: "View",
       all: "View all work",
-      items: [
-        { name: "CRL Consulting", tag: "Engineering", year: "2025/26", hook: "One system for dozens of kitchens." },
-        { name: "LPJ Ormawa IPB", tag: "Product, Data", year: "2025", hook: "A report read for its content." },
-        { name: "Gumatika", tag: "Brand Identity", year: "2024/25", hook: "A logo you can defend with reasoning." },
-        { name: "JalanSiswa", tag: "Brand Identity", year: "2025", hook: "Direction from the first step." },
-      ],
     },
     products: {
       label: "05 / Products",
@@ -248,7 +233,7 @@ export const messages = {
           cta: "Learn more",
         },
         {
-          name: "ARAH ██████",
+          name: "████ ██████",
           badge: "Stealth",
           status: "idle",
           desc: "AI-assisted student development.",
@@ -261,11 +246,7 @@ export const messages = {
       label: "06 / About Us",
       title: "Who we are, and why it matters.",
       body: "Lemma is a Jakarta venture studio where design, technology, and systems meet. Not an agency that stops when the brief does, not a startup racing its burn rate. Client work and our own products grow in one ecosystem, each testing the other.",
-      stats: [
-        { value: "4+", label: "years" },
-        { value: "12", label: "projects" },
-        { value: "2", label: "active products" },
-      ],
+      stats: { years: "years running", projects: "projects", products: "active products" },
       link: "Meet the studio",
     },
     contact: {
@@ -286,6 +267,7 @@ export const messages = {
       sending: "Sending...",
       success: "Thank you. We have received your message.",
       error: "Your message was not sent. Please try again shortly.",
+      fallback: "Or send it by email, already filled in for you:",
     },
     footer: {
       brand: "Masih Di Lemma Makna.",

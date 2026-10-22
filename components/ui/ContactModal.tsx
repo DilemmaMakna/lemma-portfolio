@@ -28,10 +28,13 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
   const [status, setStatus] = useState<Status>("idle");
   const lastFocus = useRef<HTMLElement | null>(null);
   const firstField = useRef<HTMLInputElement>(null);
+  const openedAt = useRef(0);
+  const [mailto, setMailto] = useState("");
   const isOpen = source !== null;
 
   const open = useCallback((s: string) => {
     lastFocus.current = document.activeElement as HTMLElement | null;
+    openedAt.current = Date.now();
     setStatus("idle");
     setSource(s);
   }, []);
@@ -76,6 +79,7 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
           company: v("company"),
           message: v("message"),
           website: v("website"), // honeypot, harus kosong
+          elapsed: Date.now() - openedAt.current, // jebakan waktu untuk bot
           source,
           locale,
         }),
@@ -85,6 +89,10 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
       setStatus("success");
     } catch (err) {
       console.error("Contact form failed:", err);
+      // Cadangan: pesan yang sama disiapkan sebagai email supaya tidak hilang.
+      const subject = `[Lemma] ${v("name")}${v("company") ? ` / ${v("company")}` : ""}`;
+      const body = `${v("message")}\n\n${v("name")}\n${v("email")}`;
+      setMailto(`mailto:${t.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
       setStatus("error");
     }
   }
@@ -144,9 +152,12 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
                 <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
                 {status === "error" && (
-                  <p role="alert" className="mono text-sm text-accent">
-                    {m.error}
-                  </p>
+                  <div role="alert" className="flex flex-col gap-2">
+                    <p className="mono text-sm text-accent">{m.error}</p>
+                    <a href={mailto} className="mono !normal-case text-sm text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent">
+                      {m.fallback} {t.contact.email} ↗
+                    </a>
+                  </div>
                 )}
 
                 <div>

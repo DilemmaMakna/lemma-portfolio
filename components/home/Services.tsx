@@ -6,6 +6,7 @@ import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/gsap";
+import { workPhotos } from "@/lib/work-photos";
 
 function Diagram() {
   const { t } = useLocale();
@@ -65,32 +66,13 @@ function Diagram() {
   );
 }
 
+// Foto pratinjau per layanan diambil dari proyek di /work (urutan = urutan t.services.items).
 const SERVICE_PREVIEWS = [
-  {
-    image: "/services/brand.jpg",
-    client: "BEM FAHUTAN, Gumatika",
-    role: "Identity & Design System",
-  },
-  {
-    image: "/services/ux.jpg",
-    client: "LPJ Ormawa IPB & NATA",
-    role: "UX Research & HCI Architecture",
-  },
-  {
-    image: "/services/engineering.jpg",
-    client: "CRL Consulting",
-    role: "Multi-branch Cloud Platform",
-  },
-  {
-    image: "/services/ai.jpg",
-    client: "Lemma Venture Studio",
-    role: "AI & Data",
-  },
-  {
-    image: "/services/strategy.jpg",
-    client: "Lemma Venture Studio",
-    role: "Venture Systems & Roadmapping",
-  },
+  { photo: workPhotos["bem-fahutan-langkah-bermakna"][4], client: "BEM FAHUTAN, JalanSiswa", role: "Identity & Design System" },
+  { photo: workPhotos["nata"][1], client: "NATA, LPJ Ormawa IPB", role: "UX Research & Product Design" },
+  { photo: workPhotos["nata"][2], client: "NATA, Lemma Website", role: "Platform & Web Engineering" },
+  { photo: workPhotos["lpj-ormawa-ipb-2025"][4], client: "LPJ Ormawa IPB", role: "Data Storytelling" },
+  { photo: workPhotos["nata-launch-campaign"][3], client: "Nataku Beta Launch", role: "Campaign & Launch Strategy" },
 ];
 
 function Row({
@@ -254,8 +236,14 @@ export default function Services() {
     setHoveredIdx(null);
   };
 
-  const activeItem = hoveredIdx !== null ? s.items[hoveredIdx] : null;
-  const activePreview = hoveredIdx !== null ? SERVICE_PREVIEWS[hoveredIdx] : null;
+  // Kartu terakhir tetap dirender saat memudar keluar supaya isinya tidak hilang mendadak.
+  const [shownIdx, setShownIdx] = useState(0);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- ingat kartu terakhir untuk animasi keluar
+    if (hoveredIdx !== null) setShownIdx(hoveredIdx);
+  }, [hoveredIdx]);
+  const shownItem = s.items[shownIdx];
+  const shownPreview = SERVICE_PREVIEWS[shownIdx];
 
   return (
     <section id="services" className="section bg-bg relative" aria-labelledby="services-title">
@@ -315,35 +303,40 @@ export default function Services() {
           willChange: "transform, opacity",
         }}
       >
-        {activeItem && activePreview && (
+        {shownItem && shownPreview && (
           <div className="overflow-hidden rounded-[4px] border border-line-strong bg-surface p-4 text-fg shadow-[0_24px_60px_-10px_rgba(0,0,0,0.7)]">
             {/* Top Image Preview */}
+            {/* Semua foto dirender sekaligus lalu di-crossfade, jadi tidak ada jeda memuat saat hover. */}
             <div className="relative mb-3.5 aspect-[16/10] w-full overflow-hidden rounded-[4px] border border-line bg-surface-2">
-              <Image
-                src={activePreview.image}
-                alt={activeItem.name}
-                fill
-                sizes="320px"
-                className="object-cover"
-              />
+              {SERVICE_PREVIEWS.map((pv, i) => (
+                <Image
+                  key={pv.photo.src}
+                  src={pv.photo.src}
+                  alt={i === shownIdx ? shownItem.name : ""}
+                  fill
+                  unoptimized
+                  className={`object-cover transition-opacity duration-300 ${i === shownIdx ? "opacity-100" : "opacity-0"}`}
+                  style={{ backgroundColor: pv.photo.color }}
+                />
+              ))}
               <div className="mono absolute top-2.5 left-2.5 z-10 rounded-full border border-line-strong bg-bg/70 px-2.5 py-1 text-[10px] text-fg backdrop-blur-md">
-                0{hoveredIdx! + 1} / SERVICE
+                0{shownIdx + 1} / SERVICE
               </div>
             </div>
 
             {/* Title & Client Subtitle */}
             <div>
               <h4 className="text-[15px] font-medium leading-tight tracking-tight text-fg">
-                {activeItem.name}
+                {shownItem.name}
               </h4>
               <p className="mono mt-1 text-[11px] text-fg-dim">
-                {activePreview.client} • {activePreview.role}
+                {shownPreview.client} • {shownPreview.role}
               </p>
             </div>
 
             {/* Description */}
             <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-fg-muted">
-              {activeItem.summary}
+              {shownItem.summary}
             </p>
           </div>
         )}

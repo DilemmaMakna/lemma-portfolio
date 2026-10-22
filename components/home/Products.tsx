@@ -3,6 +3,7 @@
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
+import Redacted from "@/components/ui/Redacted";
 
 export default function Products() {
   const { t } = useLocale();
@@ -37,10 +38,7 @@ export default function Products() {
                 <div className="my-10">
                   <h3 className="text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-none tracking-[-0.04em]">
                     {stealth ? (
-                      <>
-                        <span>ARAH </span>
-                        <span className="stealth-block text-fg-dim" aria-label="redacted">██████</span>
-                      </>
+                      <Redacted className="text-fg-dim" />
                     ) : (
                       it.name
                     )}

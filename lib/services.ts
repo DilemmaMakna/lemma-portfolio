@@ -32,10 +32,6 @@ const id = {
         "Dokumentasi Figma dengan design system",
       ],
       fit: "Cocok untuk organisasi, startup, dan institusi yang butuh identitas konsisten lintas media.",
-      proof: [
-        { name: "Gumatika", hook: "Logo yang bisa dipertahankan dengan argumen." },
-        { name: "BEM FAHUTAN IPB", hook: "Satu kepengurusan, satu identitas yang konsisten." },
-      ],
     },
     {
       index: "02",
@@ -49,10 +45,6 @@ const id = {
         "Prototipe interaktif",
       ],
       fit: "Cocok untuk produk digital yang masih mencari bentuk, atau laporan dan platform yang ingin benar-benar dipakai.",
-      proof: [
-        { name: "LPJ Ormawa IPB", hook: "Laporan yang dibaca karena isinya." },
-        { name: "NATA", hook: "Lima aplikasi untuk satu kehidupan kampus? Satu saja cukup." },
-      ],
     },
     {
       index: "03",
@@ -66,7 +58,6 @@ const id = {
         "Dokumentasi teknis untuk serah terima",
       ],
       fit: "Cocok untuk organisasi dengan banyak unit atau mitra yang harus bekerja dalam satu sistem.",
-      proof: [{ name: "CRL Consulting", hook: "Satu sistem untuk puluhan dapur." }],
     },
     {
       index: "04",
@@ -80,7 +71,6 @@ const id = {
         "Dokumentasi arsitektur dan evaluasi",
       ],
       fit: "Cocok untuk institusi yang ingin AI yang dapat dipertanggungjawabkan, bukan kotak hitam.",
-      proof: [],
     },
     {
       index: "05",
@@ -93,10 +83,9 @@ const id = {
         "OKR dan dokumentasi operasional",
       ],
       fit: "Cocok untuk tim yang tahu ada yang harus dibangun, tapi belum tahu bentuknya.",
-      proof: [],
     },
   ],
-  labels: { deliverables: "Yang kamu terima", fit: "Cocok untuk", proof: "Bukti" },
+  labels: { deliverables: "Yang kamu terima", fit: "Cocok untuk" },
   engagement: {
     label: "02 / Cara Bekerja Sama",
     title: "Mulai dari pertanyaan, bukan dari paket.",
@@ -147,10 +136,6 @@ const en: ServicesCopy = {
         "Figma documentation with a design system",
       ],
       fit: "For organisations, startups, and institutions that need a consistent identity across media.",
-      proof: [
-        { name: "Gumatika", hook: "A logo you can defend with an argument." },
-        { name: "BEM FAHUTAN IPB", hook: "One administration, one consistent identity." },
-      ],
     },
     {
       index: "02",
@@ -164,10 +149,6 @@ const en: ServicesCopy = {
         "Interactive prototypes",
       ],
       fit: "For digital products still finding their shape, or reports and platforms that want to actually be used.",
-      proof: [
-        { name: "LPJ Ormawa IPB", hook: "A report that gets read for what's in it." },
-        { name: "NATA", hook: "Five apps for one campus life? One is enough." },
-      ],
     },
     {
       index: "03",
@@ -181,7 +162,6 @@ const en: ServicesCopy = {
         "Technical documentation for handover",
       ],
       fit: "For organisations with many units or partners that have to work in a single system.",
-      proof: [{ name: "CRL Consulting", hook: "One system for dozens of kitchens." }],
     },
     {
       index: "04",
@@ -195,7 +175,6 @@ const en: ServicesCopy = {
         "Architecture and evaluation documentation",
       ],
       fit: "For institutions that want AI they can be accountable for, not a black box.",
-      proof: [],
     },
     {
       index: "05",
@@ -208,10 +187,9 @@ const en: ServicesCopy = {
         "OKRs and operational documentation",
       ],
       fit: "For teams who know something has to be built, but not yet what shape it takes.",
-      proof: [],
     },
   ],
-  labels: { deliverables: "What you receive", fit: "Best for", proof: "Proof" },
+  labels: { deliverables: "What you receive", fit: "Best for" },
   engagement: {
     label: "02 / How We Work Together",
     title: "Start from a question, not a package.",

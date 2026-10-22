@@ -1,50 +1,77 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import PixelReveal from "@/components/ui/PixelReveal";
+import { projects, type Project } from "@/lib/work";
 
-type Item = { name: string; tag: string; year: string; hook: string };
+// Empat proyek pilihan beserta foto yang ditampilkan (indeks dari daftar foto proyek).
+// Setiap kartu membuka detailnya di /work (?p=slug membuka modal proyek di sana).
+const HOME: { slug: string; pick: number[] }[] = [
+  { slug: "lpj-ormawa-ipb-2025", pick: [1, 4] },
+  { slug: "jalansiswa", pick: [0, 3] },
+  { slug: "bem-fahutan-langkah-bermakna", pick: [0, 3] },
+  { slug: "himpro-hksa-serenata", pick: [0, 7, 3] },
+];
 
 const hookCls =
   "opacity-100 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity duration-500";
 
-function Meta({ n, item, view, className = "" }: { n: number; item: Item; view: string; className?: string }) {
+const href = (p: Project) => `/work?p=${p.slug}`;
+
+function Meta({ p, view, className = "" }: { p: Project; view: string; className?: string }) {
+  const { locale } = useLocale();
   return (
     <div className={`flex flex-col justify-between gap-8 ${className}`}>
       <div>
-        <div className="mono text-fg-dim">PROJECT 0{n + 1}</div>
-        <h3 className="mt-4 text-[clamp(1.75rem,3.6vw,3.25rem)] font-medium leading-[1.05] tracking-[-0.03em]">
-          {item.name}
+        <div className="mono text-fg-dim">PROJECT {p.n}</div>
+        <h3 className="mt-4 text-[clamp(1.75rem,3.6vw,3.25rem)] font-medium leading-[1.05] tracking-[-0.03em] transition-colors group-hover:text-accent">
+          {p.name}
         </h3>
         <div className="mt-5 flex flex-wrap items-center gap-2">
-          {item.tag.split(", ").map((tg) => (
-            <span key={tg} className="tag">{tg}</span>
-          ))}
-          <span className="mono ml-1 text-fg-dim">{item.year}</span>
+          <span className="tag">{p.category}</span>
+          <span className="mono ml-1 text-fg-dim">{p.year}</span>
         </div>
       </div>
       <div className={hookCls}>
-        <p className="max-w-[30ch] text-fg-muted">{item.hook}</p>
+        <p className="max-w-[30ch] text-fg-muted">{p.hook[locale]}</p>
         <span className="mono mt-4 inline-block text-accent">{view} →</span>
       </div>
     </div>
   );
 }
 
-function Frame({ seed, label, view, aspect = "aspect-[16/10]" }: { seed: number; label: string; view: string; aspect?: string }) {
+// Foto 4:5 dijajarkan berdampingan mengisi bingkai lanskap (2 foto ≈ 16:10, 3 foto ≈ 21:9).
+function Frame({ p, pick, view, aspect = "aspect-[16/10]" }: { p: Project; pick: number[]; view: string; aspect?: string }) {
+  const photos = pick.map((i) => p.photos[i]).filter(Boolean);
   return (
-    <div className={`relative w-full ${aspect}`} data-cursor-label={view.toUpperCase()}>
-      <PixelReveal seed={seed} label={label} />
+    <div className={`relative flex w-full gap-2 overflow-hidden ${aspect}`} data-cursor-label={view.toUpperCase()}>
+      {photos.map((ph, i) => (
+        <div
+          key={ph.src}
+          className={`relative h-full min-w-0 flex-1 overflow-hidden rounded-[4px] ${i === 2 ? "hidden md:block" : ""}`}
+          style={{ backgroundColor: ph.color }}
+        >
+          <Image
+            src={ph.src}
+            width={ph.w}
+            height={ph.h}
+            unoptimized
+            alt=""
+            className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+          />
+        </div>
+      ))}
     </div>
   );
 }
 
 export default function SelectedWork() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const w = t.work;
-  const [a, b, c, d] = w.items;
+  const [a, b, c, d] = HOME.map((h) => ({ ...h, p: projects.find((x) => x.slug === h.slug)! }));
 
   return (
     <section id="work" className="section bg-bg" aria-label={w.label}>
@@ -53,41 +80,42 @@ export default function SelectedWork() {
 
         <div className="flex flex-col gap-20 md:gap-28">
           {/* 01: gambar 7 kolom kiri, meta 5 kolom kanan */}
-          <article data-pixel-host data-reveal className="group grid12 items-stretch gap-y-6">
-            <div className="col-span-full lg:col-span-7"><Frame seed={0} label={a.name} view={w.view} /></div>
-            <Meta n={0} item={a} view={w.view} className="col-span-full lg:col-span-5 lg:pl-6" />
-          </article>
+          <Link href={href(a.p)} data-reveal className="group grid12 items-stretch gap-y-6">
+            <div className="col-span-full lg:col-span-7"><Frame p={a.p} pick={a.pick} view={w.view} /></div>
+            <Meta p={a.p} view={w.view} className="col-span-full lg:col-span-5 lg:pl-6" />
+          </Link>
 
           {/* 02: meta 4 kolom kiri, gambar 8 kolom kanan */}
-          <article data-pixel-host data-reveal className="group grid12 items-stretch gap-y-6">
-            <Meta n={1} item={b} view={w.view} className="order-2 col-span-full lg:order-1 lg:col-span-4 lg:pr-6" />
-            <div className="order-1 col-span-full lg:order-2 lg:col-span-8"><Frame seed={1} label={b.name} view={w.view} /></div>
-          </article>
+          <Link href={href(b.p)} data-reveal className="group grid12 items-stretch gap-y-6">
+            <Meta p={b.p} view={w.view} className="order-2 col-span-full lg:order-1 lg:col-span-4 lg:pr-6" />
+            <div className="order-1 col-span-full lg:order-2 lg:col-span-8"><Frame p={b.p} pick={b.pick} view={w.view} /></div>
+          </Link>
 
           {/* 03: dua kolom setara */}
-          <article data-pixel-host data-reveal className="group grid12 items-stretch gap-y-6">
-            <div className="col-span-full lg:col-span-6"><Frame seed={2} label={c.name} view={w.view} aspect="aspect-[4/3]" /></div>
-            <Meta n={2} item={c} view={w.view} className="col-span-full lg:col-span-6 lg:pl-10" />
-          </article>
+          <Link href={href(c.p)} data-reveal className="group grid12 items-stretch gap-y-6">
+            <div className="col-span-full lg:col-span-6"><Frame p={c.p} pick={c.pick} view={w.view} aspect="aspect-[4/3]" /></div>
+            <Meta p={c.p} view={w.view} className="col-span-full lg:col-span-6 lg:pl-10" />
+          </Link>
 
           {/* 04: gambar penuh dengan caption overlay */}
-          <article data-pixel-host data-reveal className="group relative">
-            <Frame seed={3} label={d.name} view={w.view} aspect="aspect-[16/9] md:aspect-[21/9]" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-3 p-5 md:flex-row md:items-end md:justify-between md:p-8">
-              <div className="bg-bg/90 p-4 md:p-5">
-                <div className="mono text-fg-dim">PROJECT 04</div>
-                <h3 className="mt-2 text-[clamp(1.5rem,3vw,2.5rem)] font-medium leading-none tracking-[-0.03em]">{d.name}</h3>
+          <Link href={href(d.p)} data-reveal className="group relative block">
+            <Frame p={d.p} pick={d.pick} view={w.view} aspect="aspect-[16/10] md:aspect-[21/9]" />
+            {/* Ponsel: caption di bawah gambar (bingkainya terlalu pendek untuk overlay). */}
+            <div className="pointer-events-none mt-6 flex flex-col gap-3 md:absolute md:inset-x-0 md:bottom-0 md:mt-0 md:flex-row md:items-end md:justify-between md:p-8">
+              <div className="md:bg-bg/90 md:p-5">
+                <div className="mono text-fg-dim">PROJECT {d.p.n}</div>
+                <h3 className="mt-2 text-[clamp(1.5rem,3vw,2.5rem)] font-medium leading-none tracking-[-0.03em]">{d.p.name}</h3>
                 <div className="mt-3 flex items-center gap-3">
-                  <span className="tag">{d.tag}</span>
-                  <span className="mono text-fg-dim">{d.year}</span>
+                  <span className="tag">{d.p.category}</span>
+                  <span className="mono text-fg-dim">{d.p.year}</span>
                 </div>
               </div>
-              <div className={`bg-bg/90 p-4 md:p-5 ${hookCls}`}>
-                <p className="text-fg-muted">{d.hook}</p>
+              <div className={`md:bg-bg/90 md:p-5 ${hookCls}`}>
+                <p className="text-fg-muted">{d.p.hook[locale]}</p>
                 <span className="mono mt-2 inline-block text-accent">{w.view} →</span>
               </div>
             </div>
-          </article>
+          </Link>
         </div>
 
         <div className="mt-16" data-reveal>
