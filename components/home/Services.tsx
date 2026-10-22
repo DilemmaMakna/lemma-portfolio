@@ -52,13 +52,13 @@ function Diagram() {
             pathLength={1}
             d={`M ${x} 62 C ${x} 170, 400 150, 400 262`}
             fill="none"
-            stroke="#333333"
+            style={{ stroke: "var(--line-strong)" }}
             strokeWidth="1"
           />
         </g>
       ))}
-      <circle data-node cx="400" cy="270" r="6" fill="#ff5a1f" />
-      <circle data-node cx="400" cy="270" r="14" fill="none" stroke="#ff5a1f" strokeOpacity=".4" />
+      <circle data-node cx="400" cy="270" r="6" style={{ fill: "var(--accent)" }} />
+      <circle data-node cx="400" cy="270" r="14" fill="none" strokeOpacity=".4" style={{ stroke: "var(--accent)" }} />
       <text data-dlabel x="400" y="312" textAnchor="middle" className="fill-accent" style={{ font: "500 13px var(--font-mono)", letterSpacing: "0.3em" }}>
         {s.meaning}
       </text>
@@ -304,7 +304,7 @@ export default function Services() {
         }}
       >
         {shownItem && shownPreview && (
-          <div className="overflow-hidden rounded-[4px] border border-line-strong bg-surface p-4 text-fg shadow-[0_24px_60px_-10px_rgba(0,0,0,0.7)]">
+          <div className="overflow-hidden rounded-[4px] border border-line-strong bg-surface p-4 text-fg shadow-[0_24px_60px_-10px_var(--shadow)]">
             {/* Top Image Preview */}
             {/* Semua foto dirender sekaligus lalu di-crossfade, jadi tidak ada jeda memuat saat hover. */}
             <div className="relative mb-3.5 aspect-[16/10] w-full overflow-hidden rounded-[4px] border border-line bg-surface-2">

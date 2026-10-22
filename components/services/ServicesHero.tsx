@@ -182,7 +182,7 @@ export default function ServicesHero() {
   const typing = !done;
 
   const sideCard =
-    "absolute top-14 hidden w-[300px] overflow-hidden rounded-[6px] border border-line-strong bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] md:block";
+    "absolute top-14 hidden w-[300px] overflow-hidden rounded-[6px] border border-line-strong bg-surface shadow-[0_30px_80px_-20px_var(--shadow)] md:block";
 
   return (
     <section
@@ -226,8 +226,8 @@ export default function ServicesHero() {
               id="services-hero-browse"
               className="btn btn-ghost !normal-case"
               style={{
-                background: "rgba(255, 255, 255, 0.04)",
-                borderColor: "rgba(255, 255, 255, 0.14)",
+                background: "var(--hairline-soft)",
+                borderColor: "var(--hairline)",
                 backdropFilter: "blur(14px) saturate(1.2)",
                 WebkitBackdropFilter: "blur(14px) saturate(1.2)",
               }}
@@ -274,7 +274,7 @@ export default function ServicesHero() {
             <div
               role="img"
               aria-label={`lemma.config.ts: ${copy.services.map((s) => s.name).join(", ")}`}
-              className="overflow-hidden rounded-[6px] border border-line-strong bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+              className="overflow-hidden rounded-[6px] border border-line-strong bg-surface shadow-[0_30px_80px_-20px_var(--shadow)]"
             >
               {/* Title bar */}
               <div className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-2.5">

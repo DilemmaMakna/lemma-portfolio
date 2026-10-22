@@ -27,6 +27,8 @@ var d=document.documentElement;
 var m=document.cookie.match(/(?:^|; )NEXT_LOCALE=(id|en)/);
 var l=m?m[1]:'id';
 d.lang=l;d.setAttribute('data-locale',l);d.classList.add('is-booting');
+var th=null;try{th=localStorage.getItem('lemma-theme')}catch(e){}
+if(th==='light'){d.setAttribute('data-theme','light');var tc=document.querySelector('meta[name="theme-color"]');if(tc)tc.setAttribute('content','#f3f1ec');}
 var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!r&&!sessionStorage.getItem('lemma-intro'))d.classList.add('is-loading');
 }catch(e){}})();`;

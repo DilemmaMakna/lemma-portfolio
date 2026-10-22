@@ -7,6 +7,7 @@ import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { getLenis, scrollToId } from "@/lib/lenis";
 
 // `id` links scroll to a section on the home page; `href` links open their own page.
@@ -113,7 +114,7 @@ export default function NavPill() {
           data-intro="fade"
           className="pointer-events-auto hidden items-center gap-1 rounded-full border border-line px-2 backdrop-blur-[12px] transition-all duration-500 md:flex"
           style={{
-            background: "rgba(16,16,16,.7)",
+            background: "var(--glass)",
             height: scrolled ? 44 : 52,
           }}
         >
@@ -135,8 +136,15 @@ export default function NavPill() {
           ))}
         </nav>
 
-        <div data-intro="fade" className="pointer-events-auto flex items-center gap-3 md:gap-4">
+        {/* md+: latar kaca seperti pil tengah, supaya konten di belakangnya (mis. ASCII hero /about) tidak bertabrakan. */}
+        <div
+          data-intro="fade"
+          className={`pointer-events-auto flex items-center gap-3 transition-all duration-500 md:rounded-full md:border md:border-line md:pl-4 md:backdrop-blur-[12px] md:[background:var(--glass)] ${
+            scrolled ? "md:py-0.5 md:pr-0.5" : "md:py-1.5 md:pr-1.5"
+          }`}
+        >
           <LangToggle className="hidden sm:flex" />
+          <ThemeToggle className="hidden sm:grid" />
           <Button id="nav-cta" onClick={() => openContact("nav")} className="hidden !h-10 md:inline-flex">
             {t.nav.cta}
           </Button>
@@ -191,7 +199,10 @@ export default function NavPill() {
           <div className="mt-8 flex flex-col gap-6">
             <SocialLinks label size="sm" />
             <div className="flex items-center justify-between gap-4 border-t border-line pt-6">
-              <LangToggle />
+              <div className="flex items-center gap-4">
+                <LangToggle />
+                <ThemeToggle />
+              </div>
               <Button
                 onClick={() => {
                   setOpen(false);

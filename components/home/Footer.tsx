@@ -306,9 +306,9 @@ export default function Footer() {
       >
         {/* Base Glassy Translucent Text */}
         <span
-          className="inline-block bg-gradient-to-b from-white/[0.18] via-white/[0.04] to-transparent bg-clip-text text-transparent [filter:drop-shadow(0_12px_40px_rgba(0,0,0,0.9))]"
+          className="inline-block bg-gradient-to-b from-fg/[0.18] via-fg/[0.04] to-transparent bg-clip-text text-transparent [filter:drop-shadow(0_12px_40px_var(--shadow))]"
           style={{
-            WebkitTextStroke: "1px rgba(255, 255, 255, 0.12)",
+            WebkitTextStroke: "1px var(--hairline)",
           }}
         >
           LEMMA
