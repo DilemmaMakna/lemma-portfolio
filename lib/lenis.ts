@@ -1,0 +1,19 @@
+import type Lenis from "lenis";
+
+let instance: Lenis | null = null;
+
+export const setLenis = (l: Lenis | null) => {
+  instance = l;
+};
+export const getLenis = () => instance;
+
+export function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  // Bukan di beranda (mis. /services): pindah ke beranda pada anchor tersebut.
+  if (!el) {
+    if (window.location.pathname !== "/") window.location.href = `/#${id}`;
+    return;
+  }
+  if (instance) instance.scrollTo(el, { offset: -20 });
+  else el.scrollIntoView({ behavior: "auto" });
+}

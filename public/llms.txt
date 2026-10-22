@@ -1,0 +1,31 @@
+# Lemma
+
+> Lemma is a venture studio in Jakarta, Indonesia. It combines UX, HCI, data, and technology to build brands, digital products, and systems that mean something. Client work and its own products grow in one ecosystem, each testing the other.
+
+Contact: hello@dilemma-makna.com. Languages: English (default) and Bahasa Indonesia.
+
+## Pages
+
+- [Home](https://lemma.studio/): overview of the studio, selected work, products, and contact.
+- [Services](https://lemma.studio/services): the five service areas, deliverables, and how engagements work.
+
+## Services
+
+- [Brand & Visual Identity](https://lemma.studio/services#service-01): logo systems, brand guideline books, palettes, typography, and Figma design systems. Clients: Gumatika, BEM FAHUTAN IPB.
+- [UX, HCI & Product Design](https://lemma.studio/services#service-02): user research, usability testing, information architecture, UI kits, design systems, and prototypes. Clients: LPJ Ormawa IPB, NATA.
+- [Engineering & Technology](https://lemma.studio/services#service-03): web apps, SaaS platforms, dashboards, partner portals, data integration, and technical documentation. Client: CRL Consulting.
+- [AI & Data](https://lemma.studio/services#service-04): recommender systems, RAG-based chatbots, model evaluation, and analytics dashboards, built with explainability from the start.
+- [Strategy & Systems](https://lemma.studio/services#service-05): problem and goal definition, information architecture, system maps, OKRs, and operational documentation.
+
+## Products
+
+- [NATA](https://lemma.studio/): EdTech app for campus life (B2C, Indonesia). Active development.
+- ARAH: AI-assisted student development (B2B SaaS, EdTech). Stealth.
+
+## Working with Lemma
+
+Projects start with a short conversation, then a written scope, timeline, and price before work begins. Work is structured first and visual second, with progress visible at each stage. Everything is tested and documented at handover so the client team can run it alone.
+
+## Optional
+
+- [Full overview (Markdown)](https://lemma.studio/index.md): extended summary of the studio, services, products, and selected work.
