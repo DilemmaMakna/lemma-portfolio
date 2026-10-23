@@ -127,7 +127,7 @@ export default function Footer() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative flex min-h-[82vh] flex-col justify-between overflow-hidden border-t border-line bg-bg-raised pb-10 pt-28 md:min-h-[88vh] md:pb-14 md:pt-36"
+      className="relative flex min-h-[82svh] flex-col justify-between overflow-hidden border-t border-line bg-bg-raised pb-10 pt-28 md:min-h-[88svh] md:pb-14 md:pt-36"
     >
       {/* Ambient background glow */}
       <div
