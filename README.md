@@ -29,6 +29,86 @@ Lemma (PT Masih Dilemma Makna) is a venture studio in Jakarta. This repository i
 - **Design Tokens**: Colors, type scale, radius and easing are CSS custom properties mapped into [Tailwind CSS](https://tailwindcss.com) 4 `@theme`.
 - **Lighthouse Runner**: `scripts/lighthouse.sh` builds, starts and audits five pages on mobile and desktop. Results are recorded in `docs/lighthouse/`.
 
+## Prerequisites
+
+- **Node.js 20.9 or newer**: the minimum for Next.js 16.4.2, as stated in the docs bundled in `node_modules/next/dist/docs/`. The project has no `.nvmrc` or `engines` field.
+- **npm** (ships with Node.js) or **bun**.
+- **Git**, only for the optional [Local Git Hook](#local-git-hook).
+
+## Installation
+
+Install dependencies with npm:
+
+```bash
+npm install
+```
+
+or with bun:
+
+```bash
+bun install
+```
+
+Both lockfiles are committed: `package-lock.json` for npm and `bun.lock` for bun.
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` for local development. `.env.local` is git-ignored. All three variables are optional.
+
+| Variable                   | Purpose                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`     | Production origin for canonical URLs, sitemap, JSON-LD and `/llms.txt`. Defaults to `https://lemma.studio`. Must be an absolute URL. |
+| `GOOGLE_SITE_VERIFICATION` | Token from Google Search Console ("HTML tag" method). Leave empty to skip.                                                           |
+| `CONTACT_WEBHOOK_URL`      | Webhook that receives contact form submissions. Server-only, never sent to the browser.                                              |
+
+Production values are set in Vercel. Contact form behavior, including the `mailto:` fallback, is described in [Deploy (Vercel)](#deploy-vercel).
+
+## Development
+
+```bash
+npm run dev          # Start the development server on http://localhost:3000
+npm run typecheck    # Type-check with tsc --noEmit
+npm run lint         # Lint with oxlint
+npm run lint:fix     # Lint and apply oxlint fixes
+npm run format       # Format with oxfmt
+npm run format:check # Check formatting without writing files
+npm run analyze      # Analyze the production bundle with next analyze
+```
+
+Replace `npm run` with `bun run` to use bun.
+
+## Local Git Hook
+
+The pre-commit hook in `.githooks/pre-commit` is opt-in. Enable it once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+It checks the staged files in this order:
+
+1. `oxfmt --check` on staged `ts`, `tsx`, `js`, `mjs`, `css`, `json` and `md` files. Advisory: it prints unformatted files and never blocks the commit.
+2. `oxlint` on staged `ts`, `tsx`, `js` and `mjs` files. Blocks the commit on errors only. Warnings pass.
+3. `npm run typecheck`. Blocks the commit on failure.
+
+Disable the hook with:
+
+```bash
+git config --unset core.hooksPath
+```
+
+## Mobile Testing
+
+Start the development server on all network interfaces:
+
+```bash
+npx next dev -H 0.0.0.0
+```
+
+Find your computer's LAN IP (on macOS: `ipconfig getifaddr en0`), then open `http://<LAN-IP>:3000` on a phone on the same network.
+
+To test without a phone, use the device toolbar in Chrome DevTools at 360x640 and 390x844.
+
 ## Getting Started
 
 ```bash
