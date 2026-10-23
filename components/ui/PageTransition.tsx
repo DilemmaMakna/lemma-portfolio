@@ -143,7 +143,7 @@ export default function PageTransition() {
     <div
       ref={root}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[68] hidden"
+      className="pointer-events-none fixed inset-0 z-transition hidden"
       style={{ display: "none" }}
     >
       <div className="absolute inset-0 flex overflow-hidden">

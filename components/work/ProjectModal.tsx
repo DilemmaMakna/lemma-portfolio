@@ -159,7 +159,7 @@ export default function ProjectModal({
 
   return (
     <div
-      className="fixed inset-0 z-[65] bg-bg/80 backdrop-blur-sm sm:px-4 sm:pt-6"
+      className="fixed inset-0 z-overlay bg-bg/80 backdrop-blur-sm sm:px-4 sm:pt-6"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div

@@ -58,7 +58,7 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
       {children}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[66] flex items-end justify-center bg-bg/80 backdrop-blur-sm sm:items-center sm:p-6"
+          className="fixed inset-0 z-modal flex items-end justify-center bg-bg/80 backdrop-blur-sm sm:items-center sm:p-6"
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) close();
           }}
