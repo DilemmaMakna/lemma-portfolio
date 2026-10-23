@@ -43,7 +43,6 @@
 
   --radius-sm: 4px;
   --radius-pill: 999px;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -60,6 +59,19 @@
   --color-accent-hover: var(--accent-hover);
   --font-sans: var(--font-sans), Inter, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* static: keep these emitted even when no utility uses them yet (z-index, easing).
+   Breakpoints: Tailwind defaults, no --breakpoint-* override. */
+@theme static {
+  --z-index-grain: 60;
+  --z-index-overlay: 65;
+  --z-index-modal: 66;
+  --z-index-transition: 68;
+  --z-index-preloader: 70;
+  --z-index-cursor: 80;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Tema terang: kertas hangat, tinta hampir hitam, aksen oranye sedikit digelapkan agar kontras.
