@@ -61,6 +61,7 @@ export default function ServicesIntro() {
         const split = SplitText.create(el, {
           type: "lines",
           autoSplit: true,
+          aria: "none",
           linesClass: "intro-line",
           ignore: "[data-anno]",
           onSplit: (self) => {
