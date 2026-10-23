@@ -222,3 +222,25 @@ Mobile LCP is the gap: 3.41s to 4.26s against 0.80s to 1.03s on desktop. The LCP
 [docs/BEST_PRACTICES.md](docs/BEST_PRACTICES.md) is a checklist of speed, SEO and developer experience practices, each with its status and code location.
 
 Sourcing: only the static rendering of content sites, the SEO and accessibility deep dive and the layered architecture points come from the [GreatFrontEnd front-end system design playbook](https://www.greatfrontend.com/front-end-system-design-playbook/framework). The rest is standard practice that is not verified against GreatFrontEnd.
+
+---
+
+## Tech Stack
+
+- **Framework and Core**: [Next.js](https://nextjs.org) 16 (App Router), [React](https://react.dev) 19 (`react` and `react-dom`), and [TypeScript](https://www.typescriptlang.org) 5
+- **Styling**: [Tailwind CSS](https://tailwindcss.com) 4, with `@tailwindcss/turbopack`
+- **Motion**: [GSAP](https://gsap.com) with [@gsap/react](https://www.npmjs.com/package/@gsap/react), and [Lenis](https://lenis.darkroom.engineering) for smooth scroll
+- **Tooling**: [oxlint](https://oxc.rs) and [oxfmt](https://oxc.rs) from the oxc project, [sharp](https://sharp.pixelplumbing.com) for image processing, and [npm](https://www.npmjs.com) or [bun](https://bun.sh) as package managers
+- **Deployment**: [Vercel](https://vercel.com)
+
+## Contributing
+
+Read [CONTRIBUTING.md](docs/CONTRIBUTING.md) before you open a change. It covers branch names, the quality gate and the oxc tooling.
+
+Commit messages follow conventional commits in the form `type(scope): summary`, on one line, for example `docs(readme): add tech stack`. The convention is documented, not enforced: the repository runs no commitlint or other message check.
+
+<div align="center">
+
+<sub>Copyright &copy; 2026 PT Masih Dilemma Makna. All rights reserved.</sub>
+
+</div>
