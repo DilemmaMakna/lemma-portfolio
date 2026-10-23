@@ -271,7 +271,7 @@ html.lenis body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 60;
+  z-index: var(--z-index-grain);
   opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("/noise.svg");
@@ -297,7 +297,7 @@ html.is-loading .preloader {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 80;
+  z-index: var(--z-index-cursor);
   pointer-events: none;
   display: none;
   align-items: center;
