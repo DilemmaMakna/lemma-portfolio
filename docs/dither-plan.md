@@ -34,7 +34,7 @@
 
 - File and component: `components/home/About.tsx`, left column (`lg:col-span-7`), below the ghost link button. Desktop has empty space under the button.
 - Current content: section label, headline, lead paragraph, ghost button. Right column has three stats. No image.
-- Source photo: `public/work-photos/nata/01.webp` (1080x1350 per the manifest). This is a candidate. Pick the final crop in 4.2 by viewing it, and choose a crop with few small details and no legible text.
+- Source photo: `public/work-photos/bem-fahutan-langkah-bermakna/03.webp` (1080x1350). Changed in 4.2: `nata/01.webp` is a client app mockup with a full name, email and readable UI text, so it was dropped. The chosen photo is a teal line pattern with no text, no people and no client detail.
 - Dither style: the same Bayer 4x4 two-tone style as Spot A (`#86837e` dots on transparent). Orange is not used.
 - Output: `public/dithered/about-atmosphere.webp`, 960x384 (5:2 crop), target under 30 KB. Fallback if over: 800x320.
 - Placement: a wrapper `relative mt-12 aspect-[5/2] overflow-hidden rounded-[4px] border border-line`, with `next/image` at `width={960} height={384}`, `sizes="(min-width: 1024px) 58vw, 100vw"`, `loading="lazy"`, `alt=""` (decorative). Use `unoptimized`, because Next image optimization would resample the dither pattern and blur it. The aspect box reserves the height. The wrapper gets `data-reveal` (fade only, no blur).
@@ -62,10 +62,10 @@ File: `scripts/dither-photos.mjs`, run with `node scripts/dither-photos.mjs`.
 
 Input list (constant `JOBS` in the script):
 
-| Input                             | Output                                  | Size    | Crop             |
-| --------------------------------- | --------------------------------------- | ------- | ---------------- |
-| `public/services/strategy.jpg`    | `public/dithered/products-stealth.webp` | 640x640 | cover, center    |
-| `public/work-photos/nata/01.webp` | `public/dithered/about-atmosphere.webp` | 960x384 | cover, attention |
+| Input                                                     | Output                                  | Size    | Crop             |
+| --------------------------------------------------------- | --------------------------------------- | ------- | ---------------- |
+| `public/services/strategy.jpg`                            | `public/dithered/products-stealth.webp` | 640x640 | cover, center    |
+| `public/work-photos/bem-fahutan-langkah-bermakna/03.webp` | `public/dithered/about-atmosphere.webp` | 960x384 | cover, attention |
 
 Steps for each job:
 
