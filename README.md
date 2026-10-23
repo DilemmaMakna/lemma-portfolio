@@ -29,6 +29,15 @@ Lemma (PT Masih Dilemma Makna) is a venture studio in Jakarta. This repository i
 - **Design Tokens**: Colors, type scale, radius and easing are CSS custom properties mapped into [Tailwind CSS](https://tailwindcss.com) 4 `@theme`.
 - **Lighthouse Runner**: `scripts/lighthouse.sh` builds, starts and audits five pages on mobile and desktop. Results are recorded in `docs/lighthouse/`.
 
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). See [Prerequisites](#prerequisites) and [Installation](#installation) for bun and other setup details, and [Scripts](#scripts) for every command.
+
 ## Prerequisites
 
 - **Node.js 20.9 or newer**: the minimum for Next.js 16.4.2, as stated in the docs bundled in `node_modules/next/dist/docs/`. The project has no `.nvmrc` or `engines` field.
@@ -109,36 +118,29 @@ Find your computer's LAN IP (on macOS: `ipconfig getifaddr en0`), then open `htt
 
 To test without a phone, use the device toolbar in Chrome DevTools at 360x640 and 390x844.
 
-## Getting Started
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-Bun is also supported (`bun.lock` is committed). npm stays supported with `package-lock.json`.
-
-| npm             | bun             |
-| --------------- | --------------- |
-| `npm install`   | `bun install`   |
-| `npm run dev`   | `bun run dev`   |
-| `npm run build` | `bun run build` |
-| `npm run lint`  | `bun run lint`  |
-
 ## Scripts
 
-| Command         | What it does                 |
-| --------------- | ---------------------------- |
-| `npm run dev`   | Start the development server |
-| `npm run build` | Create a production build    |
-| `npm run start` | Serve the production build   |
-| `npm run lint`  | Run ESLint                   |
+| Command                | What it does                                          |
+| ---------------------- | ----------------------------------------------------- |
+| `npm run dev`          | Start the development server on http://localhost:3000 |
+| `npm run build`        | Create a production build                             |
+| `npm run start`        | Serve the production build                            |
+| `npm run lint`         | Lint with oxlint                                      |
+| `npm run lint:fix`     | Lint and apply oxlint fixes                           |
+| `npm run typecheck`    | Type-check with `tsc --noEmit`                        |
+| `npm run format`       | Format with oxfmt                                     |
+| `npm run format:check` | Check formatting without writing files                |
+| `npm run analyze`      | Analyze the production bundle with `next analyze`     |
+
+Standalone scripts in `scripts/`:
+
+- `node scripts/optimize-work-photos.mjs` converts work photos to WebP. See [Work Photos](#work-photos).
+- `node scripts/dither-photos.mjs` writes the two-tone dithered art to `public/dithered/` (Bayer 4x4 ordered dither, lossless WebP). It overwrites the files on each run and exits with status 1 if any file is larger than 30 KB.
+- `scripts/lighthouse.sh` builds and starts the app on port 3100 (set `PORT` to change it), audits five pages on mobile and desktop, writes the raw JSON to `docs/lighthouse/raw/` (git-ignored) and prints a score table.
 
 ## Deploy (Vercel)
 
-Set these environment variables in Vercel (Project → Settings → Environment Variables):
+Set these in Vercel under Project → Settings → Environment Variables:
 
 | Variable                   | Purpose                                                                                                                                         |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -146,24 +148,32 @@ Set these environment variables in Vercel (Project → Settings → Environment 
 | `GOOGLE_SITE_VERIFICATION` | Token from Google Search Console ("HTML tag" method). Rendered as `<meta name="google-site-verification">`.                                     |
 | `CONTACT_WEBHOOK_URL`      | Where the contact form is forwarded (e.g. a Make, Zapier, n8n or Formspree webhook that emails you). Server-only; never exposed to the browser. |
 
-Without it the form does not lose messages: it shows a pre-filled `mailto:` link instead.
-The contact API only accepts same-origin JSON, rate-limits per IP, and silently drops bot submissions (honeypot + fill-time check).
+Without `CONTACT_WEBHOOK_URL` the form does not lose messages. It shows a pre-filled `mailto:` link instead.
+
+The contact API accepts same-origin JSON only, rate-limits requests per IP, and silently drops bot submissions (honeypot and fill-time check).
 
 ## Work Photos
 
-Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. It converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
+Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. The script converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
 
 ## Project Structure
 
-- `app/` - root layout, home page, global styles, fonts
-- `components/home/` - one component per home section
-- `components/nav/` - floating nav pill and mobile menu
-- `components/ui/` - shared UI pieces (buttons, cursor, canvas effects)
-- `lib/` - GSAP and Lenis setup, intro animation, and `messages.ts` (all ID and EN text)
-- `public/` - logo, service images, and other static assets
+- `app/` - routes (one `page.tsx` per page), `layout.tsx`, `sitemap.ts`, `robots.ts`, `manifest.ts`, OG and Twitter images, `llms` and `index.md` routes, and `api/contact/`
+- `app/styles/tokens.css` - design tokens; `app/globals.css` - global styles; `app/fonts.ts` - fonts
+- `components/home/`, `components/about/`, `components/services/`, `components/work/`, `components/contact/` - sections for each page
+- `components/nav/` - floating nav pill
+- `components/ui/` - shared pieces such as `Button.tsx`, `ContactForm.tsx` and `Cursor.tsx`
+- `components/` - app-wide wrappers such as `Providers.tsx`, `LocaleProvider.tsx` and `JsonLd.tsx`
+- `lib/` - non-visual code: `env.ts` (typed env), `messages.ts` (shared and home copy, ID and EN), `site.ts` (metadata and JSON-LD), GSAP, Lenis and intro setup, and `work-photos.ts`
+- `public/` - logo, service images, `work-photos/` and `dithered/`
+- `scripts/` - photo, dither and Lighthouse scripts
+- `docs/` - architecture, contributing, best practices and Lighthouse reports
+- `.githooks/` - optional pre-commit hook
+
+See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layers and folder rules.
 
 ## Content and Design
 
-- Copy source: `.copyw/lemma_home_copywriting.md`. Keep text in `lib/messages.ts` and do not hardcode strings in components.
-- Design brief: `.agents/DESIGN.md`. Dark theme only, one orange accent, mono labels.
+- Copy source: `.copywriting/lemma_home_copywriting.md`. Keep text in `lib/` (shared and home copy in `lib/messages.ts`, section copy in `lib/about.ts`, `lib/contact.ts`, `lib/services.ts` and `lib/work.ts`) and do not hardcode strings in components.
+- Design brief: `.agents/DESIGN.md`. Dark by default with a light theme override, one orange accent, mono labels.
 - Public pages must not show the full name or technical details of the ARAH product.
