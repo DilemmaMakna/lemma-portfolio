@@ -164,7 +164,7 @@ export default function NavPill() {
         <div
           role="dialog"
           aria-modal="true"
-          className="pointer-events-auto fixed inset-0 z-[65] flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
+          className="pointer-events-auto fixed inset-0 z-overlay flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
         >
           <div className="flex items-center justify-between">
             <span className="text-[15px] font-semibold uppercase tracking-[0.18em]">LEMMA</span>

@@ -34,7 +34,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div
         ref={pre}
         aria-hidden="true"
-        className="preloader fixed inset-0 z-[70] items-center justify-center bg-bg"
+        className="preloader fixed inset-0 z-preloader items-center justify-center bg-bg"
       >
         <span
           data-pre-mark
