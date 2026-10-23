@@ -9,11 +9,12 @@ import { projects, type Project } from "@/lib/work";
 
 // Empat proyek pilihan beserta foto yang ditampilkan (indeks dari daftar foto proyek).
 // Setiap kartu membuka detailnya di /work (?p=slug membuka modal proyek di sana).
+// Kartu pertama (LPJ Ormawa IPB) adalah highlight project: diberi penanda di atas nomor proyek.
 const HOME: { slug: string; pick: number[] }[] = [
   { slug: "lpj-ormawa-ipb-2025", pick: [1, 4] },
   { slug: "jalansiswa", pick: [0, 3] },
   { slug: "bem-fahutan-langkah-bermakna", pick: [0, 3] },
-  { slug: "himpro-hksa-serenata", pick: [0, 7, 3] },
+  { slug: "nata", pick: [0, 2, 4] },
 ];
 
 const hookCls =
@@ -21,11 +22,17 @@ const hookCls =
 
 const href = (p: Project) => `/work?p=${p.slug}`;
 
-function Meta({ p, view, className = "" }: { p: Project; view: string; className?: string }) {
+function Meta({ p, view, highlight, className = "" }: { p: Project; view: string; highlight?: string; className?: string }) {
   const { locale } = useLocale();
   return (
     <div className={`flex flex-col justify-between gap-8 ${className}`}>
       <div>
+        {highlight && (
+          <div className="mono mb-3 flex items-center gap-2 text-accent">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
+            {highlight.toUpperCase()}
+          </div>
+        )}
         <div className="mono text-fg-dim">PROJECT {p.n}</div>
         <h3 className="mt-4 text-[clamp(1.75rem,3.6vw,3.25rem)] font-medium leading-[1.05] tracking-[-0.03em] transition-colors group-hover:text-accent">
           {p.name}
@@ -82,7 +89,7 @@ export default function SelectedWork() {
           {/* 01: gambar 7 kolom kiri, meta 5 kolom kanan */}
           <Link href={href(a.p)} data-reveal className="group grid12 items-stretch gap-y-6">
             <div className="col-span-full lg:col-span-7"><Frame p={a.p} pick={a.pick} view={w.view} /></div>
-            <Meta p={a.p} view={w.view} className="col-span-full lg:col-span-5 lg:pl-6" />
+            <Meta p={a.p} view={w.view} highlight={w.highlight} className="col-span-full lg:col-span-5 lg:pl-6" />
           </Link>
 
           {/* 02: meta 4 kolom kiri, gambar 8 kolom kanan */}

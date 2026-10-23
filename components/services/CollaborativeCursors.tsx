@@ -206,13 +206,13 @@ function CursorPointer({ color }: { color: string }) {
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
-      className="h-[22px] w-[22px] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+      className="h-[22px] w-[22px] drop-shadow-[0_2px_8px_var(--shadow)]"
       style={{ overflow: "visible" }}
     >
       <path
         d="M3 2L10.5 20.5L13.8 13.2L21 9.9L3 2Z"
         fill={color}
-        stroke="#0a0a0a"
+        style={{ stroke: "var(--bg)" }}
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
@@ -496,11 +496,11 @@ export default function CollaborativeCursors() {
                 title={`${s.name} (klik untuk melompat ke layanan)`}
                 className="pointer-events-auto absolute left-3 top-3 z-20 flex cursor-pointer select-none items-center gap-2 whitespace-nowrap rounded-[5px] border px-2.5 py-1 text-left transition-colors duration-200"
                 style={{
-                  borderColor: isHovered ? cfg.color : "rgba(255, 255, 255, 0.12)",
-                  backgroundColor: isHovered ? "rgb(22, 22, 22)" : "rgba(16, 16, 16, 0.94)",
+                  borderColor: isHovered ? cfg.color : "var(--hairline)",
+                  backgroundColor: isHovered ? "var(--surface-2)" : "var(--surface)",
                   boxShadow: isHovered
                     ? `0 10px 25px -4px ${cfg.accentBg}`
-                    : "0 8px 25px -5px rgba(0, 0, 0, 0.85)",
+                    : "0 8px 25px -5px var(--shadow)",
                 }}
               >
                 <span

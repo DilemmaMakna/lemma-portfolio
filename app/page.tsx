@@ -9,10 +9,16 @@ import Products from "@/components/home/Products";
 import About from "@/components/home/About";
 import ContactCta from "@/components/home/ContactCta";
 import Footer from "@/components/home/Footer";
+import JsonLd from "@/components/JsonLd";
+import { pageMeta, pageJsonLd } from "@/lib/site";
+import { messages } from "@/lib/messages";
+
+export const metadata = pageMeta("/", messages.en.meta.title, messages.en.meta.description);
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={pageJsonLd({ path: "/", name: "Home", description: messages.en.meta.description })} />
       <NavPill />
       <PageAnimations>
         <main>

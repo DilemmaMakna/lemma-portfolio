@@ -1,10 +1,9 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
+import ContactForm from "@/components/ui/ContactForm";
 import { getLenis } from "@/lib/lenis";
-
-type Status = "idle" | "sending" | "success" | "error";
 
 type Ctx = {
   open: (source: string) => void;
@@ -18,24 +17,15 @@ export const useContactModal = () => {
   return c;
 };
 
-const FIELD =
-  "w-full border-b border-line-strong bg-transparent py-3 text-fg outline-none transition-colors placeholder:text-fg-dim focus:border-accent";
-
 export function ContactModalProvider({ children }: { children: React.ReactNode }) {
-  const { t, locale } = useLocale();
+  const { t } = useLocale();
   const m = t.contactModal;
   const [source, setSource] = useState<string | null>(null);
-  const [status, setStatus] = useState<Status>("idle");
   const lastFocus = useRef<HTMLElement | null>(null);
-  const firstField = useRef<HTMLInputElement>(null);
-  const openedAt = useRef(0);
-  const [mailto, setMailto] = useState("");
   const isOpen = source !== null;
 
   const open = useCallback((s: string) => {
     lastFocus.current = document.activeElement as HTMLElement | null;
-    openedAt.current = Date.now();
-    setStatus("idle");
     setSource(s);
   }, []);
 
@@ -49,7 +39,6 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
     const lenis = getLenis();
     lenis?.stop();
     document.body.style.overflow = lenis ? "" : "hidden";
-    firstField.current?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
@@ -61,41 +50,6 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
       document.body.style.overflow = "";
     };
   }, [isOpen, close]);
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    const v = (key: string) => String(fd.get(key) ?? "").trim();
-
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: v("name"),
-          email: v("email"),
-          company: v("company"),
-          message: v("message"),
-          website: v("website"), // honeypot, harus kosong
-          elapsed: Date.now() - openedAt.current, // jebakan waktu untuk bot
-          source,
-          locale,
-        }),
-      });
-      if (!res.ok) throw new Error(`Status ${res.status}`);
-      form.reset();
-      setStatus("success");
-    } catch (err) {
-      console.error("Contact form failed:", err);
-      // Cadangan: pesan yang sama disiapkan sebagai email supaya tidak hilang.
-      const subject = `[Lemma] ${v("name")}${v("company") ? ` / ${v("company")}` : ""}`;
-      const body = `${v("message")}\n\n${v("name")}\n${v("email")}`;
-      setMailto(`mailto:${t.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-      setStatus("error");
-    }
-  }
 
   const value = useMemo(() => ({ open }), [open]);
 
@@ -125,49 +79,7 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
             </div>
             <p className="lead mt-4">{m.sub}</p>
 
-            {status === "success" ? (
-              <p role="status" className="mt-10 text-fg">
-                {m.success}
-              </p>
-            ) : (
-              <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-6">
-                <label className="flex flex-col gap-1">
-                  <span className="mono text-xs text-fg-dim">{m.name}</span>
-                  <input ref={firstField} name="name" required autoComplete="name" maxLength={100} className={FIELD} />
-                </label>
-                <label className="flex flex-col gap-1">
-                  <span className="mono text-xs text-fg-dim">{m.email}</span>
-                  <input name="email" type="email" required autoComplete="email" maxLength={200} className={FIELD} />
-                </label>
-                <label className="flex flex-col gap-1">
-                  <span className="mono text-xs text-fg-dim">{m.company}</span>
-                  <input name="company" autoComplete="organization" maxLength={150} className={FIELD} />
-                </label>
-                <label className="flex flex-col gap-1">
-                  <span className="mono text-xs text-fg-dim">{m.message}</span>
-                  <textarea name="message" required rows={4} maxLength={2000} className={`${FIELD} resize-none`} />
-                </label>
-
-                {/* Honeypot: disembunyikan dari pengguna, diisi hanya oleh bot. */}
-                <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
-
-                {status === "error" && (
-                  <div role="alert" className="flex flex-col gap-2">
-                    <p className="mono text-sm text-accent">{m.error}</p>
-                    <a href={mailto} className="mono !normal-case text-sm text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent">
-                      {m.fallback} {t.contact.email} ↗
-                    </a>
-                  </div>
-                )}
-
-                <div>
-                  <button type="submit" disabled={status === "sending"} className="btn btn-primary">
-                    {status === "sending" ? m.sending : m.submit}
-                    <span className="arrow" aria-hidden="true">↗</span>
-                  </button>
-                </div>
-              </form>
-            )}
+            <ContactForm source={source} autoFocus />
           </div>
         </div>
       )}

@@ -76,6 +76,7 @@ export const messages = {
     },
     work: {
       label: "04 / Karya Terpilih",
+      highlight: "Proyek unggulan",
       view: "Lihat",
       all: "Lihat semua karya",
     },
@@ -217,6 +218,7 @@ export const messages = {
     },
     work: {
       label: "04 / Selected Work",
+      highlight: "Highlight project",
       view: "View",
       all: "View all work",
     },

@@ -1,17 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLocale } from "@/components/LocaleProvider";
-import { scrollToId } from "@/lib/lenis";
+import Button from "@/components/ui/Button";
+import { useContactModal } from "@/components/ui/ContactModal";
+import { getLenis, scrollToId } from "@/lib/lenis";
 import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
 import SocialLinks from "@/components/ui/SocialLinks";
 
+// Tautan nyata ke halaman masing-masing (bukan anchor beranda), supaya berfungsi di semua halaman.
 const NAV_LINKS = [
-  { key: "work", id: "work" },
-  { key: "about", id: "about" },
-  { key: "services", id: "services" },
-  { key: "products", id: "products" },
-  { key: "contact", id: "contact" },
+  { key: "work", href: "/work" },
+  { key: "about", href: "/about" },
+  { key: "services", href: "/services" },
+  { key: "products", href: "/#products" },
+  { key: "contact", href: "/contact" },
 ] as const;
 
 const GLOW_RADIUS = 320; // Radius lebar agar sorotan menyebar halus, bukan lingkaran tegas
@@ -22,6 +27,8 @@ const GLOW_MASK = `radial-gradient(circle ${GLOW_RADIUS}px at var(--glow-x, 50%)
 
 export default function Footer() {
   const { t, locale, setLocale } = useLocale();
+  const { open: openContact } = useContactModal();
+  const pathname = usePathname();
   const f = t.footer;
   const footerRef = useRef<HTMLElement>(null);
   const markRef = useRef<HTMLDivElement>(null);
@@ -100,9 +107,18 @@ export default function Footer() {
     setIsHovered(false);
   }, []);
 
-  const go = (id: string) => (e: React.MouseEvent) => {
+  // Di beranda, tautan "/#id" menggulir di tempat; di halaman lain Link berpindah halaman seperti biasa.
+  const goHome = (href: string) => (e: React.MouseEvent) => {
+    if (pathname !== "/" || !href.startsWith("/#")) return;
     e.preventDefault();
-    scrollToId(id);
+    scrollToId(href.slice(2));
+  };
+
+  const toTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0 });
   };
 
   return (
@@ -125,19 +141,21 @@ export default function Footer() {
           {/* Brand & Entity Column */}
           <div className="flex flex-col justify-between">
             <div>
-              <a
-                href="#top"
-                onClick={go("top")}
+              <Link
+                href="/"
                 className="inline-block text-lg font-light uppercase tracking-[0.2em] transition-opacity hover:opacity-80"
               >
                 LEMMA
-              </a>
+              </Link>
               <p className="mt-4 text-[clamp(1.5rem,3.2vw,2.5rem)] font-medium leading-[1.08] tracking-[-0.03em] max-w-[18ch]">
                 {f.brand}
               </p>
             </div>
 
             <div className="mt-8">
+              <Button id="footer-cta" onClick={() => openContact("footer")} className="mb-8">
+                {t.nav.cta}
+              </Button>
               <a
                 href="mailto:marketing@dilemma-makna.com"
                 className="mono inline-flex items-center gap-2 text-fg hover:text-accent transition-colors !normal-case text-sm tracking-[-0.01em]"
@@ -160,13 +178,13 @@ export default function Footer() {
             <ul className="mt-6 flex flex-col gap-3">
               {NAV_LINKS.map((l) => (
                 <li key={l.key}>
-                  <a
-                    href={`#${l.id}`}
-                    onClick={go(l.id)}
+                  <Link
+                    href={l.href}
+                    onClick={goHome(l.href)}
                     className="text-sm text-fg-muted transition-colors hover:text-accent"
                   >
                     {t.nav[l.key]}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -180,13 +198,12 @@ export default function Footer() {
             <ul className="mt-6 flex flex-col gap-3">
               {t.services.items.map((svc, idx) => (
                 <li key={idx}>
-                  <a
-                    href="#services"
-                    onClick={go("services")}
+                  <Link
+                    href={`/services#service-0${idx + 1}`}
                     className="text-sm text-fg-muted transition-colors hover:text-fg"
                   >
                     {svc.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -199,44 +216,28 @@ export default function Footer() {
             </h4>
             <ul className="mt-6 flex flex-col gap-3">
               <li>
-                <a
-                  href="#products"
-                  onClick={go("products")}
+                <Link
+                  href="/#products"
+                  onClick={goHome("/#products")}
                   className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
                 >
                   <span>NATA</span>
                   <span className="mono text-[10px] text-ok border border-ok/30 rounded-full px-2 py-0.5">
                     ACTIVE
                   </span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#products"
-                  onClick={go("products")}
+                <Link
+                  href="/#products"
+                  onClick={goHome("/#products")}
                   className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
                 >
                   <span>██████</span>
                   <span className="mono text-[10px] text-fg-dim border border-line-strong rounded-full px-2 py-0.5">
                     STEALTH
                   </span>
-                </a>
-              </li>
-              <li className="pt-2 border-t border-line/60">
-                <a
-                  href="#terms"
-                  className="text-xs text-fg-dim transition-colors hover:text-fg"
-                >
-                  {f.terms}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#privacy"
-                  className="text-xs text-fg-dim transition-colors hover:text-fg"
-                >
-                  {f.privacy}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -271,7 +272,7 @@ export default function Footer() {
           {/* Back to top Link */}
           <a
             href="#top"
-            onClick={go("top")}
+            onClick={toTop}
             className="group inline-flex items-center gap-2 text-fg hover:text-accent transition-colors"
           >
             <span className="relative">
@@ -306,9 +307,9 @@ export default function Footer() {
       >
         {/* Base Glassy Translucent Text */}
         <span
-          className="inline-block bg-gradient-to-b from-white/[0.18] via-white/[0.04] to-transparent bg-clip-text text-transparent [filter:drop-shadow(0_12px_40px_rgba(0,0,0,0.9))]"
+          className="inline-block bg-gradient-to-b from-fg/[0.18] via-fg/[0.04] to-transparent bg-clip-text text-transparent [filter:drop-shadow(0_12px_40px_var(--shadow))]"
           style={{
-            WebkitTextStroke: "1px rgba(255, 255, 255, 0.12)",
+            WebkitTextStroke: "1px var(--hairline)",
           }}
         >
           LEMMA
