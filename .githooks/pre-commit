@@ -1,0 +1,50 @@
+#!/bin/sh
+# Local pre-commit checks for staged files. Plain POSIX sh, no dependencies.
+#
+# Opt-in. Git does not run this hook until you point it here:
+#   git config core.hooksPath .githooks
+# Disable it again:
+#   git config --unset core.hooksPath
+#
+# Checks, in order:
+#   1. prettier --list-different on staged ts, tsx, js, mjs, css, json, md.
+#      Advisory only: prints unformatted files and the fix command, never blocks.
+#   2. eslint on staged ts, tsx, js, mjs. Blocks the commit on failure.
+#   3. npm run typecheck. Blocks the commit on failure.
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Split lists on newlines only and do not glob, so file names pass through intact.
+IFS='
+'
+set -f
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+fmt=$(printf '%s\n' "$staged" | grep -E '\.(ts|tsx|js|mjs|css|json|md)$' || true)
+
+if [ -z "$fmt" ]; then
+  exit 0
+fi
+
+lint=$(printf '%s\n' "$fmt" | grep -E '\.(ts|tsx|js|mjs)$' || true)
+
+# Advisory: the repo is not reformatted yet, so this step only warns.
+if ! npx prettier --list-different $fmt; then
+  echo "pre-commit: the staged files above are not prettier-formatted. Commit continues."
+  echo "pre-commit: fix with: npx prettier --write <files above>"
+fi
+
+if [ -n "$lint" ]; then
+  if ! npx eslint $lint; then
+    echo "pre-commit: eslint failed. Fix the errors above, then commit again."
+    exit 1
+  fi
+fi
+
+if ! npm run typecheck; then
+  echo "pre-commit: typecheck failed. Fix the type errors above, then commit again."
+  exit 1
+fi
+
+exit 0
