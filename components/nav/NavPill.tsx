@@ -35,7 +35,7 @@ function LangToggle({ className = "" }: { className?: string }) {
             type="button"
             aria-pressed={locale === l}
             onClick={() => setLocale(l)}
-            className={`transition-colors ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}
+            className={`relative transition-colors after:absolute after:-inset-x-2 after:-inset-y-4 after:content-[''] ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}
           >
             [{l.toUpperCase()}]
           </button>
@@ -103,7 +103,7 @@ export default function NavPill() {
           href="/"
           onClick={go("top")}
           data-intro="fade"
-          className="pointer-events-auto text-[15px] font-light uppercase tracking-[0.18em]"
+          className="pointer-events-auto relative text-[15px] font-light uppercase tracking-[0.18em] after:absolute after:inset-x-0 after:-inset-y-2.5 after:content-['']"
           aria-label="LEMMA"
         >
           LEMMA
@@ -153,7 +153,7 @@ export default function NavPill() {
             type="button"
             aria-expanded={open}
             onClick={() => setOpen(true)}
-            className="btn btn-ghost !h-10"
+            className="btn btn-ghost relative !h-10 after:absolute after:-inset-0.5 after:content-['']"
           >
             {t.nav.menu}
           </button>

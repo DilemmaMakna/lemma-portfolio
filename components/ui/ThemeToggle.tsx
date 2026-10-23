@@ -28,7 +28,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       onClick={() => setTheme(next)}
       aria-label={label}
       title={label}
-      className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line-strong text-fg-muted transition-colors hover:border-accent hover:text-accent ${className}`}
+      className={`relative grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line-strong text-fg-muted transition-colors hover:border-accent hover:text-accent after:absolute after:-inset-0.5 after:content-[''] ${className}`}
     >
       {next === "light" ? (
         <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">

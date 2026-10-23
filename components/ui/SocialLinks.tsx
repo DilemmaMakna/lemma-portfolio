@@ -63,7 +63,8 @@ export default function SocialLinks({ label = false, size = "md", className = ""
   const items = socials.filter((s) => s.href);
   if (items.length === 0) return null;
 
-  const box = size === "sm" ? "h-9 w-9" : "h-11 w-11";
+  // sm 36px: area sentuh diperluas 4px per sisi lewat ::after (visual tetap).
+  const box = size === "sm" ? "h-9 w-9 after:absolute after:-inset-1 after:content-['']" : "h-11 w-11";
 
   return (
     <div className={className}>
@@ -77,7 +78,7 @@ export default function SocialLinks({ label = false, size = "md", className = ""
               rel="noopener noreferrer"
               aria-label={`Lemma — ${s.label}`}
               data-social={s.key}
-              className={`inline-flex ${box} items-center justify-center rounded-full border border-accent/60 text-accent transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-on-accent`}
+              className={`relative inline-flex ${box} items-center justify-center rounded-full border border-accent/60 text-accent transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-on-accent`}
             >
               <Icon name={s.key} />
             </a>
