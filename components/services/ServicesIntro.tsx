@@ -2,7 +2,8 @@
 
 import { Fragment, useRef, useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { gsap, SplitText, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { SplitText } from "gsap/SplitText";
 import { useServicesCopy } from "./useServicesCopy";
 
 type Measured = { mid: number; right: number; w: number; h: number } | null;
@@ -34,6 +35,7 @@ export default function ServicesIntro() {
       const el = text.current;
       const box = wrap.current;
       if (!el || !box) return;
+      gsap.registerPlugin(SplitText);
 
       // Ukur posisi frasa (sebelum ada transform animasi) untuk menaruh anotasi di margin kanan.
       const measure = () => {
@@ -249,9 +251,7 @@ export default function ServicesIntro() {
                 ) : (
                   <span className="flex items-center gap-2">
                     <span className={pill}>font-instrument-serif</span>
-                    <span className={`${pill} text-accent`}>
-                      {m ? `${m.w} × ${m.h}` : ""}
-                    </span>
+                    <span className={`${pill} text-accent`}>{m ? `${m.w} × ${m.h}` : ""}</span>
                   </span>
                 )}
               </div>
