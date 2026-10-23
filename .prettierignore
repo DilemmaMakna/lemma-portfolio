@@ -1,7 +1,0 @@
-.next
-node_modules
-docs/lighthouse/raw
-package-lock.json
-bun.lock
-lib/work-photos.ts
-public
