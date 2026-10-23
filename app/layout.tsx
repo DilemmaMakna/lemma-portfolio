@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { generalSans, mono, serif } from "./fonts";
 import { Providers } from "@/components/Providers";
+import { env } from "@/lib/env";
 import { messages } from "@/lib/messages";
 import { SITE, siteJsonLd, ld } from "@/lib/site";
 import "./globals.css";
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   // Isi GOOGLE_SITE_VERIFICATION di Vercel dengan token dari Google Search Console (metode "HTML tag").
-  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  verification: { google: env.googleSiteVerification },
   openGraph: {
     title: "The work before the work.",
     description: messages.en.meta.description,

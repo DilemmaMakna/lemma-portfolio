@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { env } from "@/lib/env";
 
 // Form kontak -> webhook (CONTACT_WEBHOOK_URL, mis. Make/Zapier/n8n/Formspree yang meneruskan ke email).
 // Lapisan perlindungan, semuanya tanpa dependensi tambahan:
@@ -85,7 +86,7 @@ export async function POST(request: Request) {
     data.message.length > MAX.message;
   if (invalid) return fail(400);
 
-  const webhook = process.env.CONTACT_WEBHOOK_URL;
+  const webhook = env.contactWebhookUrl;
   if (!webhook) {
     console.error("CONTACT_WEBHOOK_URL is not set; offering email fallback.");
     return fail(503, { fallback: "email" });
