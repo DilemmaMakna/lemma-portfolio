@@ -20,7 +20,9 @@ export default function WorkExplorer() {
 
   const list = useMemo(() => (filter ? projects.filter((p) => p.category === filter) : projects), [filter]);
   const openable = useMemo(() => list.filter(isOpenable), [list]);
-  const chips = CATEGORIES.map((c) => ({ c, count: projects.filter((p) => p.category === c).length })).filter((x) => x.count);
+  const chips = CATEGORIES.map((c) => ({ c, count: projects.filter((p) => p.category === c).length })).filter(
+    (x) => x.count,
+  );
 
   const open = useCallback((slug: string) => {
     setOpenSlug(slug);
@@ -48,8 +50,11 @@ export default function WorkExplorer() {
     <>
       <section id="work" className="bg-bg" aria-label={w.hero.eyebrow}>
         <div className="wrap">
-          <div className="mb-6 flex flex-col gap-4 border-t border-line pt-6 md:flex-row md:items-center md:justify-between" data-reveal>
-            <div className="flex flex-wrap gap-2" role="group" aria-label={w.index.cols.category}>
+          <div
+            className="mb-6 flex flex-col gap-4 border-t border-line pt-6 md:flex-row md:items-center md:justify-between"
+            data-reveal
+          >
+            <div className="relative z-10 flex flex-wrap gap-2" role="group" aria-label={w.index.cols.category}>
               {[{ c: null, count: projects.length }, ...chips].map(({ c, count }) => {
                 const on = filter === c;
                 return (
@@ -58,8 +63,10 @@ export default function WorkExplorer() {
                     type="button"
                     aria-pressed={on}
                     onClick={() => setFilter(c)}
-                    className={`mono mono-2xs flex items-center gap-2 rounded-full border px-3.5 py-2 transition-colors ${
-                      on ? "border-accent text-accent" : "border-line-strong text-fg-muted hover:border-fg-dim hover:text-fg"
+                    className={`relative mono mono-2xs flex items-center gap-2 rounded-full border px-3.5 py-2 transition-colors after:absolute after:inset-x-0 after:-inset-y-[7px] after:content-[''] ${
+                      on
+                        ? "border-accent text-accent"
+                        : "border-line-strong text-fg-muted hover:border-fg-dim hover:text-fg"
                     }`}
                   >
                     {c ?? w.filters.all}
@@ -107,15 +114,27 @@ export default function WorkExplorer() {
                       <i />
                       {w.status[p.status]}
                     </span>
-                    {can && <span aria-hidden="true" className="text-fg-dim transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent">↗</span>}
+                    {can && (
+                      <span
+                        aria-hidden="true"
+                        className="text-fg-dim transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                      >
+                        ↗
+                      </span>
+                    )}
                   </span>
                 </>
               );
-              const cls = "grid w-full grid-cols-4 items-center gap-x-6 gap-y-3 border-b border-line py-5 text-left md:grid-cols-12 md:py-6";
+              const cls =
+                "grid w-full grid-cols-4 items-center gap-x-6 gap-y-3 border-b border-line py-5 text-left md:grid-cols-12 md:py-6";
               return (
                 <li key={p.slug} data-reveal>
                   {can ? (
-                    <button type="button" onClick={() => open(p.slug)} className={`group ${cls} transition-colors hover:bg-bg-raised`}>
+                    <button
+                      type="button"
+                      onClick={() => open(p.slug)}
+                      className={`group ${cls} transition-colors hover:bg-bg-raised`}
+                    >
                       {row}
                     </button>
                   ) : (
@@ -127,7 +146,10 @@ export default function WorkExplorer() {
           </ul>
 
           {/* Penutup halaman: variasi CTA dengan tanda akhir bukti. */}
-          <div className="mt-24 flex flex-col items-start gap-8 md:mt-32 md:flex-row md:items-end md:justify-between" data-reveal>
+          <div
+            className="mt-24 flex flex-col items-start gap-8 md:mt-32 md:flex-row md:items-end md:justify-between"
+            data-reveal
+          >
             <div>
               <span className="mono text-accent">∎</span>
               <h2 className="h-section mt-4 max-w-[16ch]">{w.detail.cta}</h2>
