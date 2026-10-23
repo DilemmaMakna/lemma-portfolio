@@ -106,7 +106,15 @@ export function pageMeta(path: string, title: string, description: string): Meta
     title: { absolute: title },
     description,
     alternates: { canonical: path },
-    openGraph: { title, description, url: path, siteName: "Lemma", type: "website", locale: "en_US" },
-    twitter: { card: "summary_large_image", title, description },
+    openGraph: {
+      title,
+      description,
+      url: path,
+      siteName: "Lemma",
+      type: "website",
+      locale: "en_US",
+      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${ORG.name} | ${ORG.tagline}` }],
+    },
+    twitter: { card: "summary_large_image", title, description, images: ["/twitter-image"] },
   };
 }
