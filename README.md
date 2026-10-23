@@ -11,6 +11,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Bun is also supported (`bun.lock` is committed). npm stays supported with `package-lock.json`.
+
+| npm | bun |
+|---|---|
+| `npm install` | `bun install` |
+| `npm run dev` | `bun run dev` |
+| `npm run build` | `bun run build` |
+| `npm run lint` | `bun run lint` |
+
 ## Scripts
 
 | Command | What it does |
