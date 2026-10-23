@@ -7,16 +7,18 @@ import ServiceList from "@/components/services/ServiceList";
 import Engagement from "@/components/services/Engagement";
 import ServicesCta from "@/components/services/ServicesCta";
 import Footer from "@/components/home/Footer";
+import { pageMeta, pageJsonLd } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Layanan — Lemma",
-  description:
-    "Brand, UX & HCI, engineering, AI & data, serta strategi dan sistem. Dirancang dalam satu alur oleh Lemma.",
-};
+const TITLE = "Services | Lemma";
+const DESC =
+  "Brand identity, UX & HCI, engineering, AI & data, and strategy & systems. Designed as one flow by Lemma.";
+export const metadata: Metadata = pageMeta("/services", TITLE, DESC);
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={pageJsonLd({ path: "/services", name: "Services", description: DESC, type: "WebPage" })} />
       <NavPill />
       <PageAnimations>
         <main>

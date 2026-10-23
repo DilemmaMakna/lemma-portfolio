@@ -22,10 +22,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploy (Vercel)
 
-Set one environment variable in Vercel (Project → Settings → Environment Variables):
+Set these environment variables in Vercel (Project → Settings → Environment Variables):
 
 | Variable | Purpose |
 |---|---|
+| `NEXT_PUBLIC_SITE_URL` | Production origin used for canonical URLs, sitemap, JSON-LD and `/llms.txt` (default `https://lemma.studio`). |
+| `GOOGLE_SITE_VERIFICATION` | Token from Google Search Console ("HTML tag" method). Rendered as `<meta name="google-site-verification">`. |
 | `CONTACT_WEBHOOK_URL` | Where the contact form is forwarded (e.g. a Make, Zapier, n8n or Formspree webhook that emails you). Server-only; never exposed to the browser. |
 
 Without it the form does not lose messages: it shows a pre-filled `mailto:` link instead.

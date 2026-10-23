@@ -443,7 +443,7 @@ export const isOpenable = (p: Project) => p.status !== "stealth";
 
 const id = {
   meta: {
-    title: "Karya — Lemma",
+    title: "Karya | Lemma",
     description: "Proyek klien dan produk sendiri dari Lemma: identitas visual, produk digital, sistem, dan data.",
   },
   hero: {
@@ -484,7 +484,7 @@ export type WorkCopy = typeof id;
 
 const en: WorkCopy = {
   meta: {
-    title: "Work — Lemma",
+    title: "Work | Lemma",
     description: "Client projects and our own products from Lemma: visual identity, digital products, systems, and data.",
   },
   hero: {

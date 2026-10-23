@@ -16,7 +16,7 @@ const LINKS = [
   { key: "about", href: "/about" },
   { key: "services", href: "/services" },
   { key: "products", id: "products" },
-  { key: "contact", id: "contact" },
+  { key: "contact", href: "/contact" },
 ] as const;
 
 const hrefOf = (l: (typeof LINKS)[number]) => ("href" in l ? l.href : `/#${l.id}`);
