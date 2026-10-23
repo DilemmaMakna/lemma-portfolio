@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
@@ -24,10 +25,23 @@ export default function Products() {
                 key={i}
                 data-reveal
                 className={`group flex min-h-[22rem] flex-col justify-between rounded-[4px] border border-line bg-surface p-6 transition-colors duration-500 md:p-8 ${
-                  stealth ? "" : "hover:border-line-strong hover:bg-surface-2"
+                  stealth ? "relative overflow-hidden" : "hover:border-line-strong hover:bg-surface-2"
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
+                {stealth ? (
+                  <Image
+                    src="/dithered/products-stealth.webp"
+                    width={640}
+                    height={640}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    loading="lazy"
+                    alt=""
+                    aria-hidden="true"
+                    unoptimized
+                    className="dither-art pointer-events-none absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : null}
+                <div className="relative flex items-start justify-between gap-4">
                   <span className="mono text-fg-dim">0{i + 1}</span>
                   <span className={`badge ${stealth ? "" : "is-active"}`}>
                     <i />
@@ -35,21 +49,19 @@ export default function Products() {
                   </span>
                 </div>
 
-                <div className="my-10">
+                <div className="relative my-10">
                   <h3 className="text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-none tracking-[-0.04em]">
-                    {stealth ? (
-                      <Redacted className="text-fg-dim" />
-                    ) : (
-                      it.name
-                    )}
+                    {stealth ? <Redacted className="text-fg-dim" /> : it.name}
                   </h3>
                   <p className="mt-5 max-w-[34ch] text-fg-muted">{it.desc}</p>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="relative flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap gap-2">
                     {it.tags.map((tg) => (
-                      <span key={tg} className="tag">{tg}</span>
+                      <span key={tg} className="tag">
+                        {tg}
+                      </span>
                     ))}
                   </div>
                   <Button
