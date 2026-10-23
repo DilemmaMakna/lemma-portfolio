@@ -172,8 +172,53 @@ Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node sc
 
 See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layers and folder rules.
 
+## Architecture and Design Tokens
+
+Routes live in `app/`, feature components in `components/<feature>/`, and non-visual code (configuration, text, data, helpers) in `lib/`. Dependencies point one way: components depend on `lib/`, and `lib/` never imports from `components/`. The full rules are in [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+Design tokens are defined only in `app/styles/tokens.css`. The layer utilities `z-grain`, `z-overlay`, `z-modal`, `z-transition`, `z-preloader` and `z-cursor` map to `--z-index-*` tokens. The type scale is used through `text-ds-*` utilities (`--text-ds-xs` to `--text-ds-2xl`), because the bare `--text-xs` to `--text-2xl` names collide with Tailwind defaults. Components use these utilities or `var(--name)` instead of new color values or numeric z-index values.
+
 ## Content and Design
 
 - Copy source: `.copywriting/lemma_home_copywriting.md`. Keep text in `lib/` (shared and home copy in `lib/messages.ts`, section copy in `lib/about.ts`, `lib/contact.ts`, `lib/services.ts` and `lib/work.ts`) and do not hardcode strings in components.
 - Design brief: `.agents/DESIGN.md`. Dark by default with a light theme override, one orange accent, mono labels.
 - Public pages must not show the full name or technical details of the ARAH product.
+
+## Performance, SEO and Lighthouse
+
+Scores are from [after-art.md](docs/lighthouse/after-art.md), a lab run on 2026-10-23 with `scripts/lighthouse.sh` (one run per page, fresh profile). They are not 100 on every page.
+
+| Page               | Performance | Accessibility | Best Practices | SEO | LCP   |
+| ------------------ | ----------- | ------------- | -------------- | --- | ----- |
+| Home (mobile)      | 86          | 100           | 100            | 100 | 4.18s |
+| About (mobile)     | 88          | 96            | 100            | 100 | 3.80s |
+| Services (mobile)  | 87          | 96            | 100            | 100 | 3.85s |
+| Work (mobile)      | 85          | 92            | 100            | 100 | 4.26s |
+| Contact (mobile)   | 92          | 96            | 100            | 100 | 3.41s |
+| Home (desktop)     | 98          | 100           | 100            | 100 | 1.03s |
+| About (desktop)    | 100         | 100           | 100            | 100 | 0.80s |
+| Services (desktop) | 99          | 96            | 100            | 100 | 0.82s |
+| Work (desktop)     | 99          | 96            | 100            | 100 | 0.99s |
+| Contact (desktop)  | 99          | 96            | 100            | 100 | 0.82s |
+
+Best Practices and SEO are 100 on all 10 pages. Accessibility is 100 on 3 pages and 92 to 96 on the rest. Performance is 100 on About (desktop), 98 to 99 on the other desktop pages and 85 to 92 on mobile. CLS is 0.000 on all pages.
+
+Mobile LCP is the gap: 3.41s to 4.26s against 0.80s to 1.03s on desktop. The LCP copy stays hidden until hydration and the intro fade finish, which accounts for most of the mobile render delay (about 2 s in the audit data, not measured in a trace). See [fixes.md](docs/lighthouse/fixes.md) for the LCP elements and [after-perf.md](docs/lighthouse/after-perf.md) for the open audits.
+
+### SEO
+
+- **Metadata**: `pageMeta()` in `lib/site.ts` sets the title, description and Open Graph data for each page route.
+- **Canonical URLs**: `alternates.canonical` in `pageMeta()` and in the root layout.
+- **Sitemap**: `app/sitemap.ts`, served at `/sitemap.xml`.
+- **Robots**: `app/robots.ts`, which allows `/`, disallows `/api/` and points to the sitemap.
+- **Manifest**: `app/manifest.ts`.
+- **Open Graph and Twitter images**: `app/opengraph-image.tsx` and `app/twitter-image.tsx`.
+- **JSON-LD**: `siteJsonLd` and `pageJsonLd` in `lib/site.ts`, rendered by `components/JsonLd.tsx`.
+- **LLM routes**: `app/llms.txt/route.ts` and `app/llms-full.txt/route.ts`.
+- **Markdown index**: `app/index.md/route.ts`, with the same content as `llms-full.txt`.
+
+## Best Practices
+
+[docs/BEST_PRACTICES.md](docs/BEST_PRACTICES.md) is a checklist of speed, SEO and developer experience practices, each with its status and code location.
+
+Sourcing: only the static rendering of content sites, the SEO and accessibility deep dive and the layered architecture points come from the [GreatFrontEnd front-end system design playbook](https://www.greatfrontend.com/front-end-system-design-playbook/framework). The rest is standard practice that is not verified against GreatFrontEnd.
