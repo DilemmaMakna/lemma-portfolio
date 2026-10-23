@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "next analyze",
     "start": "next start",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
