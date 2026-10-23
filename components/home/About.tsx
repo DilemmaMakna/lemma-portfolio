@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
@@ -17,9 +18,26 @@ export default function About() {
             <h2 id="about-title" data-reveal="title" className="h-section max-w-[18ch]">
               {a.title}
             </h2>
-            <p data-reveal className="lead mt-8 max-w-[52ch]">{a.body}</p>
+            <p data-reveal className="lead mt-8 max-w-[52ch]">
+              {a.body}
+            </p>
             <div className="mt-10" data-reveal>
-              <Button variant="ghost" href="/about">{a.link}</Button>
+              <Button variant="ghost" href="/about">
+                {a.link}
+              </Button>
+            </div>
+            <div data-reveal className="relative mt-12 aspect-[5/2] overflow-hidden rounded-[4px] border border-line">
+              <Image
+                src="/dithered/about-atmosphere.webp"
+                width={960}
+                height={384}
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                loading="lazy"
+                alt=""
+                aria-hidden="true"
+                unoptimized
+                className="dither-art pointer-events-none absolute inset-0 h-full w-full object-cover"
+              />
             </div>
           </div>
 
