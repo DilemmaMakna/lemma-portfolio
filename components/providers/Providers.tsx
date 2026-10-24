@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useLocale } from "./LocaleProvider";
-import SmoothScroll from "@/components/SmoothScroll";
+import SmoothScroll from "@/components/layout/SmoothScroll";
 import Cursor from "@/components/ui/Cursor";
 import PageTransition from "@/components/ui/PageTransition";
 import { LocaleProvider } from "./LocaleProvider";

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import NavPill from "@/components/nav/NavPill";
-import PageAnimations from "@/components/PageAnimations";
+import PageAnimations from "@/components/layout/PageAnimations";
 import ContactPage from "@/components/contact/ContactPage";
 import Footer from "@/components/home/Footer";
-import JsonLd from "@/components/JsonLd";
+import JsonLd from "@/components/layout/JsonLd";
 import { contactMessages } from "@/lib/content/contact";
 import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 

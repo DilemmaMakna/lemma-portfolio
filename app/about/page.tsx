@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import NavPill from "@/components/nav/NavPill";
-import PageAnimations from "@/components/PageAnimations";
+import PageAnimations from "@/components/layout/PageAnimations";
 import AboutHero from "@/components/about/AboutHero";
 import Who from "@/components/about/Who";
 import Beliefs from "@/components/about/Beliefs";
@@ -9,7 +9,7 @@ import Name from "@/components/about/Name";
 import AboutCta from "@/components/about/AboutCta";
 import Footer from "@/components/home/Footer";
 import { pageMeta, pageJsonLd } from "@/lib/seo/site";
-import JsonLd from "@/components/JsonLd";
+import JsonLd from "@/components/layout/JsonLd";
 
 const TITLE = "About Us | Lemma";
 const DESC =
