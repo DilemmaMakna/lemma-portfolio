@@ -7,7 +7,7 @@ import ServiceList from "@/components/services/ServiceList";
 import Engagement from "@/components/services/Engagement";
 import ServicesCta from "@/components/services/ServicesCta";
 import Footer from "@/components/home/Footer";
-import { pageMeta, pageJsonLd } from "@/lib/site";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 import JsonLd from "@/components/JsonLd";
 
 const TITLE = "Services | Lemma";

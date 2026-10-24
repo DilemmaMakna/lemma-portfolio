@@ -3,7 +3,7 @@ import { generalSans, mono, serif } from "@/lib/fonts";
 import { Providers } from "@/components/Providers";
 import { env } from "@/lib/env";
 import { messages } from "@/lib/content/messages";
-import { SITE, siteJsonLd, ld } from "@/lib/site";
+import { SITE, siteJsonLd, ld } from "@/lib/seo/site";
 import "./globals.css";
 
 export const metadata: Metadata = {

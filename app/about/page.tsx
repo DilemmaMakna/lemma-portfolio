@@ -8,7 +8,7 @@ import Model from "@/components/about/Model";
 import Name from "@/components/about/Name";
 import AboutCta from "@/components/about/AboutCta";
 import Footer from "@/components/home/Footer";
-import { pageMeta, pageJsonLd } from "@/lib/site";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 import JsonLd from "@/components/JsonLd";
 
 const TITLE = "About Us | Lemma";

@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { ORG, SITE } from "@/lib/site";
+import { ORG, SITE } from "@/lib/seo/site";
 
 // Warna dari .agents/DESIGN.md: --bg, --fg, --fg-dim, --accent.
 export const alt = `${ORG.name} | ${ORG.tagline}`;

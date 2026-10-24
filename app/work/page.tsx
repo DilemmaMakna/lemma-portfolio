@@ -5,7 +5,7 @@ import WorkHero from "@/components/work/WorkHero";
 import WorkExplorer from "@/components/work/WorkExplorer";
 import Footer from "@/components/home/Footer";
 import { workMessages } from "@/lib/content/work";
-import { pageMeta, pageJsonLd } from "@/lib/site";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 import JsonLd from "@/components/JsonLd";
 
 export const metadata: Metadata = pageMeta("/work", workMessages.en.meta.title, workMessages.en.meta.description);

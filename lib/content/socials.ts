@@ -1,4 +1,4 @@
-// Satu-satunya tempat akun media sosial Lemma. Dipakai oleh components/ui/SocialLinks.tsx dan JSON-LD (lib/site.ts).
+// Satu-satunya tempat akun media sosial Lemma. Dipakai oleh components/ui/SocialLinks.tsx dan JSON-LD (lib/seo/site.ts).
 // Entri dengan href kosong ("") otomatis tidak ditampilkan. X dikosongkan sampai akunnya ada.
 export type SocialKey = "instagram" | "linkedin" | "threads" | "x";
 

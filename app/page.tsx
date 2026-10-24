@@ -10,7 +10,7 @@ import About from "@/components/home/About";
 import ContactCta from "@/components/home/ContactCta";
 import Footer from "@/components/home/Footer";
 import JsonLd from "@/components/JsonLd";
-import { pageMeta, pageJsonLd } from "@/lib/site";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 import { messages } from "@/lib/content/messages";
 
 export const metadata = pageMeta("/", messages.en.meta.title, messages.en.meta.description);

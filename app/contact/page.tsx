@@ -5,7 +5,7 @@ import ContactPage from "@/components/contact/ContactPage";
 import Footer from "@/components/home/Footer";
 import JsonLd from "@/components/JsonLd";
 import { contactMessages } from "@/lib/content/contact";
-import { pageMeta, pageJsonLd } from "@/lib/site";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
 
 const { title, description } = contactMessages.en.meta;
 export const metadata: Metadata = pageMeta("/contact", title, description);
