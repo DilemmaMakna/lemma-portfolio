@@ -1,4 +1,4 @@
-import { llmsFull } from "@/lib/llms";
+import { llmsFull } from "@/lib/seo/llms";
 
 // /index.md: versi Markdown lengkap situs (isi sama dengan /llms-full.txt), dibangun dari data situs.
 export function GET() {
