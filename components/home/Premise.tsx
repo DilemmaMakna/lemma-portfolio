@@ -1,8 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
-import AsciiShape from "./AsciiShape";
+
+// Client-only: the ASCII box is empty in SSR. The placeholder reserves the same height
+// (22 rows x 1.15 line-height x scale 2, plus the mt-4 label) so nothing shifts on mount.
+const AsciiShape = dynamic(() => import("./AsciiShape"), {
+  ssr: false,
+  loading: () => (
+    <div aria-hidden="true">
+      <div
+        className="font-mono leading-[1.15] text-[6px] min-[400px]:text-[7px] sm:text-[9px] lg:text-[clamp(7px,0.95svh,10px)]"
+        style={{ height: "50.6em" }}
+      />
+      <p className="mt-4" />
+    </div>
+  ),
+});
 
 export default function Premise() {
   const { t } = useLocale();

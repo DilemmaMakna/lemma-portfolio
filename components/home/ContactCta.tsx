@@ -1,11 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
-import AsciiPrompt from "./AsciiPrompt";
+
+// Client-only. Absolutely positioned and hidden below lg, so it needs no placeholder.
+const AsciiPrompt = dynamic(() => import("./AsciiPrompt"), { ssr: false });
 
 export default function ContactCta() {
   const { t } = useLocale();
