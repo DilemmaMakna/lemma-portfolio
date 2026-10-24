@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { useLocale } from "./LocaleProvider";
 import SmoothScroll from "@/components/layout/SmoothScroll";
-import Cursor from "@/components/ui/Cursor";
 import PageTransition from "@/components/ui/PageTransition";
 import { LocaleProvider } from "./LocaleProvider";
 import { reducedMotion } from "@/lib/motion/gsap";
@@ -50,7 +49,6 @@ function Shell({ children }: { children: React.ReactNode }) {
         </span>
       </div>
       <div className="grain" aria-hidden="true" />
-      <Cursor />
       <PageTransition />
       <div id="page">{children}</div>
     </>

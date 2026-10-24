@@ -12,7 +12,7 @@ Routes live in `app/`. Components are grouped by the page or feature they belong
 - `components/home/`: sections of the home page, such as `Hero.tsx`, `Premise.tsx`, `Process.tsx`, `Services.tsx`, `SelectedWork.tsx`, `Products.tsx`, `About.tsx`, `ContactCta.tsx` and `Footer.tsx`.
 - `components/nav/`: site navigation (`NavPill.tsx`).
 - `components/about/`, `components/services/`, `components/work/` and `components/contact/`: sections for each page. Several of these folders also hold a small copy hook, such as `components/about/useAboutCopy.ts`.
-- `components/ui/`: shared pieces used by more than one feature, such as `Button.tsx`, `ContactForm.tsx`, `ThemeToggle.tsx`, `Cursor.tsx` and `PageTransition.tsx`. Code in `components/ui/` must not import from a feature folder.
+- `components/ui/`: shared pieces used by more than one feature, such as `Button.tsx`, `ContactForm.tsx`, `ThemeToggle.tsx` and `PageTransition.tsx`. Code in `components/ui/` must not import from a feature folder.
 - `components/providers/`: app-wide providers, `Providers.tsx` and `LocaleProvider.tsx`.
 - `components/layout/`: page-level helpers, `SmoothScroll.tsx`, `PageAnimations.tsx` and `JsonLd.tsx`.
 - `lib/`: non-visual code. It holds configuration, text, data and helpers. `lib/content/` holds copy and data, `lib/motion/` holds GSAP, Lenis and intro setup, `lib/seo/` holds metadata, JSON-LD and the LLM text, and `lib/ui/` holds the theme and topography helpers. `lib/env.ts` and `lib/fonts.ts` (with its font file in `lib/fonts/`) sit at the top. See the layers section below.
@@ -50,7 +50,7 @@ Read environment variables only in `lib/env.ts`. That module parses and checks t
 Define design tokens only in `app/styles/tokens.css`. Components use the generated Tailwind utilities or `var(--name)`. Do not write new color values or a numeric `z-index` in a component.
 
 - **Colors and theme**: base values are set in `:root`. Light theme values are set in `html[data-theme="light"]`.
-- **Layers**: use the z-index utilities `z-grain`, `z-overlay`, `z-modal`, `z-transition`, `z-preloader` and `z-cursor`. Each one maps to a `--z-index-*` token.
+- **Layers**: use the z-index utilities `z-grain`, `z-overlay`, `z-modal`, `z-transition` and `z-preloader`. Each one maps to a `--z-index-*` token.
 - **Type scale**: use the `text-ds-*` utilities (`--text-ds-xs` to `--text-ds-2xl`). The bare names `--text-xs` to `--text-2xl` collide with Tailwind defaults, so they are kept only as the source of the aliases.
 - **Other tokens**: spacing (`--spacing-gutter`, `--spacing-margin`), easing (`--ease-out-expo`) and radius are also defined there.
 

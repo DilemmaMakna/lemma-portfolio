@@ -77,7 +77,7 @@ function Frame({
 }) {
   const photos = pick.map((i) => p.photos[i]).filter(Boolean);
   return (
-    <div className={`relative flex w-full gap-2 overflow-hidden ${aspect}`} data-cursor-label={view.toUpperCase()}>
+    <div className={`relative flex w-full gap-2 overflow-hidden ${aspect}`}>
       {photos.map((ph, i) => (
         <div
           key={ph.src}

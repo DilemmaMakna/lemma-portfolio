@@ -77,7 +77,6 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
       <button
         type="button"
         onClick={open}
-        data-cursor-label={w.tile.open.toUpperCase()}
         className="group relative block w-full overflow-hidden rounded-[4px]"
         style={{ backgroundColor: t.photo.color }}
       >
@@ -130,7 +129,6 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
       <button
         type="button"
         onClick={open}
-        data-cursor-label={w.tile.open.toUpperCase()}
         className="group relative flex min-h-[16rem] w-full flex-col justify-end overflow-hidden rounded-[4px] border border-line bg-surface pt-24 text-left sm:min-h-[20rem]"
       >
         <AsciiCover

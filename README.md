@@ -161,7 +161,7 @@ Put raw PNG/JPG files in `public/images/work-photos/<project-slug>/`, then run `
 - `app/(machine)/` - machine-readable routes: `llms.txt`, `llms-full.txt` and `index.md` (the group name is not part of the URL)
 - `components/providers/` - app-wide providers: `Providers.tsx` and `LocaleProvider.tsx`
 - `components/layout/` - page-level helpers: `SmoothScroll.tsx`, `PageAnimations.tsx` and `JsonLd.tsx`
-- `components/ui/` - shared pieces such as `Button.tsx`, `ContactForm.tsx` and `Cursor.tsx`
+- `components/ui/` - shared pieces such as `Button.tsx` and `ContactForm.tsx`
 - `components/nav/` - floating nav pill
 - `components/home/`, `components/about/`, `components/services/`, `components/work/`, `components/contact/` - sections for each page
 - `lib/content/` - copy and data: `messages.ts` (shared and home copy, ID and EN), the section copy files, `socials.ts` and `work-photos.ts`
@@ -181,7 +181,7 @@ See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layers and folder rules.
 
 Routes live in `app/`, feature components in `components/<feature>/`, and non-visual code (configuration, text, data, helpers) in `lib/`. Dependencies point one way: components depend on `lib/`, and `lib/` never imports from `components/`. The full rules are in [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-Design tokens are defined only in `app/styles/tokens.css`. The layer utilities `z-grain`, `z-overlay`, `z-modal`, `z-transition`, `z-preloader` and `z-cursor` map to `--z-index-*` tokens. The type scale is used through `text-ds-*` utilities (`--text-ds-xs` to `--text-ds-2xl`), because the bare `--text-xs` to `--text-2xl` names collide with Tailwind defaults. Components use these utilities or `var(--name)` instead of new color values or numeric z-index values.
+Design tokens are defined only in `app/styles/tokens.css`. The layer utilities `z-grain`, `z-overlay`, `z-modal`, `z-transition` and `z-preloader` map to `--z-index-*` tokens. The type scale is used through `text-ds-*` utilities (`--text-ds-xs` to `--text-ds-2xl`), because the bare `--text-xs` to `--text-2xl` names collide with Tailwind defaults. Components use these utilities or `var(--name)` instead of new color values or numeric z-index values.
 
 ## Content and Design
 

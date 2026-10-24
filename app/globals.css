@@ -292,39 +292,6 @@ html.is-loading .preloader {
   display: flex;
 }
 
-/* Custom cursor (fine pointers only) */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: var(--z-index-cursor);
-  pointer-events: none;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--on-accent);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
-  overflow: hidden;
-  white-space: nowrap;
-}
-@media (hover: hover) and (pointer: fine) {
-  .cursor {
-    display: flex;
-  }
-  html.has-cursor,
-  html.has-cursor a,
-  html.has-cursor button {
-    cursor: none;
-  }
-}
-
 /* Marquee-free helpers */
 .stealth-block {
   animation: stealth 2.4s ease-in-out infinite;

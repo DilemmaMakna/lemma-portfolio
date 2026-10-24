@@ -479,7 +479,7 @@ components/
   layout/ (SmoothScroll, PageAnimations, JsonLd)
   nav/ (NavPill, LangToggle, MobileMenu)
   home/ (Hero, Premise, Process, Services, SelectedWork, Products, About, ContactCta)
-  ui/ (Button, Tag, Badge, SectionLabel, Accordion, Cursor, PixelReveal, DotGrid, Grain)
+  ui/ (Button, Tag, Badge, SectionLabel, Accordion, PixelReveal, DotGrid, Grain)
 lib/
   motion/ (intro, gsap, lenis), split.ts
   fonts.ts, fonts/
