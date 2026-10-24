@@ -28,7 +28,7 @@ export default function About() {
             </div>
             <div data-reveal className="relative mt-12 aspect-[3/2] overflow-hidden rounded-[4px] border border-line">
               <Image
-                src="/dithered/hand-collab.webp"
+                src="/images/dithered/hand-collab.webp"
                 width={1600}
                 height={1067}
                 sizes="(min-width: 1024px) 58vw, 100vw"

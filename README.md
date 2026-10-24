@@ -153,7 +153,7 @@ The contact API accepts same-origin JSON only, rate-limits requests per IP, and 
 
 ## Work Photos
 
-Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. The script converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
+Put raw PNG/JPG files in `public/images/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. The script converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
 
 ## Project Structure
 
@@ -164,7 +164,7 @@ Put raw PNG/JPG files in `public/work-photos/<project-slug>/`, then run `node sc
 - `components/ui/` - shared pieces such as `Button.tsx`, `ContactForm.tsx` and `Cursor.tsx`
 - `components/` - app-wide wrappers such as `Providers.tsx`, `LocaleProvider.tsx` and `JsonLd.tsx`
 - `lib/` - non-visual code: `env.ts` (typed env), `messages.ts` (shared and home copy, ID and EN), `site.ts` (metadata and JSON-LD), GSAP, Lenis and intro setup, and `work-photos.ts`
-- `public/` - logo, `work-photos/` and `dithered/`
+- `public/` - logo, `images/work-photos/` and `images/dithered/`
 - `scripts/` - photo and Lighthouse scripts
 - `docs/` - architecture, contributing, best practices and Lighthouse reports
 - `.githooks/` - optional pre-commit hook

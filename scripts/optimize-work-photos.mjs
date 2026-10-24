@@ -2,7 +2,7 @@ import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = "public/work-photos";
+const ROOT = "public/images/work-photos";
 const OUT = "lib/work-photos.ts";
 const MAX_W = 1440;
 const QUALITY = 78;
@@ -51,7 +51,7 @@ for (const slug of fs.readdirSync(ROOT).sort()) {
     const fp = path.join(dir, f);
     const { width, height } = await sharp(fp).metadata();
     const { dominant: d } = await sharp(fp).stats();
-    photos.push({ src: `/work-photos/${slug}/${f}`, w: width, h: height, color: `#${hex(d.r)}${hex(d.g)}${hex(d.b)}` });
+    photos.push({ src: `/images/work-photos/${slug}/${f}`, w: width, h: height, color: `#${hex(d.r)}${hex(d.g)}${hex(d.b)}` });
   }
   if (photos.length) manifest[slug] = photos;
 }
