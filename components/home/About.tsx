@@ -1,9 +1,10 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import Image from "next/image";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { studioStats } from "@/lib/work";
+import { studioStats } from "@/lib/content/work";
 
 export default function About() {
   const { t } = useLocale();
@@ -17,9 +18,13 @@ export default function About() {
             <h2 id="about-title" data-reveal="title" className="h-section max-w-[18ch]">
               {a.title}
             </h2>
-            <p data-reveal className="lead mt-8 max-w-[52ch]">{a.body}</p>
+            <p data-reveal className="lead mt-8 max-w-[52ch]">
+              {a.body}
+            </p>
             <div className="mt-10" data-reveal>
-              <Button variant="ghost" href="/about">{a.link}</Button>
+              <Button variant="ghost" href="/about">
+                {a.link}
+              </Button>
             </div>
           </div>
 
@@ -37,6 +42,22 @@ export default function About() {
               </div>
             ))}
           </dl>
+        </div>
+        <div
+          data-reveal
+          className="relative mt-[clamp(3rem,8vw,6rem)] aspect-[3/2] overflow-hidden rounded-[4px] border border-line md:aspect-[5/2]"
+        >
+          <Image
+            src="/images/dithered/hand-collab.webp"
+            width={1600}
+            height={1067}
+            sizes="(min-width: 1440px) 1320px, 100vw"
+            loading="lazy"
+            alt=""
+            aria-hidden="true"
+            unoptimized
+            className="block h-full w-full object-cover object-[50%_55%]"
+          />
         </div>
       </div>
     </section>

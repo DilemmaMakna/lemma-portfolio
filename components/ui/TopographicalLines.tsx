@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { reducedMotion } from "@/lib/gsap";
+import { reducedMotion } from "@/lib/motion/gsap";
 import {
   INDEX_EVERY,
   LEVELS,
@@ -17,7 +17,7 @@ import {
   type Label,
   type Route,
   type Shaped,
-} from "@/lib/topography";
+} from "@/lib/ui/topography";
 
 // Metafora "masalah yang belum punya bentuk": pusat peta sudah terdefinisi (kontur utuh,
 // elevasi terukur); ke arah tepi kontur putus jadi serpihan lalu tinggal titik survei dengan

@@ -1,10 +1,11 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import Image from "next/image";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import Button from "@/components/ui/Button";
 import DotGrid from "@/components/ui/DotGrid";
 import { useContactModal } from "@/components/ui/ContactModal";
-import { scrollToId } from "@/lib/lenis";
+import { scrollToId } from "@/lib/motion/lenis";
 
 export default function Hero() {
   const { t } = useLocale();
@@ -31,11 +32,7 @@ export default function Hero() {
         <div className="flex flex-1 items-center py-12">
           <h1 id="hero-title" className="h-hero">
             {lines.map((line, i) => (
-              <span
-                key={i}
-                className="block"
-                style={{ paddingLeft: `calc(${i} * clamp(1.25rem, 8.3vw, 8rem))` }}
-              >
+              <span key={i} className="block" style={{ paddingLeft: `calc(${i} * clamp(1.25rem, 8.3vw, 8rem))` }}>
                 {line.split(" ").map((word, j) => (
                   <span
                     key={j}
@@ -48,13 +45,17 @@ export default function Hero() {
               </span>
             ))}
           </h1>
-          <img
-            src="/lemma-logo-hero.svg"
+          <Image
+            src="/brand/lemma-logo-hero.svg"
             alt="LEMMA"
+            width={515}
+            height={527}
+            unoptimized
+            loading="eager"
+            fetchPriority="high"
             data-intro="fade"
             className="absolute right-20 top-40 hidden lg:block"
           />
-
         </div>
 
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -71,7 +72,10 @@ export default function Hero() {
         <div className="mono mt-10 flex items-center justify-between text-fg-dim" data-intro="fade">
           <a
             href="#premise"
-            onClick={(e) => { e.preventDefault(); scrollToId("premise"); }}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToId("premise");
+            }}
             className="transition-colors hover:text-accent"
           >
             ↓ {h.scroll}

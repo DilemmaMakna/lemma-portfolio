@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "@/components/LocaleProvider";
-import { gsap, ScrollTrigger, reducedMotion } from "@/lib/gsap";
-import { getLenis, scrollToId } from "@/lib/lenis";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { gsap, ScrollTrigger, reducedMotion } from "@/lib/motion/gsap";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
 
 const STRIPS = 5;
 const SERIF = 'var(--font-serif), "Instrument Serif", Georgia, serif';
@@ -143,7 +143,7 @@ export default function PageTransition() {
     <div
       ref={root}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[68] hidden"
+      className="pointer-events-none fixed inset-0 z-transition hidden"
       style={{ display: "none" }}
     >
       <div className="absolute inset-0 flex overflow-hidden">
@@ -158,8 +158,8 @@ export default function PageTransition() {
       </div>
       <i
         data-line
-        className="absolute left-0 top-1/2 block h-px w-full bg-accent"
-        style={{ transform: "scaleX(0)" }}
+        className="absolute left-0 block h-px w-full bg-accent"
+        style={{ top: "calc(50% + clamp(1.75rem, 5vw, 4rem) + 1.25rem)", transform: "scaleX(0)" }}
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
         <span

@@ -1,17 +1,9 @@
-// Kompres foto karya di public/work-photos lalu tulis manifest lib/work-photos.ts.
-//
-//   node scripts/optimize-work-photos.mjs
-//
-// - Folder lama dipetakan ke slug proyek (FOLDERS); folder baru sebaiknya langsung bernama slug.
-// - Setiap PNG/JPG diubah jadi WebP (lebar maks MAX_W) bernama 01.webp, 02.webp, ... lalu sumbernya dihapus.
-// - Manifest berisi ukuran dan warna dominan tiap foto (dipakai sebagai warna tile saat memuat).
-// Aman dijalankan ulang: file .webp yang sudah ada tidak disentuh.
 import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
 
-const ROOT = "public/work-photos";
-const OUT = "lib/work-photos.ts";
+const ROOT = "public/images/work-photos";
+const OUT = "lib/content/work-photos.ts";
 const MAX_W = 1440;
 const QUALITY = 78;
 
@@ -59,7 +51,7 @@ for (const slug of fs.readdirSync(ROOT).sort()) {
     const fp = path.join(dir, f);
     const { width, height } = await sharp(fp).metadata();
     const { dominant: d } = await sharp(fp).stats();
-    photos.push({ src: `/work-photos/${slug}/${f}`, w: width, h: height, color: `#${hex(d.r)}${hex(d.g)}${hex(d.b)}` });
+    photos.push({ src: `/images/work-photos/${slug}/${f}`, w: width, h: height, color: `#${hex(d.r)}${hex(d.g)}${hex(d.b)}` });
   }
   if (photos.length) manifest[slug] = photos;
 }

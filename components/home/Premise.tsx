@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import AsciiShape from "./AsciiShape";
 

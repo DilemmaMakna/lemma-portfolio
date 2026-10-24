@@ -1,0 +1,57 @@
+#!/bin/sh
+# Local pre-commit checks for staged files. Plain POSIX sh, no dependencies.
+#
+# Opt-in. Git does not run this hook until you point it here:
+#   git config core.hooksPath .githooks
+# Disable it again:
+#   git config --unset core.hooksPath
+#
+# Checks, in order:
+#   1. oxfmt --check on staged ts, tsx, js, mjs, css, json, md.
+#      Advisory only: prints unformatted files and the fix command, never blocks.
+#   2. oxlint on staged ts, tsx, js, mjs. Blocks the commit on errors only (warnings pass).
+#   3. npm run typecheck. Blocks the commit on failure.
+#
+# oxfmt --check exit codes, observed locally with oxfmt 0.74.0 (not documented upstream):
+#   0 = every matched file is formatted
+#   1 = at least one matched file is not formatted
+#   2 = no target files: the named files are all ignored (e.g. package-lock.json) or missing.
+#       --no-error-on-unmatched-pattern turns this into exit 0 and skips them silently.
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Split lists on newlines only and do not glob, so file names pass through intact.
+IFS='
+'
+set -f
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+fmt=$(printf '%s\n' "$staged" | grep -E '\.(ts|tsx|js|mjs|css|json|md)$' || true)
+
+if [ -z "$fmt" ]; then
+  exit 0
+fi
+
+lint=$(printf '%s\n' "$fmt" | grep -E '\.(ts|tsx|js|mjs)$' || true)
+
+# Advisory: the repo is not fully formatted yet, so this step only warns.
+if ! npx oxfmt --check --no-error-on-unmatched-pattern $fmt; then
+  echo "pre-commit: the staged files above are not oxfmt-formatted. Commit continues."
+  echo "pre-commit: fix with: npx oxfmt <files above>"
+fi
+
+# Guard: oxlint with no file arguments would lint the whole repo.
+if [ -n "$lint" ]; then
+  if ! npx oxlint --no-error-on-unmatched-pattern $lint; then
+    echo "pre-commit: oxlint failed. Fix the errors above, then commit again."
+    exit 1
+  fi
+fi
+
+if ! npm run typecheck; then
+  echo "pre-commit: typecheck failed. Fix the type errors above, then commit again."
+  exit 1
+fi
+
+exit 0

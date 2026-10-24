@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { generalSans, mono, serif } from "./fonts";
-import { Providers } from "@/components/Providers";
-import { messages } from "@/lib/messages";
-import { SITE, siteJsonLd, ld } from "@/lib/site";
+import { generalSans, mono, serif } from "@/lib/fonts";
+import { Providers } from "@/components/providers/Providers";
+import { env } from "@/lib/env";
+import { messages } from "@/lib/content/messages";
+import { SITE, SHARE_IMAGE, siteJsonLd, ld } from "@/lib/seo/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Lemma", url: SITE }],
   creator: "Lemma",
   publisher: "PT Masih Dilemma Makna",
+  icons: { icon: [{ url: "/brand/icon.svg", sizes: "any", type: "image/svg+xml" }] },
   alternates: { canonical: "/" },
   robots: {
     index: true,
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   // Isi GOOGLE_SITE_VERIFICATION di Vercel dengan token dari Google Search Console (metode "HTML tag").
-  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  verification: { google: env.googleSiteVerification },
   openGraph: {
     title: "The work before the work.",
     description: messages.en.meta.description,
@@ -41,8 +43,14 @@ export const metadata: Metadata = {
     url: "/",
     locale: "en_US",
     alternateLocale: ["id_ID"],
+    images: [SHARE_IMAGE],
   },
-  twitter: { card: "summary_large_image", title: "The work before the work.", description: messages.en.meta.description },
+  twitter: {
+    card: "summary_large_image",
+    title: "The work before the work.",
+    description: messages.en.meta.description,
+    images: [SHARE_IMAGE.url],
+  },
 };
 
 export const viewport: Viewport = {

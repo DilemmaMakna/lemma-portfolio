@@ -1,7 +1,7 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
-import { workMessages } from "@/lib/work";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { workMessages } from "@/lib/content/work";
 
 export function useWorkCopy() {
   const { locale } = useLocale();

@@ -1,0 +1,118 @@
+:root {
+  --bg: #0a0a0a;
+  --bg-raised: #101010;
+  --surface: #151515;
+  --surface-2: #1c1c1c;
+
+  --fg: #f2f0eb;
+  --fg-muted: #a3a099;
+  --fg-dim: #86837e;
+
+  --line: #232323;
+  --line-strong: #333333;
+
+  --accent: #ff5a1f;
+  --accent-hover: #ff7440;
+  --accent-press: #e04a12;
+  --accent-soft: rgba(255, 90, 31, 0.12);
+  --on-accent: #0a0a0a;
+
+  --ok: #4ade80;
+  --idle: #6e6b65;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.5625rem;
+  --text-xl: 2.125rem;
+  --text-2xl: 3rem;
+
+  --grid-gutter: 1.5rem;
+  --grid-margin: clamp(1.25rem, 4vw, 4rem);
+  --max-w: 1440px;
+
+  /* Warna turunan yang sebelumnya ditulis langsung di komponen (kaca, garis tipis, bayangan, titik grid). */
+  --glass: rgba(16, 16, 16, 0.7);
+  --hairline: rgba(255, 255, 255, 0.12);
+  --hairline-soft: rgba(255, 255, 255, 0.04);
+  --dot: #2a2a2a;
+  --shadow: rgba(0, 0, 0, 0.8);
+
+  --radius-sm: 4px;
+  --radius-pill: 999px;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --font-sans: var(--font-sans), Inter, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* static: keep these emitted even when no utility uses them yet (z-index, easing, type, spacing).
+   Breakpoints: Tailwind defaults, no --breakpoint-* override.
+   Type: --text-2xs, --text-md, --text-hero do not collide with Tailwind defaults, so they map directly.
+   --text-xs, --text-sm, --text-base, --text-lg, --text-xl, --text-2xl collide with Tailwind defaults
+   (text-sm etc. would change), so they are exposed as --text-ds-* aliases and stay declared in :root. */
+@theme static {
+  --z-index-grain: 60;
+  --z-index-overlay: 65;
+  --z-index-modal: 66;
+  --z-index-transition: 68;
+  --z-index-preloader: 70;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --text-2xs: 0.6875rem;
+  --text-md: 1.25rem;
+  --text-hero: clamp(3.25rem, 11vw, 9.5rem);
+  --text-ds-xs: var(--text-xs);
+  --text-ds-sm: var(--text-sm);
+  --text-ds-base: var(--text-base);
+  --text-ds-lg: var(--text-lg);
+  --text-ds-xl: var(--text-xl);
+  --text-ds-2xl: var(--text-2xl);
+
+  --spacing-gutter: var(--grid-gutter);
+  --spacing-margin: var(--grid-margin);
+}
+
+/* Tema terang: kertas hangat, tinta hampir hitam, aksen oranye sedikit digelapkan agar kontras.
+   Diaktifkan lewat <html data-theme="light"> (skrip boot di layout + ThemeToggle). */
+html[data-theme="light"] {
+  --bg: #f3f1ec;
+  --bg-raised: #ebe8e1;
+  --surface: #faf9f6;
+  --surface-2: #efece6;
+
+  --fg: #141414;
+  --fg-muted: #55524c;
+  --fg-dim: #6c6862;
+
+  --line: #dedad2;
+  --line-strong: #c9c4ba;
+
+  --accent: #e8521b;
+  --accent-hover: #ff5a1f;
+  --accent-press: #c94310;
+  --accent-soft: rgba(232, 82, 27, 0.12);
+  --on-accent: #0a0a0a;
+
+  --ok: #16a34a;
+  --idle: #8a867e;
+
+  --glass: rgba(250, 249, 246, 0.75);
+  --hairline: rgba(20, 20, 20, 0.12);
+  --hairline-soft: rgba(20, 20, 20, 0.03);
+  --dot: #d3cec4;
+  --shadow: rgba(40, 30, 20, 0.18);
+}

@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { projects, type Project } from "@/lib/work";
+import { projects, type Project } from "@/lib/content/work";
 
 // Empat proyek pilihan beserta foto yang ditampilkan (indeks dari daftar foto proyek).
 // Setiap kartu membuka detailnya di /work (?p=slug membuka modal proyek di sana).
@@ -22,7 +22,17 @@ const hookCls =
 
 const href = (p: Project) => `/work?p=${p.slug}`;
 
-function Meta({ p, view, highlight, className = "" }: { p: Project; view: string; highlight?: string; className?: string }) {
+function Meta({
+  p,
+  view,
+  highlight,
+  className = "",
+}: {
+  p: Project;
+  view: string;
+  highlight?: string;
+  className?: string;
+}) {
   const { locale } = useLocale();
   return (
     <div className={`flex flex-col justify-between gap-8 ${className}`}>
@@ -50,11 +60,24 @@ function Meta({ p, view, highlight, className = "" }: { p: Project; view: string
   );
 }
 
+// Lebar foto: setiap bingkai berisi 2-3 foto berdampingan; di lg kartu paling lebar 8/12 kolom dibagi dua.
+const FRAME_SIZES = "(min-width: 1024px) 33vw, 50vw";
+
 // Foto 4:5 dijajarkan berdampingan mengisi bingkai lanskap (2 foto ≈ 16:10, 3 foto ≈ 21:9).
-function Frame({ p, pick, view, aspect = "aspect-[16/10]" }: { p: Project; pick: number[]; view: string; aspect?: string }) {
+function Frame({
+  p,
+  pick,
+  view,
+  aspect = "aspect-[16/10]",
+}: {
+  p: Project;
+  pick: number[];
+  view: string;
+  aspect?: string;
+}) {
   const photos = pick.map((i) => p.photos[i]).filter(Boolean);
   return (
-    <div className={`relative flex w-full gap-2 overflow-hidden ${aspect}`} data-cursor-label={view.toUpperCase()}>
+    <div className={`relative flex w-full gap-2 overflow-hidden ${aspect}`}>
       {photos.map((ph, i) => (
         <div
           key={ph.src}
@@ -65,7 +88,7 @@ function Frame({ p, pick, view, aspect = "aspect-[16/10]" }: { p: Project; pick:
             src={ph.src}
             width={ph.w}
             height={ph.h}
-            unoptimized
+            sizes={FRAME_SIZES}
             alt=""
             className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
           />
@@ -88,19 +111,25 @@ export default function SelectedWork() {
         <div className="flex flex-col gap-20 md:gap-28">
           {/* 01: gambar 7 kolom kiri, meta 5 kolom kanan */}
           <Link href={href(a.p)} data-reveal className="group grid12 items-stretch gap-y-6">
-            <div className="col-span-full lg:col-span-7"><Frame p={a.p} pick={a.pick} view={w.view} /></div>
+            <div className="col-span-full lg:col-span-7">
+              <Frame p={a.p} pick={a.pick} view={w.view} />
+            </div>
             <Meta p={a.p} view={w.view} highlight={w.highlight} className="col-span-full lg:col-span-5 lg:pl-6" />
           </Link>
 
           {/* 02: meta 4 kolom kiri, gambar 8 kolom kanan */}
           <Link href={href(b.p)} data-reveal className="group grid12 items-stretch gap-y-6">
             <Meta p={b.p} view={w.view} className="order-2 col-span-full lg:order-1 lg:col-span-4 lg:pr-6" />
-            <div className="order-1 col-span-full lg:order-2 lg:col-span-8"><Frame p={b.p} pick={b.pick} view={w.view} /></div>
+            <div className="order-1 col-span-full lg:order-2 lg:col-span-8">
+              <Frame p={b.p} pick={b.pick} view={w.view} />
+            </div>
           </Link>
 
           {/* 03: dua kolom setara */}
           <Link href={href(c.p)} data-reveal className="group grid12 items-stretch gap-y-6">
-            <div className="col-span-full lg:col-span-6"><Frame p={c.p} pick={c.pick} view={w.view} aspect="aspect-[4/3]" /></div>
+            <div className="col-span-full lg:col-span-6">
+              <Frame p={c.p} pick={c.pick} view={w.view} aspect="aspect-[4/3]" />
+            </div>
             <Meta p={c.p} view={w.view} className="col-span-full lg:col-span-6 lg:pl-10" />
           </Link>
 
@@ -111,7 +140,9 @@ export default function SelectedWork() {
             <div className="pointer-events-none mt-6 flex flex-col gap-3 md:absolute md:inset-x-0 md:bottom-0 md:mt-0 md:flex-row md:items-end md:justify-between md:p-8">
               <div className="md:bg-bg/90 md:p-5">
                 <div className="mono text-fg-dim">PROJECT {d.p.n}</div>
-                <h3 className="mt-2 text-[clamp(1.5rem,3vw,2.5rem)] font-medium leading-none tracking-[-0.03em]">{d.p.name}</h3>
+                <h3 className="mt-2 text-[clamp(1.5rem,3vw,2.5rem)] font-medium leading-none tracking-[-0.03em]">
+                  {d.p.name}
+                </h3>
                 <div className="mt-3 flex items-center gap-3">
                   <span className="tag">{d.p.category}</span>
                   <span className="mono text-fg-dim">{d.p.year}</span>

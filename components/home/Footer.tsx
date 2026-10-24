@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
-import { getLenis, scrollToId } from "@/lib/lenis";
-import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
+import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import SocialLinks from "@/components/ui/SocialLinks";
 
 // Tautan nyata ke halaman masing-masing (bukan anchor beranda), supaya berfungsi di semua halaman.
@@ -127,7 +127,7 @@ export default function Footer() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative flex min-h-[82vh] flex-col justify-between overflow-hidden border-t border-line bg-bg-raised pb-10 pt-28 md:min-h-[88vh] md:pb-14 md:pt-36"
+      className="relative flex min-h-[82svh] flex-col justify-between overflow-hidden border-t border-line bg-bg-raised pb-10 pt-28 md:min-h-[88svh] md:pb-14 md:pt-36"
     >
       {/* Ambient background glow */}
       <div
@@ -161,7 +161,9 @@ export default function Footer() {
                 className="mono inline-flex items-center gap-2 text-fg hover:text-accent transition-colors !normal-case text-sm tracking-[-0.01em]"
               >
                 marketing@dilemma-makna.com
-                <span className="arrow font-mono" aria-hidden="true">↗</span>
+                <span className="arrow font-mono" aria-hidden="true">
+                  ↗
+                </span>
               </a>
               <div className="mono mt-2 text-xs text-fg-dim">
                 <a href="https://wa.me/6285144922167">+62 (851) 4492 2167</a>
@@ -172,9 +174,7 @@ export default function Footer() {
 
           {/* Navigation Links Column */}
           <div>
-            <h4 className="mono text-fg-dim text-xs tracking-[0.16em]">
-              {f.columns.nav}
-            </h4>
+            <h3 className="mono text-fg-dim text-xs tracking-[0.16em]">{f.columns.nav}</h3>
             <ul className="mt-6 flex flex-col gap-3">
               {NAV_LINKS.map((l) => (
                 <li key={l.key}>
@@ -192,9 +192,7 @@ export default function Footer() {
 
           {/* Core Services Column */}
           <div>
-            <h4 className="mono text-fg-dim text-xs tracking-[0.16em]">
-              {f.columns.services}
-            </h4>
+            <h3 className="mono text-fg-dim text-xs tracking-[0.16em]">{f.columns.services}</h3>
             <ul className="mt-6 flex flex-col gap-3">
               {t.services.items.map((svc, idx) => (
                 <li key={idx}>
@@ -211,9 +209,7 @@ export default function Footer() {
 
           {/* Products & Legal Column */}
           <div>
-            <h4 className="mono text-fg-dim text-xs tracking-[0.16em]">
-              {f.columns.products}
-            </h4>
+            <h3 className="mono text-fg-dim text-xs tracking-[0.16em]">{f.columns.products}</h3>
             <ul className="mt-6 flex flex-col gap-3">
               <li>
                 <Link
@@ -222,9 +218,7 @@ export default function Footer() {
                   className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
                 >
                   <span>NATA</span>
-                  <span className="mono text-[10px] text-ok border border-ok/30 rounded-full px-2 py-0.5">
-                    ACTIVE
-                  </span>
+                  <span className="mono text-[10px] text-ok border border-ok/30 rounded-full px-2 py-0.5">ACTIVE</span>
                 </Link>
               </li>
               <li>
@@ -247,7 +241,11 @@ export default function Footer() {
         <div className="mono mt-32 flex flex-col gap-5 pt-8 text-xs text-fg-dim sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3">
             <span>
-              &copy; <span ref={yearRef} suppressHydrationWarning>2026</span> PT MASIH DILEMMA MAKNA. {f.rights}
+              &copy;{" "}
+              <span ref={yearRef} suppressHydrationWarning>
+                2026
+              </span>{" "}
+              PT MASIH DILEMMA MAKNA. {f.rights}
             </span>
           </div>
 
@@ -260,8 +258,9 @@ export default function Footer() {
                   type="button"
                   id={`footer-lang-${l}`}
                   onClick={() => setLocale(l)}
-                  className={`transition-colors ${locale === l ? "text-fg font-medium" : "text-fg-dim hover:text-fg-muted"
-                    }`}
+                  className={`transition-colors ${
+                    locale === l ? "text-fg font-medium" : "text-fg-dim hover:text-fg-muted"
+                  }`}
                 >
                   [{l.toUpperCase()}]
                 </button>

@@ -1,5 +1,5 @@
 import NavPill from "@/components/nav/NavPill";
-import PageAnimations from "@/components/PageAnimations";
+import PageAnimations from "@/components/layout/PageAnimations";
 import Hero from "@/components/home/Hero";
 import Premise from "@/components/home/Premise";
 import Process from "@/components/home/Process";
@@ -9,9 +9,9 @@ import Products from "@/components/home/Products";
 import About from "@/components/home/About";
 import ContactCta from "@/components/home/ContactCta";
 import Footer from "@/components/home/Footer";
-import JsonLd from "@/components/JsonLd";
-import { pageMeta, pageJsonLd } from "@/lib/site";
-import { messages } from "@/lib/messages";
+import JsonLd from "@/components/layout/JsonLd";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
+import { messages } from "@/lib/content/messages";
 
 export const metadata = pageMeta("/", messages.en.meta.title, messages.en.meta.description);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "@/lib/work";
+import { projects } from "@/lib/content/work";
 import { useWorkCopy } from "./useWorkCopy";
 
 // Hero ringkas karena dinding karya di bawahnya adalah pertunjukan utamanya.

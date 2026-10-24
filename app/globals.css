@@ -1,99 +1,6 @@
 @import "tailwindcss";
 
-:root {
-  --bg: #0a0a0a;
-  --bg-raised: #101010;
-  --surface: #151515;
-  --surface-2: #1c1c1c;
-
-  --fg: #f2f0eb;
-  --fg-muted: #a3a099;
-  --fg-dim: #6e6b65;
-
-  --line: #232323;
-  --line-strong: #333333;
-
-  --accent: #ff5a1f;
-  --accent-hover: #ff7440;
-  --accent-press: #e04a12;
-  --accent-soft: rgba(255, 90, 31, 0.12);
-  --on-accent: #0a0a0a;
-
-  --ok: #4ade80;
-  --idle: #6e6b65;
-
-  --text-2xs: 0.6875rem;
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-md: 1.25rem;
-  --text-lg: 1.5625rem;
-  --text-xl: 2.125rem;
-  --text-2xl: 3rem;
-  --text-hero: clamp(3.25rem, 11vw, 9.5rem);
-
-  --grid-gutter: 1.5rem;
-  --grid-margin: clamp(1.25rem, 4vw, 4rem);
-  --max-w: 1440px;
-
-  /* Warna turunan yang sebelumnya ditulis langsung di komponen (kaca, garis tipis, bayangan, titik grid). */
-  --glass: rgba(16, 16, 16, 0.7);
-  --hairline: rgba(255, 255, 255, 0.12);
-  --hairline-soft: rgba(255, 255, 255, 0.04);
-  --dot: #2a2a2a;
-  --shadow: rgba(0, 0, 0, 0.8);
-
-  --radius-sm: 4px;
-  --radius-pill: 999px;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@theme inline {
-  --color-bg: var(--bg);
-  --color-bg-raised: var(--bg-raised);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-fg: var(--fg);
-  --color-fg-muted: var(--fg-muted);
-  --color-fg-dim: var(--fg-dim);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --font-sans: var(--font-sans), Inter, system-ui, sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
-}
-
-/* Tema terang: kertas hangat, tinta hampir hitam, aksen oranye sedikit digelapkan agar kontras.
-   Diaktifkan lewat <html data-theme="light"> (skrip boot di layout + ThemeToggle). */
-html[data-theme="light"] {
-  --bg: #f3f1ec;
-  --bg-raised: #ebe8e1;
-  --surface: #faf9f6;
-  --surface-2: #efece6;
-
-  --fg: #141414;
-  --fg-muted: #55524c;
-  --fg-dim: #8a867e;
-
-  --line: #dedad2;
-  --line-strong: #c9c4ba;
-
-  --accent: #e8521b;
-  --accent-hover: #ff5a1f;
-  --accent-press: #c94310;
-  --accent-soft: rgba(232, 82, 27, 0.12);
-  --on-accent: #0a0a0a;
-
-  --ok: #16a34a;
-  --idle: #8a867e;
-
-  --glass: rgba(250, 249, 246, 0.75);
-  --hairline: rgba(20, 20, 20, 0.12);
-  --hairline-soft: rgba(20, 20, 20, 0.03);
-  --dot: #d3cec4;
-  --shadow: rgba(40, 30, 20, 0.18);
-}
+@import "./styles/tokens.css";
 
 html {
   background: var(--bg);
@@ -269,7 +176,10 @@ html.lenis body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border-radius: var(--radius-pill);
-  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -361,10 +271,10 @@ html.lenis body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 60;
+  z-index: var(--z-index-grain);
   opacity: 0.05;
   mix-blend-mode: overlay;
-  background-image: url("/noise.svg");
+  background-image: url("/textures/noise.svg");
   background-size: 200px 200px;
 }
 
@@ -380,39 +290,6 @@ html.is-booting #page {
 }
 html.is-loading .preloader {
   display: flex;
-}
-
-/* Custom cursor (fine pointers only) */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 80;
-  pointer-events: none;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--on-accent);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
-  overflow: hidden;
-  white-space: nowrap;
-}
-@media (hover: hover) and (pointer: fine) {
-  .cursor {
-    display: flex;
-  }
-  html.has-cursor,
-  html.has-cursor a,
-  html.has-cursor button {
-    cursor: none;
-  }
 }
 
 /* Marquee-free helpers */

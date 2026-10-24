@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { SITE } from "@/lib/seo/site";
 
 // Halaman publik saja. Proyek di /work dibuka lewat modal (?p=slug) dan berbagi satu URL kanonik, jadi tidak didaftarkan.
 // /llms.txt dan /index.md sengaja tidak masuk sitemap (bukan halaman untuk hasil pencarian).

@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { reducedMotion } from "@/lib/gsap";
-import { isOpenable, type Project } from "@/lib/work";
-import type { WorkPhoto } from "@/lib/work-photos";
+import { reducedMotion } from "@/lib/motion/gsap";
+import { isOpenable, type Project } from "@/lib/content/work";
+import type { WorkPhoto } from "@/lib/content/work-photos";
 import Redacted from "@/components/ui/Redacted";
 import AsciiCover from "./AsciiCover";
 import { useWorkCopy } from "./useWorkCopy";
@@ -71,15 +71,12 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
   const { w, locale } = useWorkCopy();
   const { p } = t;
   const open = () => onOpen(p.slug);
-  const label = `${p.name}. ${p.hook[locale]}`;
 
   if (t.kind === "photo")
     return (
       <button
         type="button"
         onClick={open}
-        aria-label={label}
-        data-cursor-label={w.tile.open.toUpperCase()}
         className="group relative block w-full overflow-hidden rounded-[4px]"
         style={{ backgroundColor: t.photo.color }}
       >
@@ -88,12 +85,13 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
           width={t.photo.w}
           height={t.photo.h}
           sizes={SIZES}
-          unoptimized
           alt=""
           className="h-auto w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
         />
         <span className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-1 bg-gradient-to-t from-bg/90 via-bg/50 to-transparent p-3 pt-12 text-left opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-          <span className="mono mono-2xs text-fg-muted">{p.n} · {p.year}</span>
+          <span className="mono mono-2xs text-fg-muted">
+            {p.n} · {p.year}
+          </span>
           <span className="text-sm font-medium leading-tight text-fg">{p.name}</span>
         </span>
       </button>
@@ -104,7 +102,6 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
       <button
         type="button"
         onClick={open}
-        aria-label={label}
         className="group flex w-full flex-col gap-4 rounded-[4px] border border-line bg-bg-raised p-4 text-left sm:gap-5 sm:p-5 transition-colors hover:border-accent focus-visible:border-accent"
       >
         <span className="mono mono-2xs flex justify-between text-fg-dim">
@@ -112,12 +109,17 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
           <span>{p.year}</span>
         </span>
         <span className="h-card">{p.name}</span>
-        <span className="text-base italic leading-snug text-fg-muted sm:text-lg" style={{ fontFamily: "var(--font-serif)" }}>
+        <span
+          className="text-base italic leading-snug text-fg-muted sm:text-lg"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
           {p.hook[locale]}
         </span>
         <span className="mono mono-2xs flex items-center justify-between gap-3 text-fg-dim">
           <span className="truncate">{p.category}</span>
-          <span className="text-accent transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+          <span className="text-accent transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+            ↗
+          </span>
         </span>
       </button>
     );
@@ -127,11 +129,12 @@ function TileView({ t, onOpen }: { t: Tile; onOpen: (slug: string) => void }) {
       <button
         type="button"
         onClick={open}
-        aria-label={label}
-        data-cursor-label={w.tile.open.toUpperCase()}
         className="group relative flex min-h-[16rem] w-full flex-col justify-end overflow-hidden rounded-[4px] border border-line bg-surface pt-24 text-left sm:min-h-[20rem]"
       >
-        <AsciiCover seed={Number(p.n)} className="absolute inset-0 transition-colors duration-500 group-hover:text-accent/60" />
+        <AsciiCover
+          seed={Number(p.n)}
+          className="absolute inset-0 transition-colors duration-500 group-hover:text-accent/60"
+        />
         <span className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent" />
         <span className="relative flex flex-col gap-2 p-4 sm:p-5">
           <span className="mono mono-2xs text-fg-dim">№ {p.n}</span>
@@ -253,7 +256,12 @@ export default function WorkWall({
           >
             {/* Salinan kedua membuat loop tanpa sambungan; disembunyikan dari pembaca layar dan tab. */}
             {(motion ? [0, 1] : [0]).map((copy) => (
-              <div key={copy} className="flex flex-col gap-3 pb-3" inert={copy === 1} aria-hidden={copy === 1 || undefined}>
+              <div
+                key={copy}
+                className="flex flex-col gap-3 pb-3"
+                inert={copy === 1}
+                aria-hidden={copy === 1 || undefined}
+              >
                 {col.map((t) => (
                   <TileView key={t.key} t={t} onOpen={onOpen} />
                 ))}

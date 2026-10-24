@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import Redacted from "@/components/ui/Redacted";
@@ -37,11 +37,7 @@ export default function Products() {
 
                 <div className="my-10">
                   <h3 className="text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-none tracking-[-0.04em]">
-                    {stealth ? (
-                      <Redacted className="text-fg-dim" />
-                    ) : (
-                      it.name
-                    )}
+                    {stealth ? <Redacted className="text-fg-dim" /> : it.name}
                   </h3>
                   <p className="mt-5 max-w-[34ch] text-fg-muted">{it.desc}</p>
                 </div>
@@ -49,7 +45,9 @@ export default function Products() {
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap gap-2">
                     {it.tags.map((tg) => (
-                      <span key={tg} className="tag">{tg}</span>
+                      <span key={tg} className="tag">
+                        {tg}
+                      </span>
                     ))}
                   </div>
                   <Button

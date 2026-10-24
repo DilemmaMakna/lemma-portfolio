@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import { getLenis, scrollToId } from "@/lib/lenis";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
 
 // `id` links scroll to a section on the home page; `href` links open their own page.
 const LINKS = [
@@ -35,7 +35,7 @@ function LangToggle({ className = "" }: { className?: string }) {
             type="button"
             aria-pressed={locale === l}
             onClick={() => setLocale(l)}
-            className={`transition-colors ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}
+            className={`relative transition-colors after:absolute after:-inset-x-2 after:-inset-y-4 after:content-[''] ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}
           >
             [{l.toUpperCase()}]
           </button>
@@ -103,7 +103,7 @@ export default function NavPill() {
           href="/"
           onClick={go("top")}
           data-intro="fade"
-          className="pointer-events-auto text-[15px] font-light uppercase tracking-[0.18em]"
+          className="pointer-events-auto relative text-[15px] font-light uppercase tracking-[0.18em] after:absolute after:inset-x-0 after:-inset-y-2.5 after:content-['']"
           aria-label="LEMMA"
         >
           LEMMA
@@ -153,7 +153,7 @@ export default function NavPill() {
             type="button"
             aria-expanded={open}
             onClick={() => setOpen(true)}
-            className="btn btn-ghost !h-10"
+            className="btn btn-ghost relative !h-10 after:absolute after:-inset-0.5 after:content-['']"
           >
             {t.nav.menu}
           </button>
@@ -164,7 +164,7 @@ export default function NavPill() {
         <div
           role="dialog"
           aria-modal="true"
-          className="pointer-events-auto fixed inset-0 z-[65] flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
+          className="pointer-events-auto fixed inset-0 z-overlay flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
         >
           <div className="flex items-center justify-between">
             <span className="text-[15px] font-semibold uppercase tracking-[0.18em]">LEMMA</span>

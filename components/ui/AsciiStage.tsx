@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { reducedMotion } from "@/lib/gsap";
+import { reducedMotion } from "@/lib/motion/gsap";
 
 // Mesin animasi ASCII: grid W x H dengan tiga lapisan (samar, normal, aksen). Setiap varian
 // hanya menggambar frame untuk fase p (0..1 = membangun, 1..SPAN = larut) lewat `put`.

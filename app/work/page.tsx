@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import NavPill from "@/components/nav/NavPill";
-import PageAnimations from "@/components/PageAnimations";
+import PageAnimations from "@/components/layout/PageAnimations";
 import WorkHero from "@/components/work/WorkHero";
 import WorkExplorer from "@/components/work/WorkExplorer";
 import Footer from "@/components/home/Footer";
-import { workMessages } from "@/lib/work";
-import { pageMeta, pageJsonLd } from "@/lib/site";
-import JsonLd from "@/components/JsonLd";
+import { workMessages } from "@/lib/content/work";
+import { pageMeta, pageJsonLd } from "@/lib/seo/site";
+import JsonLd from "@/components/layout/JsonLd";
 
 export const metadata: Metadata = pageMeta("/work", workMessages.en.meta.title, workMessages.en.meta.description);
 

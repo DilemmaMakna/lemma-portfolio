@@ -1,10 +1,10 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import ContactForm from "@/components/ui/ContactForm";
 import SocialLinks from "@/components/ui/SocialLinks";
-import { contactMessages } from "@/lib/contact";
-import { ORG } from "@/lib/site";
+import { contactMessages } from "@/lib/content/contact";
+import { ORG } from "@/lib/seo/site";
 
 const WHATSAPP = { href: "https://wa.me/6285144922167", label: "+62 (851) 4492 2167" };
 

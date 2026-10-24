@@ -1,8 +1,13 @@
 import Link from "next/link";
 
-type Props = {
+const variants = {
+  primary: "btn-primary",
+  ghost: "btn-ghost",
+} as const;
+
+export type ButtonProps = {
   href?: string;
-  variant?: "primary" | "ghost";
+  variant?: keyof typeof variants;
   disabled?: boolean;
   children: React.ReactNode;
   arrow?: boolean;
@@ -20,8 +25,8 @@ export default function Button({
   className = "",
   id,
   onClick,
-}: Props) {
-  const cls = `btn btn-${variant} ${disabled ? "is-disabled" : ""} ${className}`;
+}: ButtonProps) {
+  const cls = `btn ${variants[variant]} ${disabled ? "is-disabled" : ""} ${className}`;
   const inner = (
     <>
       {children}

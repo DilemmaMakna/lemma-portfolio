@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
-import { studioStats } from "@/lib/work";
+import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
+import { studioStats } from "@/lib/content/work";
 import { useAboutCopy } from "./useAboutCopy";
 
 // "4+" -> hitung naik ke 4 lalu tambahkan "+"; nilai non-angka tampil apa adanya.

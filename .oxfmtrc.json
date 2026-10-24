@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "printWidth": 120,
+  "ignorePatterns": [
+    ".next",
+    "node_modules",
+    "docs/lighthouse/raw",
+    "package-lock.json",
+    "bun.lock",
+    "lib/content/work-photos.ts",
+    "public"
+  ]
+}

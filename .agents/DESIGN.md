@@ -99,10 +99,10 @@ Dua keluarga: **General Sans** (heading dan paragraf) dan **mono** (label, UI, d
 | Heading dan paragraf | General Sans (variable) | Fontshare, self-host | `Inter, system-ui, sans-serif` |
 | Mono | Geist Mono | `next/font/google` (di-host sendiri saat build) | `ui-monospace, "SF Mono", Menlo, monospace` |
 
-General Sans tersedia sebagai font variable di Fontshare. Unduh dari Fontshare, simpan di `public/fonts` atau `app/fonts`, lalu muat dengan `next/font/local`. Periksa lisensi Fontshare untuk penggunaan komersial sebelum launch dan simpan salinan lisensinya di repo.
+General Sans tersedia sebagai font variable di Fontshare. Unduh dari Fontshare, simpan di `lib/fonts/`, lalu muat dengan `next/font/local`. Periksa lisensi Fontshare untuk penggunaan komersial sebelum launch dan simpan salinan lisensinya di repo.
 
 ```ts
-// app/fonts.ts
+// lib/fonts.ts
 import localFont from 'next/font/local';
 import { Geist_Mono } from 'next/font/google';
 
@@ -352,7 +352,7 @@ Library: `gsap`, `@gsap/react` (hook `useGSAP`), `lenis`. Daftarkan `ScrollTrigg
 Lenis dipasang sekali di provider klien, disinkronkan dengan ticker GSAP agar satu loop `requestAnimationFrame` menggerakkan keduanya, dan lag smoothing dimatikan agar ScrollTrigger akurat.
 
 ```tsx
-// components/SmoothScroll.tsx
+// components/layout/SmoothScroll.tsx
 'use client';
 import { useEffect } from 'react';
 import Lenis from 'lenis';
@@ -398,7 +398,7 @@ Urutan:
 4. 1.0 sampai 2.4s: elemen hero masuk berurutan (eyebrow, tiga baris headline per kata, lead, CTA, nav pill) dengan blur 20px menjadi 0, `y: 24` menjadi 0, opacity 0 menjadi 1.
 
 ```tsx
-// lib/intro.ts
+// lib/motion/intro.ts
 import gsap from 'gsap';
 
 export function playIntro(scope: HTMLElement) {
@@ -474,13 +474,15 @@ app/
   work/page.tsx
   work/[slug]/page.tsx
   contact/page.tsx
-  fonts.ts
 components/
+  providers/ (Providers, LocaleProvider)
+  layout/ (SmoothScroll, PageAnimations, JsonLd)
   nav/ (NavPill, LangToggle, MobileMenu)
   home/ (Hero, Premise, Process, Services, SelectedWork, Products, About, ContactCta)
-  ui/ (Button, Tag, Badge, SectionLabel, Accordion, Cursor, PixelReveal, DotGrid, Grain)
+  ui/ (Button, Tag, Badge, SectionLabel, Accordion, PixelReveal, DotGrid, Grain)
 lib/
-  intro.ts, gsap.ts, split.ts
+  motion/ (intro, gsap, lenis), split.ts
+  fonts.ts, fonts/
 messages/ id.json en.json
 styles/ tokens.css globals.css
 ```
