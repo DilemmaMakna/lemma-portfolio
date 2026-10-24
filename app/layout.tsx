@@ -3,7 +3,7 @@ import { generalSans, mono, serif } from "@/lib/fonts";
 import { Providers } from "@/components/providers/Providers";
 import { env } from "@/lib/env";
 import { messages } from "@/lib/content/messages";
-import { SITE, siteJsonLd, ld } from "@/lib/seo/site";
+import { SITE, SHARE_IMAGE, siteJsonLd, ld } from "@/lib/seo/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,8 +43,14 @@ export const metadata: Metadata = {
     url: "/",
     locale: "en_US",
     alternateLocale: ["id_ID"],
+    images: [SHARE_IMAGE],
   },
-  twitter: { card: "summary_large_image", title: "The work before the work.", description: messages.en.meta.description },
+  twitter: {
+    card: "summary_large_image",
+    title: "The work before the work.",
+    description: messages.en.meta.description,
+    images: [SHARE_IMAGE.url],
+  },
 };
 
 export const viewport: Viewport = {

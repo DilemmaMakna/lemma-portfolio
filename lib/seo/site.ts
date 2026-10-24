@@ -101,6 +101,14 @@ export function pageJsonLd(opts: { path: string; name: string; description: stri
 // Serialisasi aman untuk <script type="application/ld+json">: "<" di-escape agar tidak menutup tag.
 export const ld = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");
 
+// Gambar Open Graph dan Twitter, sama untuk semua halaman.
+export const SHARE_IMAGE = {
+  url: "/brand/twitter-card.png",
+  width: 3240,
+  height: 1980,
+  alt: `${ORG.name} | ${ORG.tagline}`,
+};
+
 // Metadata per halaman (EN: bahasa default dan yang dibaca crawler). Judul memakai format "Nama | Lemma".
 export function pageMeta(path: string, title: string, description: string): Metadata {
   return {
@@ -114,8 +122,8 @@ export function pageMeta(path: string, title: string, description: string): Meta
       siteName: "Lemma",
       type: "website",
       locale: "en_US",
-      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${ORG.name} | ${ORG.tagline}` }],
+      images: [SHARE_IMAGE],
     },
-    twitter: { card: "summary_large_image", title, description, images: ["/twitter-image"] },
+    twitter: { card: "summary_large_image", title, description, images: [SHARE_IMAGE.url] },
   };
 }
