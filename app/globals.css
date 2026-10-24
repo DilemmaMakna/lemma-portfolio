@@ -274,7 +274,7 @@ html.lenis body {
   z-index: var(--z-index-grain);
   opacity: 0.05;
   mix-blend-mode: overlay;
-  background-image: url("/noise.svg");
+  background-image: url("/textures/noise.svg");
   background-size: 200px 200px;
 }
 

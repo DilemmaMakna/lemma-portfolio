@@ -33,7 +33,7 @@ export const siteJsonLd = {
       legalName: ORG.legalName,
       slogan: ORG.tagline,
       url: SITE,
-      logo: `${SITE}/lemma-logo-hero.svg`,
+      logo: `${SITE}/brand/lemma-logo-hero.svg`,
       email: ORG.email,
       telephone: ORG.phone,
       description:

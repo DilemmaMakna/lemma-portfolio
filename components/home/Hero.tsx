@@ -46,7 +46,7 @@ export default function Hero() {
             ))}
           </h1>
           <Image
-            src="/lemma-logo-hero.svg"
+            src="/brand/lemma-logo-hero.svg"
             alt="LEMMA"
             width={515}
             height={527}
