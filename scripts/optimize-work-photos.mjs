@@ -1,11 +1,3 @@
-// Kompres foto karya di public/work-photos lalu tulis manifest lib/work-photos.ts.
-//
-//   node scripts/optimize-work-photos.mjs
-//
-// - Folder lama dipetakan ke slug proyek (FOLDERS); folder baru sebaiknya langsung bernama slug.
-// - Setiap PNG/JPG diubah jadi WebP (lebar maks MAX_W) bernama 01.webp, 02.webp, ... lalu sumbernya dihapus.
-// - Manifest berisi ukuran dan warna dominan tiap foto (dipakai sebagai warna tile saat memuat).
-// Aman dijalankan ulang: file .webp yang sudah ada tidak disentuh.
 import sharp from "sharp";
 import fs from "node:fs";
 import path from "node:path";
