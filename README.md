@@ -191,24 +191,24 @@ Design tokens are defined only in `app/styles/tokens.css`. The layer utilities `
 
 ## Performance, SEO and Lighthouse
 
-Scores are from [after-art.md](docs/lighthouse/after-art.md), a lab run on 2026-10-23 with `scripts/lighthouse.sh` (one run per page, fresh profile). They are not 100 on every page.
+Scores are from [results.md](docs/lighthouse/results.md), one lab run on 2026-10-24 with `scripts/lighthouse.sh` (10 runs: 5 pages, mobile and desktop). Each value comes from that single run, and lab scores vary by several points between runs. They are not 100 on every page.
 
-| Page               | Performance | Accessibility | Best Practices | SEO | LCP   |
-| ------------------ | ----------- | ------------- | -------------- | --- | ----- |
-| Home (mobile)      | 86          | 100           | 100            | 100 | 4.18s |
-| About (mobile)     | 88          | 96            | 100            | 100 | 3.80s |
-| Services (mobile)  | 87          | 96            | 100            | 100 | 3.85s |
-| Work (mobile)      | 85          | 92            | 100            | 100 | 4.26s |
-| Contact (mobile)   | 92          | 96            | 100            | 100 | 3.41s |
-| Home (desktop)     | 98          | 100           | 100            | 100 | 1.03s |
-| About (desktop)    | 100         | 100           | 100            | 100 | 0.80s |
-| Services (desktop) | 99          | 96            | 100            | 100 | 0.82s |
-| Work (desktop)     | 99          | 96            | 100            | 100 | 0.99s |
-| Contact (desktop)  | 99          | 96            | 100            | 100 | 0.82s |
+| Page               | Performance | Accessibility | Best Practices | SEO | LCP   | CLS   | TBT   |
+| ------------------ | ----------- | ------------- | -------------- | --- | ----- | ----- | ----- |
+| Home (mobile)      | 75          | 100           | 100            | 100 | 6.61s | 0.000 | 152ms |
+| About (mobile)     | 88          | 96            | 100            | 100 | 3.81s | 0.000 | 89ms  |
+| Services (mobile)  | 87          | 100           | 100            | 100 | 3.85s | 0.000 | 132ms |
+| Work (mobile)      | 85          | 96            | 100            | 100 | 4.27s | 0.000 | 46ms  |
+| Contact (mobile)   | 91          | 96            | 100            | 100 | 3.41s | 0.000 | 14ms  |
+| Home (desktop)     | 98          | 100           | 100            | 100 | 1.03s | 0.000 | 0ms   |
+| About (desktop)    | 100         | 100           | 100            | 100 | 0.79s | 0.000 | 0ms   |
+| Services (desktop) | 99          | 96            | 100            | 100 | 0.82s | 0.000 | 0ms   |
+| Work (desktop)     | 99          | 96            | 100            | 100 | 0.98s | 0.000 | 0ms   |
+| Contact (desktop)  | 99          | 96            | 100            | 100 | 0.78s | 0.000 | 0ms   |
 
-Best Practices and SEO are 100 on all 10 pages. Accessibility is 100 on 3 pages and 92 to 96 on the rest. Performance is 100 on About (desktop), 98 to 99 on the other desktop pages and 85 to 92 on mobile. CLS is 0.000 on all pages.
+Best Practices and SEO are 100 on all 10 pages. Accessibility is 100 on 4 pages (Home and Services mobile, Home and About desktop) and 96 on the other 6. Performance is 100 on About (desktop), 98 to 99 on the other desktop pages and 75 to 91 on mobile. No mobile page reaches 100. CLS is 0.000 on all pages.
 
-Mobile LCP is the gap: 3.41s to 4.26s against 0.80s to 1.03s on desktop. The LCP copy stays hidden until hydration and the intro fade finish, which accounts for most of the mobile render delay (about 2 s in the audit data, not measured in a trace). See [fixes.md](docs/lighthouse/fixes.md) for the LCP elements and [after-perf.md](docs/lighthouse/after-perf.md) for the open audits.
+Mobile LCP is the gap: 3.41s to 4.27s on four pages and 6.61s on Home, against 0.78s to 1.03s on desktop. Mobile LCP and TTI move together, and the remaining wait is main-thread script work and hydration. The 96 scores come from the header button captured mid-fade (5 pages) and, on Services desktop, hover-panel text captured while typing. Both are inferred from the run, not confirmed in a browser. Causes, the other open items and the rerun steps are in [results.md](docs/lighthouse/results.md).
 
 ### SEO
 
