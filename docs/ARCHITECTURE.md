@@ -8,21 +8,22 @@ This project runs Next.js 16.4.2. This version has breaking changes compared wit
 
 Routes live in `app/`. Components are grouped by the page or feature they belong to. A feature folder holds only the components for that feature.
 
-- `app/`: routes and route-level files. `app/page.tsx` is the home page. `about/`, `services/`, `work/` and `contact/` each hold a `page.tsx`. `api/contact/route.ts` is the contact form endpoint. `layout.tsx`, `sitemap.ts`, `robots.ts`, `manifest.ts` and the image routes sit directly in `app/`. `styles/tokens.css` holds the design tokens.
+- `app/`: routes and route-level files. `app/page.tsx` is the home page. `about/`, `services/`, `work/` and `contact/` each hold a `page.tsx`. `api/contact/route.ts` is the contact form endpoint. `layout.tsx`, `sitemap.ts`, `robots.ts`, `manifest.ts` and the image routes sit directly in `app/`. `app/(machine)/` is a route group for the machine-readable routes `llms.txt`, `llms-full.txt` and `index.md`; the group name is not part of the URL. `styles/tokens.css` holds the design tokens.
 - `components/home/`: sections of the home page, such as `Hero.tsx`, `Premise.tsx`, `Process.tsx`, `Services.tsx`, `SelectedWork.tsx`, `Products.tsx`, `About.tsx`, `ContactCta.tsx` and `Footer.tsx`.
 - `components/nav/`: site navigation (`NavPill.tsx`).
 - `components/about/`, `components/services/`, `components/work/` and `components/contact/`: sections for each page. Several of these folders also hold a small copy hook, such as `components/about/useAboutCopy.ts`.
 - `components/ui/`: shared pieces used by more than one feature, such as `Button.tsx`, `ContactForm.tsx`, `ThemeToggle.tsx`, `Cursor.tsx` and `PageTransition.tsx`. Code in `components/ui/` must not import from a feature folder.
-- `components/` (top level): app-wide wrappers such as `Providers.tsx`, `LocaleProvider.tsx`, `PageAnimations.tsx`, `SmoothScroll.tsx` and `JsonLd.tsx`.
-- `lib/`: non-visual code. It holds configuration, text, data and helpers. See the layers section below.
+- `components/providers/`: app-wide providers, `Providers.tsx` and `LocaleProvider.tsx`.
+- `components/layout/`: page-level helpers, `SmoothScroll.tsx`, `PageAnimations.tsx` and `JsonLd.tsx`.
+- `lib/`: non-visual code. It holds configuration, text, data and helpers. `lib/content/` holds copy and data, `lib/motion/` holds GSAP, Lenis and intro setup, `lib/seo/` holds metadata, JSON-LD and the LLM text, and `lib/ui/` holds the theme and topography helpers. `lib/env.ts` and `lib/fonts.ts` (with its font file in `lib/fonts/`) sit at the top. See the layers section below.
 
 ## Layers: view, logic, data
 
 The GreatFrontEnd front-end system design playbook describes a layered way to split a front end into view, logic and data: https://www.greatfrontend.com/front-end-system-design-playbook/framework. That playbook is a high-level framework for talking through a design in an interview. It is not a folder layout, so this repository does not copy its names. We use the three layers as a rule about dependencies.
 
 - **View**: React components and route files (`app/**/page.tsx` and `components/**`). They render UI and receive their text and data through props, hooks or context.
-- **Logic**: hooks, providers and helpers that connect the view to the data. Examples are `components/LocaleProvider.tsx`, the `use*Copy.ts` hooks, and `lib/gsap.ts`, `lib/lenis.ts` and `lib/intro.ts`.
-- **Data**: static content and configuration in `lib/`, such as `lib/messages.ts`, `lib/work.ts`, `lib/services.ts`, `lib/site.ts` and `lib/env.ts`. The contact endpoint in `app/api/contact/route.ts` is the only API route. The `llms` routes and the sitemap build their output from the same `lib/` data. There is no database and no data-fetching layer.
+- **Logic**: hooks, providers and helpers that connect the view to the data. Examples are `components/providers/LocaleProvider.tsx`, the `use*Copy.ts` hooks, and `lib/motion/gsap.ts`, `lib/motion/lenis.ts` and `lib/motion/intro.ts`.
+- **Data**: static content and configuration in `lib/`, such as `lib/content/messages.ts`, `lib/content/work.ts`, `lib/content/services.ts`, `lib/seo/site.ts` and `lib/env.ts`. The contact endpoint in `app/api/contact/route.ts` is the only API route. The `llms` routes and the sitemap build their output from the same `lib/` data. There is no database and no data-fetching layer.
 
 Dependencies point one way: view depends on logic, logic depends on data, and data never depends on the view. Today `lib/` does not import from `components/`, and that rule must hold.
 
@@ -55,18 +56,18 @@ Define design tokens only in `app/styles/tokens.css`. Components use the generat
 
 ## Copy and text
 
-User-facing text lives in `lib/messages.ts`, which holds the shared and home page copy in Indonesian (`id`) and English (`en`). Each section has its own copy file with the same two keys: `lib/about.ts`, `lib/contact.ts`, `lib/services.ts` and `lib/work.ts`. Components read copy through `useLocale` or a `use*Copy` hook. Do not write copy directly in a component.
+User-facing text lives in `lib/content/messages.ts`, which holds the shared and home page copy in Indonesian (`id`) and English (`en`). Each section has its own copy file with the same two keys: `lib/content/about.ts`, `lib/content/contact.ts`, `lib/content/services.ts` and `lib/content/work.ts`. Components read copy through `useLocale` or a `use*Copy` hook. Do not write copy directly in a component.
 
 ## Pages and metadata
 
-Each route is a folder under `app/` with a `page.tsx`. A page exports `metadata` built by `pageMeta(path, title, description)` from `lib/site.ts`. `pageMeta` sets the absolute page title, the canonical URL and the Open Graph data, so include the site name yourself, for example `"About Us | Lemma"`. A page can also render JSON-LD with `pageJsonLd`, as `app/about/page.tsx` does.
+Each route is a folder under `app/` with a `page.tsx`. A page exports `metadata` built by `pageMeta(path, title, description)` from `lib/seo/site.ts`. `pageMeta` sets the absolute page title, the canonical URL and the Open Graph data, so include the site name yourself, for example `"About Us | Lemma"`. A page can also render JSON-LD with `pageJsonLd`, as `app/about/page.tsx` does.
 
 ## How to add a page
 
 1. Create `app/<route>/page.tsx`. Keep it a Server Component, with no `"use client"`, and compose section components from `components/<route>/`.
 2. Export `metadata = pageMeta("/<route>", title, description)`.
 3. Add the public URL to the list in `app/sitemap.ts`.
-4. Add a `[name, path, description]` row to the `pages` list in `lib/llms.ts`. That list feeds both `/llms.txt` and `/llms-full.txt`.
+4. Add a `[name, path, description]` row to the `pages` list in `lib/seo/llms.ts`. That list feeds both `/llms.txt` and `/llms-full.txt`.
 
 ## How to add a token
 

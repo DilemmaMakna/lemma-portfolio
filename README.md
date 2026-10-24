@@ -20,7 +20,7 @@
 
 Lemma (PT Masih Dilemma Makna) is a venture studio in Jakarta. This repository is its landing page, built with [Next.js](https://nextjs.org) (App Router), [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), [Tailwind CSS](https://tailwindcss.com), [GSAP](https://gsap.com) and [Lenis](https://lenis.darkroom.engineering).
 
-- **Bilingual Copy**: Indonesian and English text, switched on the client and remembered in a `NEXT_LOCALE` cookie. Shared and home copy lives in `lib/messages.ts`, section copy in `lib/about.ts`, `lib/services.ts`, `lib/work.ts` and `lib/contact.ts`.
+- **Bilingual Copy**: Indonesian and English text, switched on the client and remembered in a `NEXT_LOCALE` cookie. Shared and home copy lives in `lib/content/messages.ts`, section copy in `lib/content/about.ts`, `lib/content/services.ts`, `lib/content/work.ts` and `lib/content/contact.ts`.
 - **Dark and Light Theme**: Dark by default. The choice is stored in `localStorage` under `lemma-theme` and applied before first paint.
 - **Motion**: [GSAP](https://gsap.com) animations with [Lenis](https://lenis.darkroom.engineering) smooth scroll and page transitions.
 - **Typed Environment**: Site settings are read and validated in one module, `lib/env.ts`.
@@ -157,16 +157,22 @@ Put raw PNG/JPG files in `public/images/work-photos/<project-slug>/`, then run `
 
 ## Project Structure
 
-- `app/` - routes (one `page.tsx` per page), `layout.tsx`, `sitemap.ts`, `robots.ts`, `manifest.ts`, OG and Twitter images, `llms` and `index.md` routes, and `api/contact/`
-- `app/styles/tokens.css` - design tokens; `app/globals.css` - global styles; `app/fonts.ts` - fonts
-- `components/home/`, `components/about/`, `components/services/`, `components/work/`, `components/contact/` - sections for each page
-- `components/nav/` - floating nav pill
+- `app/` - Next.js convention files (`layout.tsx`, `page.tsx`, `globals.css`, `manifest.ts`, `robots.ts`, `sitemap.ts`), one folder per page (`about/`, `contact/`, `services/`, `work/`), `api/contact/`, and `styles/tokens.css` (design tokens)
+- `app/(machine)/` - machine-readable routes: `llms.txt`, `llms-full.txt` and `index.md` (the group name is not part of the URL)
+- `components/providers/` - app-wide providers: `Providers.tsx` and `LocaleProvider.tsx`
+- `components/layout/` - page-level helpers: `SmoothScroll.tsx`, `PageAnimations.tsx` and `JsonLd.tsx`
 - `components/ui/` - shared pieces such as `Button.tsx`, `ContactForm.tsx` and `Cursor.tsx`
-- `components/` - app-wide wrappers such as `Providers.tsx`, `LocaleProvider.tsx` and `JsonLd.tsx`
-- `lib/` - non-visual code: `env.ts` (typed env), `messages.ts` (shared and home copy, ID and EN), `site.ts` (metadata and JSON-LD), GSAP, Lenis and intro setup, and `work-photos.ts`
-- `public/` - logo, `images/work-photos/` and `images/dithered/`
+- `components/nav/` - floating nav pill
+- `components/home/`, `components/about/`, `components/services/`, `components/work/`, `components/contact/` - sections for each page
+- `lib/content/` - copy and data: `messages.ts` (shared and home copy, ID and EN), the section copy files, `socials.ts` and `work-photos.ts`
+- `lib/motion/` - GSAP, Lenis and intro setup
+- `lib/seo/` - metadata and JSON-LD (`site.ts`), and the LLM text generator (`llms.ts`)
+- `lib/ui/` - theme and topography helpers
+- `lib/env.ts` - typed env; `lib/fonts.ts` - fonts, with the font files in `lib/fonts/`
+- `public/` - `brand/` (logo and icon), `textures/` (noise), `images/work-photos/` and `images/dithered/`
 - `scripts/` - photo and Lighthouse scripts
 - `docs/` - architecture, contributing, best practices and Lighthouse reports
+- `.agents/` - design brief, skills, and original design assets in `assets/`
 - `.githooks/` - optional pre-commit hook
 
 See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layers and folder rules.
@@ -179,7 +185,7 @@ Design tokens are defined only in `app/styles/tokens.css`. The layer utilities `
 
 ## Content and Design
 
-- Copy source: `.copywriting/lemma_home_copywriting.md`. Keep text in `lib/` (shared and home copy in `lib/messages.ts`, section copy in `lib/about.ts`, `lib/contact.ts`, `lib/services.ts` and `lib/work.ts`) and do not hardcode strings in components.
+- Copy source: `.copywriting/lemma_home_copywriting.md`. Keep text in `lib/content/` (shared and home copy in `lib/content/messages.ts`, section copy in `lib/content/about.ts`, `lib/content/contact.ts`, `lib/content/services.ts` and `lib/content/work.ts`) and do not hardcode strings in components.
 - Design brief: `.agents/DESIGN.md`. Dark by default with a light theme override, one orange accent, mono labels.
 - Public pages must not show the full name or technical details of the ARAH product.
 
@@ -206,15 +212,15 @@ Mobile LCP is the gap: 3.41s to 4.26s against 0.80s to 1.03s on desktop. The LCP
 
 ### SEO
 
-- **Metadata**: `pageMeta()` in `lib/site.ts` sets the title, description and Open Graph data for each page route.
+- **Metadata**: `pageMeta()` in `lib/seo/site.ts` sets the title, description and Open Graph data for each page route.
 - **Canonical URLs**: `alternates.canonical` in `pageMeta()` and in the root layout.
 - **Sitemap**: `app/sitemap.ts`, served at `/sitemap.xml`.
 - **Robots**: `app/robots.ts`, which allows `/`, disallows `/api/` and points to the sitemap.
 - **Manifest**: `app/manifest.ts`.
-- **Open Graph and Twitter images**: `app/opengraph-image.tsx` and `app/twitter-image.tsx`.
-- **JSON-LD**: `siteJsonLd` and `pageJsonLd` in `lib/site.ts`, rendered by `components/JsonLd.tsx`.
-- **LLM routes**: `app/llms.txt/route.ts` and `app/llms-full.txt/route.ts`.
-- **Markdown index**: `app/index.md/route.ts`, with the same content as `llms-full.txt`.
+- **Open Graph and Twitter images**: `public/brand/twitter-card.png`, set by `SHARE_IMAGE` in `lib/seo/site.ts`.
+- **JSON-LD**: `siteJsonLd` and `pageJsonLd` in `lib/seo/site.ts`, rendered by `components/layout/JsonLd.tsx`.
+- **LLM routes**: `app/(machine)/llms.txt/route.ts` and `app/(machine)/llms-full.txt/route.ts`.
+- **Markdown index**: `app/(machine)/index.md/route.ts`, with the same content as `llms-full.txt`.
 
 ## Best Practices
 
