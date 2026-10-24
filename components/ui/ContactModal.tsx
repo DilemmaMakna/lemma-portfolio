@@ -37,8 +37,9 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
       return;
     }
     const lenis = getLenis();
+    const prevOverflow = document.body.style.overflow;
     lenis?.stop();
-    document.body.style.overflow = lenis ? "" : "hidden";
+    if (!lenis) document.body.style.overflow = "hidden";
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
@@ -47,7 +48,7 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
     return () => {
       window.removeEventListener("keydown", onKey);
       lenis?.start();
-      document.body.style.overflow = "";
+      if (!lenis) document.body.style.overflow = prevOverflow;
     };
   }, [isOpen, close]);
 
@@ -70,7 +71,10 @@ export function ContactModalProvider({ children }: { children: React.ReactNode }
             className="max-h-[92svh] w-full max-w-lg overflow-y-auto border border-line-strong bg-bg-raised p-6 sm:rounded-[4px] md:p-8"
           >
             <div className="flex items-start justify-between gap-6">
-              <h2 id="contact-modal-title" className="text-[clamp(1.75rem,4vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.03em]">
+              <h2
+                id="contact-modal-title"
+                className="text-[clamp(1.75rem,4vw,2.25rem)] font-medium leading-[1.05] tracking-[-0.03em]"
+              >
                 {m.title}
               </h2>
               <button type="button" onClick={close} className="btn btn-ghost !h-10 shrink-0">

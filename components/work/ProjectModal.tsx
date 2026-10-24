@@ -42,7 +42,10 @@ function Heading({ n, id, children }: { n: number; id: string; children: React.R
   return (
     <div id={id} data-section className="mb-6 flex scroll-mt-24 items-baseline gap-4 border-b border-line pb-4">
       <span className="mono text-accent">§{n}</span>
-      <h3 className="text-[clamp(1.5rem,3vw,2rem)] italic leading-none tracking-[-0.01em]" style={{ fontFamily: "var(--font-serif)" }}>
+      <h3
+        className="text-[clamp(1.5rem,3vw,2rem)] italic leading-none tracking-[-0.01em]"
+        style={{ fontFamily: "var(--font-serif)" }}
+      >
         {children}
       </h3>
     </div>
@@ -80,19 +83,24 @@ export default function ProjectModal({
   useEffect(() => {
     const lastFocus = document.activeElement as HTMLElement | null;
     const lenis = getLenis();
+    const prevOverflow = document.body.style.overflow;
     lenis?.stop();
-    document.body.style.overflow = lenis ? "" : "hidden";
+    if (!lenis) document.body.style.overflow = "hidden";
     closeBtn.current?.focus({ preventScroll: true });
     // fromTo (bukan from): di StrictMode efek jalan dua kali, dan from() kedua akan membaca opacity 0
     // sebagai nilai akhir sehingga panel tetap transparan.
     const intro =
       panel.current && !reducedMotion()
-        ? gsap.fromTo(panel.current, { yPercent: 6, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.6, ease: "expo.out" })
+        ? gsap.fromTo(
+            panel.current,
+            { yPercent: 6, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 0.6, ease: "expo.out" },
+          )
         : null;
     return () => {
       intro?.kill();
       lenis?.start();
-      document.body.style.overflow = "";
+      if (!lenis) document.body.style.overflow = prevOverflow;
       lastFocus?.focus({ preventScroll: true });
     };
   }, []);
@@ -116,7 +124,11 @@ export default function ProjectModal({
     sc.scrollTop = 0;
     setActive("given");
     if (!reducedMotion())
-      gsap.fromTo(sc.querySelectorAll("[data-stagger]"), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: "expo.out" });
+      gsap.fromTo(
+        sc.querySelectorAll("[data-stagger]"),
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: "expo.out" },
+      );
 
     const onScroll = () => {
       const max = sc.scrollHeight - sc.clientHeight;
@@ -141,12 +153,18 @@ export default function ProjectModal({
   if (!p) return null;
   const s = p.story;
   const [lead, mid, rest] = [p.photos.slice(0, 2), p.photos.slice(2, 6), p.photos.slice(6)];
-  const go = (id: Section) => document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth" });
+  const go = (id: Section) =>
+    document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth" });
 
   const meta: [string, React.ReactNode][] = [
     [d.client, p.client[locale]],
     [d.role, p.role[locale]],
-    [d.year, <span key="y" className="font-mono text-sm">{p.year}</span>],
+    [
+      d.year,
+      <span key="y" className="font-mono text-sm">
+        {p.year}
+      </span>,
+    ],
     [d.category, [p.category, ...(p.secondary ?? [])].join(" + ")],
     [
       d.status,
@@ -175,20 +193,37 @@ export default function ProjectModal({
             lemma://{locale === "id" ? "karya" : "work"}/<span className="text-fg-muted">{p.slug}</span>
           </span>
           <div className="mono flex items-center gap-1 md:absolute md:left-1/2 md:-translate-x-1/2">
-            <button type="button" onClick={() => onNavigate(prev.slug)} aria-label={`${d.prev}: ${prev.name}`} className="grid h-9 w-9 place-items-center rounded-full text-fg-muted transition-colors hover:bg-surface hover:text-accent">
+            <button
+              type="button"
+              onClick={() => onNavigate(prev.slug)}
+              aria-label={`${d.prev}: ${prev.name}`}
+              className="grid h-9 w-9 place-items-center rounded-full text-fg-muted transition-colors hover:bg-surface hover:text-accent"
+            >
               ←
             </button>
             <span className="tabular-nums text-fg-muted">
-              <span className="text-fg">{String(index + 1).padStart(2, "0")}</span> {d.of} {String(list.length).padStart(2, "0")}
+              <span className="text-fg">{String(index + 1).padStart(2, "0")}</span> {d.of}{" "}
+              {String(list.length).padStart(2, "0")}
             </span>
-            <button type="button" onClick={() => onNavigate(next.slug)} aria-label={`${d.next}: ${next.name}`} className="grid h-9 w-9 place-items-center rounded-full text-fg-muted transition-colors hover:bg-surface hover:text-accent">
+            <button
+              type="button"
+              onClick={() => onNavigate(next.slug)}
+              aria-label={`${d.next}: ${next.name}`}
+              className="grid h-9 w-9 place-items-center rounded-full text-fg-muted transition-colors hover:bg-surface hover:text-accent"
+            >
               →
             </button>
           </div>
           <div className="flex items-center gap-3">
             <div className="mono hidden items-center gap-1 sm:flex" role="group" aria-label="Language">
               {(["id", "en"] as const).map((l) => (
-                <button key={l} type="button" aria-pressed={locale === l} onClick={() => setLocale(l)} className={`px-1 transition-colors ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}>
+                <button
+                  key={l}
+                  type="button"
+                  aria-pressed={locale === l}
+                  onClick={() => setLocale(l)}
+                  className={`px-1 transition-colors ${locale === l ? "text-fg" : "text-fg-dim hover:text-fg-muted"}`}
+                >
                   [{l.toUpperCase()}]
                 </button>
               ))}
@@ -208,7 +243,10 @@ export default function ProjectModal({
             <aside className="col-span-full lg:col-span-3">
               <div className="flex flex-col gap-8 lg:sticky lg:top-6">
                 <div data-stagger className="flex items-end justify-between gap-4 border-b border-line pb-6">
-                  <span className="text-[clamp(4rem,8vw,6.5rem)] italic leading-[0.8] text-fg-dim" style={{ fontFamily: "var(--font-serif)" }}>
+                  <span
+                    className="text-[clamp(4rem,8vw,6.5rem)] italic leading-[0.8] text-fg-dim"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
                     {p.n}
                   </span>
                   <span className="mono mono-2xs pb-1 text-right text-fg-dim">{p.type}</span>
@@ -225,7 +263,9 @@ export default function ProjectModal({
                     <dt className="mono mono-2xs text-fg-dim">{d.tags}</dt>
                     <dd className="mt-2 flex flex-wrap gap-1.5">
                       {p.tags.map((t) => (
-                        <span key={t} className="tag">{t}</span>
+                        <span key={t} className="tag">
+                          {t}
+                        </span>
                       ))}
                     </dd>
                   </div>
@@ -236,7 +276,10 @@ export default function ProjectModal({
                     <div className="mono mono-2xs mb-3 flex justify-between text-fg-dim">
                       <span>{d.outline}</span>
                       <span>
-                        {d.progress} <span ref={pct} className="tabular-nums text-fg-muted">0%</span>
+                        {d.progress}{" "}
+                        <span ref={pct} className="tabular-nums text-fg-muted">
+                          0%
+                        </span>
                       </span>
                     </div>
                     <ol className="border-l border-line">
@@ -246,7 +289,9 @@ export default function ProjectModal({
                             type="button"
                             onClick={() => go(id)}
                             className={`-ml-px flex w-full items-baseline gap-3 border-l py-2 pl-4 text-left text-sm transition-colors ${
-                              active === id ? "border-accent text-fg" : "border-transparent text-fg-dim hover:text-fg-muted"
+                              active === id
+                                ? "border-accent text-fg"
+                                : "border-transparent text-fg-dim hover:text-fg-muted"
                             }`}
                           >
                             <span className="mono mono-2xs">§{i + 1}</span>
@@ -262,13 +307,23 @@ export default function ProjectModal({
 
             {/* Kolom kanan: judul, cerita, foto. */}
             <article className="col-span-full lg:col-span-8 lg:col-start-5">
-              <h2 id="project-title" data-stagger className="text-[clamp(2.25rem,5vw,4.25rem)] font-medium leading-[1] tracking-[-0.04em]">
+              <h2
+                id="project-title"
+                data-stagger
+                className="text-[clamp(2.25rem,5vw,4.25rem)] font-medium leading-[1] tracking-[-0.04em]"
+              >
                 {p.name}
               </h2>
-              <p data-stagger className="mt-5 text-[clamp(1.375rem,2.4vw,1.875rem)] italic leading-snug text-accent" style={{ fontFamily: "var(--font-serif)" }}>
+              <p
+                data-stagger
+                className="mt-5 text-[clamp(1.375rem,2.4vw,1.875rem)] italic leading-snug text-accent"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
                 {p.hook[locale]}
               </p>
-              <p data-stagger className="lead mt-6 max-w-[58ch]">{p.summary[locale]}</p>
+              <p data-stagger className="lead mt-6 max-w-[58ch]">
+                {p.summary[locale]}
+              </p>
 
               <div data-stagger>
                 {p.photos.length ? (
@@ -284,12 +339,16 @@ export default function ProjectModal({
               {s && (
                 <>
                   <section className="mt-16">
-                    <Heading n={1} id="sec-given">{d.sections.given}</Heading>
+                    <Heading n={1} id="sec-given">
+                      {d.sections.given}
+                    </Heading>
                     <p className="lead max-w-[58ch] !text-fg">{s.given[locale]}</p>
                   </section>
 
                   <section className="mt-16">
-                    <Heading n={2} id="sec-approach">{d.sections.approach}</Heading>
+                    <Heading n={2} id="sec-approach">
+                      {d.sections.approach}
+                    </Heading>
                     <div className="flex max-w-[62ch] flex-col gap-4 text-fg-muted">
                       {s.approach.map((a, i) => (
                         <p key={i}>{a[locale]}</p>
@@ -299,11 +358,15 @@ export default function ProjectModal({
                   </section>
 
                   <section className="mt-16">
-                    <Heading n={3} id="sec-proof">{d.sections.proof}</Heading>
+                    <Heading n={3} id="sec-proof">
+                      {d.sections.proof}
+                    </Heading>
                     <ol className="grid gap-px overflow-hidden rounded-[4px] border border-line bg-line sm:grid-cols-2">
                       {s.proof.map((item, i) => (
                         <li key={i} className="flex flex-col gap-2 bg-bg p-5">
-                          <span className="mono mono-2xs text-fg-dim">L{p.n}.{i + 1}</span>
+                          <span className="mono mono-2xs text-fg-dim">
+                            L{p.n}.{i + 1}
+                          </span>
                           <span className="h-card">{item.title[locale]}</span>
                           <span className="text-sm text-fg-muted">{item.body[locale]}</span>
                         </li>
@@ -313,7 +376,9 @@ export default function ProjectModal({
                   </section>
 
                   <section className="mt-16">
-                    <Heading n={4} id="sec-result">{d.sections.result}</Heading>
+                    <Heading n={4} id="sec-result">
+                      {d.sections.result}
+                    </Heading>
                     <p className="text-[clamp(1.375rem,2.6vw,2rem)] font-medium leading-snug tracking-[-0.02em]">
                       <span className="mr-2 text-accent">∴</span>
                       {s.result[locale]}
