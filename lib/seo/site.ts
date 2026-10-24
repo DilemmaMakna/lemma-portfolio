@@ -103,9 +103,9 @@ export const ld = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c
 
 // Gambar Open Graph dan Twitter, sama untuk semua halaman.
 export const SHARE_IMAGE = {
-  url: "/brand/twitter-card.png",
-  width: 3240,
-  height: 1980,
+  url: "/brand/share-card.jpg",
+  width: 1200,
+  height: 630,
   alt: `${ORG.name} | ${ORG.tagline}`,
 };
 
