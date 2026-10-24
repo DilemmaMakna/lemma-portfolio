@@ -268,3 +268,24 @@ Not done in batch 1:
 
 - About and services ASCII effects (`AsciiCycle`, `AsciiFlow`): not in the requested measurement. They need reserved boxes like the home ones.
 - The revert of `19e8f40` is staged in the working tree but not committed. The dotagent commit-message hook refuses `Revert "..."`. Commit it with `git commit -m 'Revert "perf(ui): lazy load below-fold canvas effects"' -- components/home/Premise.tsx components/home/Process.tsx components/home/ContactCta.tsx` once the message is accepted, or keep 5.3 if the lead judges the difference as noise.
+
+## PR 5 Results (batch 2)
+
+Subtasks 5.8 to 5.12 (ScrollTrigger deferral): discarded before any code change. No commits 5.8 to 5.12, no build and no Lighthouse run in this batch. The working tree was left unchanged.
+
+Reason: the keep rule requires `ScrollTrigger` to leave the shared chunk. It cannot, because `PageAnimations` (mounted on all five routes) and `ServicesIntro` set up ScrollTrigger tweens synchronously at mount, and their `from` states are the visible starting state. Deferring them would show the content in its pre-tween state until the chunk resolves, then jump.
+
+Blocking sites:
+
+- `components/layout/PageAnimations.tsx` (`app/{page,about,work,services,contact}/page.tsx`): `gsap.from` and `fromTo` with `scrollTrigger` on `[data-reveal]`, `[data-reveal="title"]` and `[data-rule]`, applied at mount (`from` tweens render immediately). No CSS hides these states (`app/globals.css` has no `data-reveal` or `data-rule` rule), so the content would paint visible first. This site alone blocks the goal, since it is on every route.
+- `components/services/ServicesIntro.tsx` (`/services`): the scrub timeline is created inside the SplitText `onSplit` at mount and sets the blurred, offset line state. Deferred, the split lines would show unblurred until the chunk loads.
+- `components/home/Footer.tsx` (all pages): `fromTo` with `scrub` on the footer mark, applied at mount.
+- `components/home/Services.tsx` (`/`): stroke and node states set at mount for the diagram.
+- `components/about/Who.tsx` (`/about`): counter tween with `scrollTrigger`. Not analyzed further.
+
+Not measured. The reference numbers are batch 1 baseline: `/` Perf 86, LCP 4.16 s, TBT 68 ms, TTI 4.20 s; `/work` Perf 86, LCP 4.19 s, TBT 50 ms, TTI 4.22 s.
+
+Options left open for a later batch (needs a decision, not taken here):
+
+- Keep `PageAnimations` sync and accept that ScrollTrigger stays in the shared chunk. The group's goal is then not met.
+- Apply the `from` states synchronously with `gsap.set` and create the ScrollTrigger tweens after the load. This hides reveal content for the chunk load time, which can worsen LCP on pages where a reveal element is in the first viewport. Needs measurement.
