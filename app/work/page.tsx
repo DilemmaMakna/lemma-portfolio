@@ -4,7 +4,7 @@ import PageAnimations from "@/components/PageAnimations";
 import WorkHero from "@/components/work/WorkHero";
 import WorkExplorer from "@/components/work/WorkExplorer";
 import Footer from "@/components/home/Footer";
-import { workMessages } from "@/lib/work";
+import { workMessages } from "@/lib/content/work";
 import { pageMeta, pageJsonLd } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 

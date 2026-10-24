@@ -7,7 +7,7 @@ import { useContactModal } from "@/components/ui/ContactModal";
 import Button from "@/components/ui/Button";
 import { gsap, reducedMotion } from "@/lib/gsap";
 import { getLenis } from "@/lib/lenis";
-import type { Project } from "@/lib/work";
+import type { Project } from "@/lib/content/work";
 import type { WorkPhoto } from "@/lib/work-photos";
 import AsciiCover from "./AsciiCover";
 import { useWorkCopy } from "./useWorkCopy";

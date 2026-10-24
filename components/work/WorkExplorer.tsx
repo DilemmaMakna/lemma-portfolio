@@ -5,7 +5,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import Redacted from "@/components/ui/Redacted";
 import { useContactModal } from "@/components/ui/ContactModal";
-import { CATEGORIES, isOpenable, projects, type Category } from "@/lib/work";
+import { CATEGORIES, isOpenable, projects, type Category } from "@/lib/content/work";
 import ProjectModal from "./ProjectModal";
 import WorkWall from "./WorkWall";
 import { useWorkCopy } from "./useWorkCopy";

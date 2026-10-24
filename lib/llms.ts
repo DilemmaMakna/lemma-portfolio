@@ -7,7 +7,7 @@ import { messages } from "@/lib/messages";
 import { servicesMessages } from "@/lib/content/services";
 import { ORG, SITE } from "@/lib/site";
 import { socials } from "@/lib/socials";
-import { projects, studioStats, type Project } from "@/lib/work";
+import { projects, studioStats, type Project } from "@/lib/content/work";
 
 const en = messages.en;
 const idm = messages.id;

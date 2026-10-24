@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { studioStats } from "@/lib/work";
+import { studioStats } from "@/lib/content/work";
 
 export default function About() {
   const { t } = useLocale();

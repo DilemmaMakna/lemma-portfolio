@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { projects, type Project } from "@/lib/work";
+import { projects, type Project } from "@/lib/content/work";
 
 // Empat proyek pilihan beserta foto yang ditampilkan (indeks dari daftar foto proyek).
 // Setiap kartu membuka detailnya di /work (?p=slug membuka modal proyek di sana).

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { reducedMotion } from "@/lib/gsap";
-import { isOpenable, type Project } from "@/lib/work";
+import { isOpenable, type Project } from "@/lib/content/work";
 import type { WorkPhoto } from "@/lib/work-photos";
 import Redacted from "@/components/ui/Redacted";
 import AsciiCover from "./AsciiCover";
