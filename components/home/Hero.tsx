@@ -5,7 +5,7 @@ import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
 import DotGrid from "@/components/ui/DotGrid";
 import { useContactModal } from "@/components/ui/ContactModal";
-import { scrollToId } from "@/lib/lenis";
+import { scrollToId } from "@/lib/motion/lenis";
 
 export default function Hero() {
   const { t } = useLocale();

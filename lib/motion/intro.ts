@@ -1,5 +1,5 @@
 import { gsap } from "@/lib/motion/gsap";
-import { getLenis } from "@/lib/lenis";
+import { getLenis } from "@/lib/motion/lenis";
 
 // Intro blur: preloader singkat, lalu elemen hero masuk berurutan. Total di bawah 2.5s.
 export function playIntro(preloader: HTMLElement | null, counter: HTMLElement | null) {

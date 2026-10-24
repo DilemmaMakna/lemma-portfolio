@@ -8,7 +8,7 @@ import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ThemeToggle from "@/components/ui/ThemeToggle";
-import { getLenis, scrollToId } from "@/lib/lenis";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
 
 // `id` links scroll to a section on the home page; `href` links open their own page.
 const LINKS = [

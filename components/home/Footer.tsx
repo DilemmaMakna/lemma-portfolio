@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
-import { getLenis, scrollToId } from "@/lib/lenis";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
 import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import SocialLinks from "@/components/ui/SocialLinks";
 

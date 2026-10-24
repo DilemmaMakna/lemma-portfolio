@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import DotGrid from "@/components/ui/DotGrid";
 import { reducedMotion } from "@/lib/motion/gsap";
-import { scrollToId } from "@/lib/lenis";
+import { scrollToId } from "@/lib/motion/lenis";
 import CollaborativeCursors from "./CollaborativeCursors";
 import { useServicesCopy } from "./useServicesCopy";
 

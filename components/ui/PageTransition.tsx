@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "@/components/LocaleProvider";
 import { gsap, ScrollTrigger, reducedMotion } from "@/lib/motion/gsap";
-import { getLenis, scrollToId } from "@/lib/lenis";
+import { getLenis, scrollToId } from "@/lib/motion/lenis";
 
 const STRIPS = 5;
 const SERIF = 'var(--font-serif), "Instrument Serif", Georgia, serif';

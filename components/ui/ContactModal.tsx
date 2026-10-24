@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import ContactForm from "@/components/ui/ContactForm";
-import { getLenis } from "@/lib/lenis";
+import { getLenis } from "@/lib/motion/lenis";
 
 type Ctx = {
   open: (source: string) => void;
