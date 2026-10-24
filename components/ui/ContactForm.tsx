@@ -69,19 +69,19 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
   return (
     <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-6">
       <label className="flex flex-col gap-1">
-        <span className="mono text-xs text-fg-dim">{m.name}</span>
+        <span className="mono text-xs text-fg-muted">{m.name}</span>
         <input ref={firstField} name="name" required autoComplete="name" maxLength={100} className={FIELD} />
       </label>
       <label className="flex flex-col gap-1">
-        <span className="mono text-xs text-fg-dim">{m.email}</span>
+        <span className="mono text-xs text-fg-muted">{m.email}</span>
         <input name="email" type="email" required autoComplete="email" maxLength={200} className={FIELD} />
       </label>
       <label className="flex flex-col gap-1">
-        <span className="mono text-xs text-fg-dim">{m.company}</span>
+        <span className="mono text-xs text-fg-muted">{m.company}</span>
         <input name="company" autoComplete="organization" maxLength={150} className={FIELD} />
       </label>
       <label className="flex flex-col gap-1">
-        <span className="mono text-xs text-fg-dim">{m.message}</span>
+        <span className="mono text-xs text-fg-muted">{m.message}</span>
         <textarea name="message" required rows={4} maxLength={2000} className={`${FIELD} resize-none`} />
       </label>
 
@@ -91,7 +91,10 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
       {status === "error" && (
         <div role="alert" className="flex flex-col gap-2">
           <p className="mono text-sm text-accent">{m.error}</p>
-          <a href={mailto} className="mono !normal-case text-sm text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent">
+          <a
+            href={mailto}
+            className="mono !normal-case text-sm text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent"
+          >
             {m.fallback} {t.contact.email} ↗
           </a>
         </div>
@@ -100,7 +103,9 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
       <div>
         <button type="submit" disabled={status === "sending"} className="btn btn-primary">
           {status === "sending" ? m.sending : m.submit}
-          <span className="arrow" aria-hidden="true">↗</span>
+          <span className="arrow" aria-hidden="true">
+            ↗
+          </span>
         </button>
       </div>
     </form>
