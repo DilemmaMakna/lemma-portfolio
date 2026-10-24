@@ -29,7 +29,7 @@ export default function Hero() {
           <span>{h.place} &nbsp; GMT+7</span>
         </div> */}
 
-        <div className="flex flex-1 flex-col justify-center gap-10 py-12 lg:flex-row lg:items-center lg:gap-0">
+        <div className="flex flex-1 items-center py-12">
           <h1 id="hero-title" className="h-hero">
             {lines.map((line, i) => (
               <span key={i} className="block" style={{ paddingLeft: `calc(${i} * clamp(1.25rem, 8.3vw, 8rem))` }}>
@@ -54,7 +54,7 @@ export default function Hero() {
             loading="eager"
             fetchPriority="high"
             data-intro="fade"
-            className="block h-auto w-24 sm:w-32 lg:absolute lg:right-20 lg:top-40 lg:w-auto"
+            className="absolute right-20 top-40 hidden lg:block"
           />
         </div>
 
