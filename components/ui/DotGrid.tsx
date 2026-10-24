@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { isTouch, reducedMotion } from "@/lib/motion/gsap";
-import { cssVar, onThemeChange } from "@/lib/theme";
+import { cssVar, onThemeChange } from "@/lib/ui/theme";
 
 const STEP = 24;
 const RADIUS = 180;

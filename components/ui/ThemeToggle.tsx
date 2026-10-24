@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
-import { getTheme, onThemeChange, setTheme, type Theme } from "@/lib/theme";
+import { getTheme, onThemeChange, setTheme, type Theme } from "@/lib/ui/theme";
 
 // Tombol bulat tema gelap/terang. Ikon menunjukkan tema TUJUAN (bulan = ke gelap, matahari = ke terang).
 export default function ThemeToggle({ className = "" }: { className?: string }) {
