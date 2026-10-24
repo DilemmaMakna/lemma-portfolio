@@ -1,5 +1,5 @@
 // Copy halaman /about. Bahasa Indonesia adalah sumber; versi en mengikuti strukturnya.
-import type { Locale } from "@/lib/messages";
+import type { Locale } from "@/lib/content/messages";
 
 const id = {
   hero: {

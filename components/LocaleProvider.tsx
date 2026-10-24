@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { gsap, reducedMotion } from "@/lib/gsap";
-import { messages, type Locale, type Messages } from "@/lib/messages";
+import { messages, type Locale, type Messages } from "@/lib/content/messages";
 
 type Ctx = {
   locale: Locale;

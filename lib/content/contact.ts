@@ -1,6 +1,6 @@
 // Copy halaman /contact. Bahasa Indonesia adalah sumber; versi en mengikuti strukturnya.
-// Label form dan pesan status memakai t.contactModal (lib/messages.ts) supaya modal dan halaman seragam.
-import type { Locale } from "@/lib/messages";
+// Label form dan pesan status memakai t.contactModal (lib/content/messages.ts) supaya modal dan halaman seragam.
+import type { Locale } from "@/lib/content/messages";
 
 const id = {
   meta: {

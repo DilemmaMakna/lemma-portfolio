@@ -11,7 +11,7 @@ import ContactCta from "@/components/home/ContactCta";
 import Footer from "@/components/home/Footer";
 import JsonLd from "@/components/JsonLd";
 import { pageMeta, pageJsonLd } from "@/lib/site";
-import { messages } from "@/lib/messages";
+import { messages } from "@/lib/content/messages";
 
 export const metadata = pageMeta("/", messages.en.meta.title, messages.en.meta.description);
 

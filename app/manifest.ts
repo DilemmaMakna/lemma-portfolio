@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { messages } from "@/lib/messages";
+import { messages } from "@/lib/content/messages";
 
 // Warna tema gelap (--bg di app/globals.css dan viewport themeColor di layout).
 export default function manifest(): MetadataRoute.Manifest {
