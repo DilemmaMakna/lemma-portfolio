@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { useContactModal } from "@/components/ui/ContactModal";
 import Button from "@/components/ui/Button";
 import { gsap, reducedMotion } from "@/lib/motion/gsap";

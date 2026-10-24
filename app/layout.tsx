@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { generalSans, mono, serif } from "@/lib/fonts";
-import { Providers } from "@/components/Providers";
+import { Providers } from "@/components/providers/Providers";
 import { env } from "@/lib/env";
 import { messages } from "@/lib/content/messages";
 import { SITE, siteJsonLd, ld } from "@/lib/seo/site";

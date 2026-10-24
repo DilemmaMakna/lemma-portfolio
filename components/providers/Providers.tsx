@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { useLocale } from "./LocaleProvider";
-import SmoothScroll from "./SmoothScroll";
-import Cursor from "./ui/Cursor";
-import PageTransition from "./ui/PageTransition";
+import SmoothScroll from "@/components/SmoothScroll";
+import Cursor from "@/components/ui/Cursor";
+import PageTransition from "@/components/ui/PageTransition";
 import { LocaleProvider } from "./LocaleProvider";
 import { reducedMotion } from "@/lib/motion/gsap";
 import { playIntro } from "@/lib/motion/intro";

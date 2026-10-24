@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { gsap, ScrollTrigger, reducedMotion } from "@/lib/motion/gsap";
 import { getLenis, scrollToId } from "@/lib/motion/lenis";
 

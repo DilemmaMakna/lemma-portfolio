@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { aboutMessages } from "@/lib/content/about";
 
 export function useAboutCopy() {

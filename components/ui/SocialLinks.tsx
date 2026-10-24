@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import { socials, type SocialKey } from "@/lib/content/socials";
 
 const LABEL = { id: "Ikuti kami", en: "Follow us" } as const;

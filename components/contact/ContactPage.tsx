@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "@/components/LocaleProvider";
+import { useLocale } from "@/components/providers/LocaleProvider";
 import ContactForm from "@/components/ui/ContactForm";
 import SocialLinks from "@/components/ui/SocialLinks";
 import { contactMessages } from "@/lib/content/contact";
