@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { generalSans, mono, serif } from "./fonts";
+import { generalSans, mono, serif } from "@/lib/fonts";
 import { Providers } from "@/components/Providers";
 import { env } from "@/lib/env";
 import { messages } from "@/lib/messages";
