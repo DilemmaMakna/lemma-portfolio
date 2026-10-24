@@ -43,19 +43,19 @@ export default function About() {
             ))}
           </dl>
         </div>
-      </div>
-      <div data-reveal className="mt-[clamp(3rem,8vw,6rem)] w-full">
-        <Image
-          src="/images/dithered/hand-collab.webp"
-          width={1600}
-          height={1067}
-          sizes="100vw"
-          loading="lazy"
-          alt=""
-          aria-hidden="true"
-          unoptimized
-          className="block h-auto w-full"
-        />
+        <div data-reveal className="mt-[clamp(3rem,8vw,6rem)] overflow-hidden rounded-[4px] border border-line">
+          <Image
+            src="/images/dithered/hand-collab.webp"
+            width={1600}
+            height={1067}
+            sizes="(min-width: 1440px) 1320px, 100vw"
+            loading="lazy"
+            alt=""
+            aria-hidden="true"
+            unoptimized
+            className="block h-auto w-full"
+          />
+        </div>
       </div>
     </section>
   );
