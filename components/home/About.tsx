@@ -43,7 +43,10 @@ export default function About() {
             ))}
           </dl>
         </div>
-        <div data-reveal className="mt-[clamp(3rem,8vw,6rem)] overflow-hidden rounded-[4px] border border-line">
+        <div
+          data-reveal
+          className="relative mt-[clamp(3rem,8vw,6rem)] aspect-[3/2] overflow-hidden rounded-[4px] border border-line md:aspect-[5/2]"
+        >
           <Image
             src="/images/dithered/hand-collab.webp"
             width={1600}
@@ -53,7 +56,7 @@ export default function About() {
             alt=""
             aria-hidden="true"
             unoptimized
-            className="block h-auto w-full"
+            className="block h-full w-full object-cover object-[50%_55%]"
           />
         </div>
       </div>
