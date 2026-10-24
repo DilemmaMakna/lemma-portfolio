@@ -11,7 +11,7 @@
     "docs/lighthouse/raw",
     "package-lock.json",
     "bun.lock",
-    "lib/work-photos.ts",
+    "lib/content/work-photos.ts",
     "public"
   ]
 }

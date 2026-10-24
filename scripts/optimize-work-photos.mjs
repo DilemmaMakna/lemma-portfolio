@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = "public/images/work-photos";
-const OUT = "lib/work-photos.ts";
+const OUT = "lib/content/work-photos.ts";
 const MAX_W = 1440;
 const QUALITY = 78;
 

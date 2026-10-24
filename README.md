@@ -153,7 +153,7 @@ The contact API accepts same-origin JSON only, rate-limits requests per IP, and 
 
 ## Work Photos
 
-Put raw PNG/JPG files in `public/images/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. The script converts them to WebP, deletes the originals and regenerates `lib/work-photos.ts`.
+Put raw PNG/JPG files in `public/images/work-photos/<project-slug>/`, then run `node scripts/optimize-work-photos.mjs`. The script converts them to WebP, deletes the originals and regenerates `lib/content/work-photos.ts`.
 
 ## Project Structure
 

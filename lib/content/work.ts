@@ -1,7 +1,7 @@
 // Copy dan data halaman /work. Sumber kebenaran proyek: .copyw/lemma_project_index.md.
 // Field proyek mengikuti skema indeks ({ id, en } per field); copy halaman mengikuti pola Record<Locale, ...>.
 import type { Locale } from "@/lib/content/messages";
-import { workPhotos, type WorkPhoto } from "@/lib/work-photos";
+import { workPhotos, type WorkPhoto } from "@/lib/content/work-photos";
 
 type L = { id: string; en: string };
 
