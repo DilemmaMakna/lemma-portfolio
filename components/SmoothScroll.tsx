@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { gsap, ScrollTrigger, reducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, reducedMotion } from "@/lib/motion/gsap";
 import { setLenis } from "@/lib/lenis";
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {

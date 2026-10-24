@@ -1,4 +1,4 @@
-import { gsap } from "@/lib/gsap";
+import { gsap } from "@/lib/motion/gsap";
 import { getLenis } from "@/lib/lenis";
 
 // Intro blur: preloader singkat, lalu elemen hero masuk berurutan. Total di bawah 2.5s.

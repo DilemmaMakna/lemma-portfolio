@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import { studioStats } from "@/lib/content/work";
 import { useAboutCopy } from "./useAboutCopy";
 

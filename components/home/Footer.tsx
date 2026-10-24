@@ -7,7 +7,7 @@ import { useLocale } from "@/components/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import { getLenis, scrollToId } from "@/lib/lenis";
-import { gsap, useGSAP, reducedMotion } from "@/lib/gsap";
+import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import SocialLinks from "@/components/ui/SocialLinks";
 
 // Tautan nyata ke halaman masing-masing (bukan anchor beranda), supaya berfungsi di semua halaman.

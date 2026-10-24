@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 
 // Scroll reveal global: [data-reveal], [data-reveal="title"], [data-rule].
 export default function PageAnimations({ children }: { children: React.ReactNode }) {

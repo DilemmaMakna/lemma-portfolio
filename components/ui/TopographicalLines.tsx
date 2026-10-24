@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { reducedMotion } from "@/lib/gsap";
+import { reducedMotion } from "@/lib/motion/gsap";
 import {
   INDEX_EVERY,
   LEVELS,

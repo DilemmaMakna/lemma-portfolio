@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, isTouch, reducedMotion } from "@/lib/gsap";
+import { gsap, isTouch, reducedMotion } from "@/lib/motion/gsap";
 
 export default function Cursor() {
   const ref = useRef<HTMLDivElement>(null);

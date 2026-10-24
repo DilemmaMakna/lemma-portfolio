@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { isTouch, reducedMotion } from "@/lib/gsap";
+import { isTouch, reducedMotion } from "@/lib/motion/gsap";
 import { cssVar, onThemeChange } from "@/lib/theme";
 
 const STEP = 24;

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale } from "@/components/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import { workPhotos } from "@/lib/content/work-photos";
 
 function Diagram() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { gsap, reducedMotion, useGSAP } from "@/lib/gsap";
+import { gsap, reducedMotion, useGSAP } from "@/lib/motion/gsap";
 import { scrollToId } from "@/lib/lenis";
 import { useServicesCopy } from "./useServicesCopy";
 

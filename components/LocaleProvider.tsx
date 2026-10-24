@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { gsap, reducedMotion } from "@/lib/gsap";
+import { gsap, reducedMotion } from "@/lib/motion/gsap";
 import { messages, type Locale, type Messages } from "@/lib/content/messages";
 
 type Ctx = {

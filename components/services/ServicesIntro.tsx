@@ -2,7 +2,7 @@
 
 import { Fragment, useRef, useState } from "react";
 import SectionLabel from "@/components/ui/SectionLabel";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/motion/gsap";
 import { SplitText } from "gsap/SplitText";
 import { useServicesCopy } from "./useServicesCopy";
 

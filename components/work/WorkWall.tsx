@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { reducedMotion } from "@/lib/gsap";
+import { reducedMotion } from "@/lib/motion/gsap";
 import { isOpenable, type Project } from "@/lib/content/work";
 import type { WorkPhoto } from "@/lib/content/work-photos";
 import Redacted from "@/components/ui/Redacted";

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale } from "@/components/LocaleProvider";
 import { useContactModal } from "@/components/ui/ContactModal";
 import Button from "@/components/ui/Button";
-import { gsap, reducedMotion } from "@/lib/gsap";
+import { gsap, reducedMotion } from "@/lib/motion/gsap";
 import { getLenis } from "@/lib/lenis";
 import type { Project } from "@/lib/content/work";
 import type { WorkPhoto } from "@/lib/content/work-photos";

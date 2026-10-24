@@ -6,7 +6,7 @@ import SmoothScroll from "./SmoothScroll";
 import Cursor from "./ui/Cursor";
 import PageTransition from "./ui/PageTransition";
 import { LocaleProvider } from "./LocaleProvider";
-import { reducedMotion } from "@/lib/gsap";
+import { reducedMotion } from "@/lib/motion/gsap";
 import { playIntro } from "@/lib/intro";
 import { ContactModalProvider } from "@/components/ui/ContactModal";
 

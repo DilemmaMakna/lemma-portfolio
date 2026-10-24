@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { isTouch, reducedMotion } from "@/lib/gsap";
+import { isTouch, reducedMotion } from "@/lib/motion/gsap";
 
 const RAW_ASCII = `                                                            ~fr$$$$$$$$$$$p$$$                                          
                                                        +$v$$$$$$$$$$$$$$$$$$$$J$$$>                                     

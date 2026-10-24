@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "@/components/LocaleProvider";
-import { gsap, ScrollTrigger, reducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, reducedMotion } from "@/lib/motion/gsap";
 import { getLenis, scrollToId } from "@/lib/lenis";
 
 const STRIPS = 5;
