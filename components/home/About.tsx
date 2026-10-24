@@ -26,17 +26,17 @@ export default function About() {
                 {a.link}
               </Button>
             </div>
-            <div data-reveal className="relative mt-12 aspect-[5/2] overflow-hidden rounded-[4px] border border-line">
+            <div data-reveal className="relative mt-12 aspect-[3/2] overflow-hidden rounded-[4px] border border-line">
               <Image
-                src="/dithered/about-atmosphere.webp"
-                width={960}
-                height={384}
+                src="/dithered/hand-collab.webp"
+                width={1600}
+                height={1067}
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 loading="lazy"
                 alt=""
                 aria-hidden="true"
                 unoptimized
-                className="dither-art pointer-events-none absolute inset-0 h-full w-full object-cover"
+                className="h-full w-full object-cover"
               />
             </div>
           </div>

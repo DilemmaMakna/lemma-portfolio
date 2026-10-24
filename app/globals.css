@@ -278,14 +278,6 @@ html.lenis body {
   background-size: 200px 200px;
 }
 
-/* Decorative dither art (docs/dither-plan.md). Kept low so fg-muted text stays >= 4.5:1 over lit dots. */
-.dither-art {
-  opacity: 0.25;
-}
-html[data-theme="light"] .dither-art {
-  opacity: 0.3;
-}
-
 /* Intro / reveal initial states */
 html.is-loading [data-intro] {
   opacity: 0;
