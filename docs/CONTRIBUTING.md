@@ -58,7 +58,7 @@ The matching npm scripts are:
 
 oxfmt is still version 0.x, so its output and rules can change between releases. Check the formatting of the repository again after every oxfmt upgrade.
 
-Migration note: lint and format moved from ESLint and Prettier to oxc. The rules that were compared during the move, and the ones accepted as lost, are listed in [oxc-gaps.md](oxc-gaps.md).
+Migration note: lint and format moved from ESLint and Prettier to oxc. Some ESLint rules were accepted as lost: the `@next/next` rules that oxlint does not implement (for example `no-location-assign-relative-destination`), the React Compiler rules in `react-hooks`, the `@typescript-eslint` rules that had no matches in this code, and the type-aware rules, because `oxlint-tsgolint` is skipped. `npm run typecheck` covers the base JavaScript rules that ESLint turned off.
 
 ## Local git hook (optional)
 

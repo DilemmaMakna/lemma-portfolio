@@ -55,6 +55,8 @@ Each item gives the practice, its status and where it lives in code. Status is o
 | oxc version bumps                                     | todo          | `oxfmt` is 0.x (`package.json` devDependencies), so its rules can change between minor versions. Re-check the rules on each bump against `docs/oxc-gaps.md`. No bump policy is written yet. |
 | Automated dependency updates (Renovate or Dependabot) | todo (option) | Not configured: there is no `renovate.json` and no `.github/dependabot.yml`.                                                                                                                |
 
+Dependency decisions: `gsap`, `@gsap/react` and `lenis` stay. `lib/motion/gsap.ts` imports GSAP core and ScrollTrigger statically, and `components/providers/Providers.tsx` imports that module, so both load on every page. SplitText is imported only by `components/services/ServicesIntro.tsx`. Lenis loads with a dynamic import after mount in `components/layout/SmoothScroll.tsx`, and it is not loaded when reduced motion is set. The project has no framer-motion dependency or import. `sharp` is a devDependency used only by `scripts/optimize-work-photos.mjs`, so it does not ship to the browser.
+
 ## Open Items
 
 These are audit findings. They are recorded here and in the `noticed` section of docs/TODO.md. They are not fixed by PR 8.4.
