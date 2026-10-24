@@ -54,7 +54,7 @@ export default function Hero() {
             loading="eager"
             fetchPriority="high"
             data-intro="fade"
-            className="absolute right-20 top-40 hidden lg:block"
+            className="absolute right-5 top-28 block h-auto w-20 md:right-20 md:top-40 md:w-auto"
           />
         </div>
 
