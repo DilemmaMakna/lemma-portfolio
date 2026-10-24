@@ -7,6 +7,7 @@ import Services from "@/components/home/Services";
 import SelectedWork from "@/components/home/SelectedWork";
 import Products from "@/components/home/Products";
 import About from "@/components/home/About";
+import HandCollab from "@/components/home/HandCollab";
 import ContactCta from "@/components/home/ContactCta";
 import Footer from "@/components/home/Footer";
 import JsonLd from "@/components/layout/JsonLd";
@@ -29,6 +30,7 @@ export default function Home() {
           <SelectedWork />
           <Products />
           <About />
+          <HandCollab />
           <ContactCta />
         </main>
         <Footer />

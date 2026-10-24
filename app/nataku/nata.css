@@ -1,0 +1,19 @@
+/* Landing Nataku di /nataku. Semua aturan di bawah .nata-lp supaya tidak bocor ke halaman lain.
+   Palet krem/oranye milik Nataku sengaja berdiri sendiri (tidak mengikuti token tema gelap/terang Lemma). */
+.nata-lp {
+  min-height: 100vh;
+  background-color: #fffaf7;
+  color: #1f1b16;
+  font-family: var(--font-satoshi);
+  line-height: normal;
+  overflow-x: clip;
+  position: relative;
+}
+
+.nata-lp .hero-bg {
+  background-color: #ff5000;
+  background-image: url("/nata/assets/hero-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

@@ -98,6 +98,50 @@ export function pageJsonLd(opts: { path: string; name: string; description: stri
   };
 }
 
+// Landing Nataku di /nataku: aplikasi + FAQ. Harga dan fitur mengikuti landing aslinya (pre-order, Android).
+export function natakuLandingJsonLd(description: string, faqs: { question: string; answer: string }[]) {
+  const url = `${SITE}/nataku`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${url}#app`,
+        name: "Nataku",
+        description,
+        url,
+        applicationCategory: "ProductivityApplication",
+        operatingSystem: "Android",
+        inLanguage: "id-ID",
+        publisher: { "@id": orgId },
+        featureList: [
+          "Today's Focus: maksimal 3 prioritas setiap hari",
+          "Kalender terintegrasi dengan hitung mundur deadline",
+          "WhatsApp Daily Digest setiap pagi jam 7",
+          "Balas chat WhatsApp untuk coret dan tambah tugas",
+          "Skor Produktivitas harian dan mingguan",
+        ],
+        offers: {
+          "@type": "Offer",
+          name: "Paket Mulai Dulu",
+          price: "15000",
+          priceCurrency: "IDR",
+          availability: "https://schema.org/PreOrder",
+        },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+    ],
+  };
+}
+
 // Serialisasi aman untuk <script type="application/ld+json">: "<" di-escape agar tidak menutup tag.
 export const ld = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");
 

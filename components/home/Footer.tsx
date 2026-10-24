@@ -9,6 +9,7 @@ import { useContactModal } from "@/components/ui/ContactModal";
 import { getLenis, scrollToId } from "@/lib/motion/lenis";
 import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import SocialLinks from "@/components/ui/SocialLinks";
+import ProfileDownload from "@/components/ui/ProfileDownload";
 
 // Tautan nyata ke halaman masing-masing (bukan anchor beranda), supaya berfungsi di semua halaman.
 const NAV_LINKS = [
@@ -156,17 +157,8 @@ export default function Footer() {
               <Button id="footer-cta" onClick={() => openContact("footer")} className="mb-8">
                 {t.nav.cta}
               </Button>
-              <a
-                href="mailto:marketing@dilemma-makna.com"
-                className="mono inline-flex items-center gap-2 text-fg hover:text-accent transition-colors !normal-case text-sm tracking-[-0.01em]"
-              >
-                marketing@dilemma-makna.com
-                <span className="arrow font-mono" aria-hidden="true">
-                  ↗
-                </span>
-              </a>
-              <div className="mono mt-2 text-xs text-fg-dim">
-                <a href="https://wa.me/6285144922167">+62 (851) 4492 2167</a>
+              <div>
+                <ProfileDownload id="footer-profile" variant="link" />
               </div>
               <SocialLinks size="sm" className="mt-6" />
             </div>
@@ -234,6 +226,20 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
+
+            {/* Kontak langsung, di bawah daftar produk. */}
+            <div className="mt-10">
+              <a
+                href="mailto:marketing@dilemma-makna.com"
+                className="mono text-fg hover:text-accent transition-colors !normal-case text-[13px] leading-snug tracking-[-0.01em]"
+              >
+                marketing@<wbr />
+                <span className="whitespace-nowrap">dilemma-makna.com↗</span>
+              </a>
+              <div className="mono mt-2 text-xs text-fg-dim">
+                <a href="https://wa.me/6285144922167">+62 (851) 4492 2167</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -258,9 +264,8 @@ export default function Footer() {
                   type="button"
                   id={`footer-lang-${l}`}
                   onClick={() => setLocale(l)}
-                  className={`transition-colors ${
-                    locale === l ? "text-fg font-medium" : "text-fg-dim hover:text-fg-muted"
-                  }`}
+                  className={`transition-colors ${locale === l ? "text-fg font-medium" : "text-fg-dim hover:text-fg-muted"
+                    }`}
                 >
                   [{l.toUpperCase()}]
                 </button>

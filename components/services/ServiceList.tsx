@@ -1,5 +1,7 @@
 "use client";
 
+import TechTile from "@/components/ui/TechTile";
+import { SERVICE_STACK } from "@/lib/content/tech-stack";
 import { useServicesCopy } from "./useServicesCopy";
 
 export default function ServiceList() {
@@ -55,6 +57,19 @@ export default function ServiceList() {
                 <h3 className="mono text-fg-dim">{labels.fit}</h3>
                 <p className="mt-3 max-w-[52ch] text-fg-muted">{s.fit}</p>
               </div>
+
+              {SERVICE_STACK[s.index] && (
+                <div data-reveal>
+                  <h3 className="mono text-fg-dim">{labels.stack}</h3>
+                  <ul className="mt-4 flex flex-wrap gap-3">
+                    {SERVICE_STACK[s.index].map((it) => (
+                      <li key={it.name}>
+                        <TechTile item={it} size="sm" />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </article>
         ))}

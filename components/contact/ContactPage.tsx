@@ -3,6 +3,7 @@
 import { useLocale } from "@/components/providers/LocaleProvider";
 import ContactForm from "@/components/ui/ContactForm";
 import SocialLinks from "@/components/ui/SocialLinks";
+import ProfileDownload from "@/components/ui/ProfileDownload";
 import { contactMessages } from "@/lib/content/contact";
 import { ORG } from "@/lib/seo/site";
 
@@ -73,9 +74,13 @@ export default function ContactPage() {
             </div>
           </dl>
 
+          <div className="mt-10" data-intro="fade">
+            <ProfileDownload id="contact-page-profile" />
+          </div>
+
           <SocialLinks label size="sm" className="mt-10" />
 
-          <div className="mt-14 border-t border-line pt-8" data-intro="fade">
+          {/* <div className="mt-14 border-t border-line pt-8" data-intro="fade">
             <p className="mono mono-2xs text-fg-dim">{c.next.label}</p>
             <ol className="mt-5 flex flex-col gap-4">
               {c.next.steps.map((s, i) => (
@@ -87,7 +92,7 @@ export default function ContactPage() {
                 </li>
               ))}
             </ol>
-          </div>
+          </div> */}
         </div>
 
         <div className="col-span-full lg:col-span-5 lg:col-start-8" data-intro="fade">

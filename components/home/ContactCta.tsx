@@ -5,6 +5,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
+import ProfileDownload from "@/components/ui/ProfileDownload";
 import AsciiPrompt from "./AsciiPrompt";
 
 export default function ContactCta() {
@@ -35,8 +36,9 @@ export default function ContactCta() {
           {c.email}
         </a>
 
-        <div className="mt-10" data-reveal>
+        <div className="mt-10 flex flex-wrap items-center gap-3" data-reveal>
           <Button id="contact-cta" onClick={() => openContact("contact")}>{c.cta}</Button>
+          <ProfileDownload id="contact-profile" />
         </div>
 
         <div data-reveal>

@@ -65,6 +65,7 @@ export const messages = {
       diagramSub: ["pengguna", "interaksi", "bukti", "sistem"],
       meaning: "MAKNA",
       proofLabel: "Bukti",
+      toolsLabel: "Alat yang kami pakai",
       items: [
         { name: "Brand & Visual Identity", summary: "Identitas yang tahan diuji argumen.", proof: "Gumatika, BEM FAHUTAN" },
         { name: "UX, HCI & Product Design", summary: "Dari riset perilaku pengguna sampai design system.", proof: "LPJ Ormawa IPB, NATA" },
@@ -85,7 +86,7 @@ export const messages = {
       title: "Yang kami bangun sendiri.",
       items: [
         {
-          name: "NATA",
+          name: "NATAKU",
           badge: "Active Development",
           status: "active",
           desc: "Lima aplikasi untuk satu kehidupan kampus? Satu saja cukup.",
@@ -115,6 +116,7 @@ export const messages = {
       sub: "Mulai dari satu pertanyaan: apa yang ingin kamu buktikan?",
       email: "hello@dilemma-makna.com",
       cta: "Mulai proyek",
+      profile: "Unduh company profile",
     },
     contactModal: {
       title: "Ceritakan proyekmu",
@@ -207,6 +209,7 @@ export const messages = {
       diagramSub: ["users", "interaction", "evidence", "systems"],
       meaning: "MEANINGFULNESS",
       proofLabel: "Proof",
+      toolsLabel: "Tools we use",
       items: [
         { name: "Brand & Visual Identity", summary: "Identity that survives scrutiny.", proof: "Gumatika, BEM FAHUTAN" },
         { name: "UX, HCI & Product Design", summary: "From human-centred research to design system.", proof: "LPJ Ormawa IPB, NATA" },
@@ -227,7 +230,7 @@ export const messages = {
       title: "What we build ourselves.",
       items: [
         {
-          name: "NATA",
+          name: "NATAKU",
           badge: "Active Development",
           status: "active",
           desc: "Five apps for one campus life? One is enough.",
@@ -238,8 +241,8 @@ export const messages = {
           name: "████ ██████",
           badge: "Stealth",
           status: "idle",
-          desc: "AI-assisted student development.",
-          tags: ["AI", "B2B SaaS", "EdTech"],
+          desc: "████ ██████ ████ ██████████ ██████.",
+          tags: ["████", "████ ██████", "████"],
           cta: "Coming soon",
         },
       ],
@@ -257,6 +260,7 @@ export const messages = {
       sub: "Start with one question: what do you want to prove?",
       email: "hello@dilemma-makna.com",
       cta: "Start a project",
+      profile: "Download company profile",
     },
     contactModal: {
       title: "Tell us about your project",

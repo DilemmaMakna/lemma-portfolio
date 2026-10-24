@@ -53,6 +53,7 @@ const notes = `## Notes for AI assistants
 
 const pages = [
   ["Home", "/", "studio overview, process, services, selected work, products, and contact"],
+  ["Nataku", "/nataku", "Nataku, the student productivity app from NATA (a Lemma product): problem, core features, pricing, and FAQ"],
   ["Services", "/services", "the five service areas, deliverables, who each is for, and how an engagement works"],
   ["Work", "/work", "all public projects as a searchable index with a proof-style case study for each"],
   ["About", "/about", "who Lemma is, what it believes, how client work and own products feed each other, and the meaning of the name"],

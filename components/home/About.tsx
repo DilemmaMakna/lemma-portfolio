@@ -43,22 +43,6 @@ export default function About() {
             ))}
           </dl>
         </div>
-        <div
-          data-reveal
-          className="relative mt-[clamp(3rem,8vw,6rem)] aspect-[3/2] overflow-hidden rounded-[4px] border border-line md:aspect-[5/2]"
-        >
-          <Image
-            src="/images/dithered/hand-collab.webp"
-            width={1600}
-            height={1067}
-            sizes="(min-width: 1440px) 1320px, 100vw"
-            loading="lazy"
-            alt=""
-            aria-hidden="true"
-            unoptimized
-            className="block h-full w-full object-cover object-[50%_55%]"
-          />
-        </div>
       </div>
     </section>
   );

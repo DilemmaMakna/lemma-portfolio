@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
+import TechMarquee from "@/components/ui/TechMarquee";
+import { PROCESS_STACK } from "@/lib/content/tech-stack";
 import AsciiProcess from "./AsciiProcess";
 
 export default function Process() {
@@ -81,6 +83,10 @@ export default function Process() {
                     </li>
                   ))}
                 </ul>
+                {/* Alat yang relevan dengan langkah ini; bergeser pelan, ujungnya larut lewat mask. */}
+                <div data-reveal className="mt-10">
+                  <TechMarquee items={PROCESS_STACK[i]} duration={[75, 85, 70][i] ?? 75} reverse={i === 1} label={s.title} />
+                </div>
               </li>
             ))}
           </ol>

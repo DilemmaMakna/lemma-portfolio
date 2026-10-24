@@ -6,7 +6,9 @@ import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/motion/gsap";
+import TechTile from "@/components/ui/TechTile";
 import { workPhotos } from "@/lib/content/work-photos";
+import { SERVICE_STACK } from "@/lib/content/tech-stack";
 
 function Diagram() {
   const { t } = useLocale();
@@ -93,6 +95,7 @@ function Row({
   const { t } = useLocale();
   const s = t.services;
   const item = s.items[i];
+  const tools = SERVICE_STACK[`0${i + 1}`];
   const body = useRef<HTMLDivElement>(null);
   const first = useRef(true);
 
@@ -155,15 +158,28 @@ function Row({
       <div ref={body} id={`service-panel-${i + 1}`} role="region" aria-labelledby={`service-${i + 1}`} className="overflow-hidden">
         <div className="grid items-center gap-5 pb-9 md:grid-cols-[5rem_1fr_auto]">
           <span className="hidden md:block" />
-          {item.proof ? (
-            <p className="mono text-fg-muted">
-              <span className="text-fg-dim">{s.proofLabel}: </span>
-              {item.proof}
-            </p>
-          ) : (
-            <span />
-          )}
-          <Button variant="ghost" href="/services">
+          <div className="flex flex-col gap-5">
+            {item.proof && (
+              <p className="mono text-fg-muted">
+                <span className="text-fg-dim">{s.proofLabel}: </span>
+                {item.proof}
+              </p>
+            )}
+            {tools && (
+              <div>
+                <p className="mono mono-2xs text-fg-dim">{s.toolsLabel}</p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {tools.map((tool) => (
+                    <li key={tool.name}>
+                      <TechTile item={tool} size="sm" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          {/* Tautan langsung ke layanan yang sama di /services (id service-01 ... service-05), bukan ke puncak halaman. */}
+          <Button variant="ghost" href={`/services#service-0${i + 1}`}>
             {s.all}
           </Button>
         </div>

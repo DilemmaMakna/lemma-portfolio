@@ -6,7 +6,7 @@
 // NEXT_PUBLIC_* is inlined at build time only for a literal `process.env.NEXT_PUBLIC_X` access.
 // Do not change it to `process.env[name]`.
 
-const DEFAULT_SITE_URL = "https://lemma.studio";
+const DEFAULT_SITE_URL = "https://dilemma-makna.com";
 
 // Runs at module load: an invalid URL fails the build or start instead of being used silently.
 function parseSiteUrl(raw: string | undefined): string {

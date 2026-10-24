@@ -85,7 +85,7 @@ const id = {
       fit: "Cocok untuk tim yang tahu ada yang harus dibangun, tapi belum tahu bentuknya.",
     },
   ],
-  labels: { deliverables: "Yang kamu terima", fit: "Cocok untuk" },
+  labels: { deliverables: "Yang kamu terima", fit: "Cocok untuk", stack: "Alat yang kami pakai" },
   engagement: {
     label: "02 / Cara Bekerja Sama",
     title: "Mulai dari pertanyaan, bukan dari paket.",
@@ -189,7 +189,7 @@ const en: ServicesCopy = {
       fit: "For teams who know something has to be built, but not yet what shape it takes.",
     },
   ],
-  labels: { deliverables: "What you receive", fit: "Best for" },
+  labels: { deliverables: "What you receive", fit: "Best for", stack: "Tools we use" },
   engagement: {
     label: "02 / How We Work Together",
     title: "Start from a question, not a package.",
