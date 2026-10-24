@@ -2,7 +2,7 @@
 // Semuanya dibangun dari sumber data situs (work, services, about, messages), jadi tidak bisa tertinggal
 // dari isi halaman. Bahasa Inggris (default situs); padanan Indonesia disertakan di bagian terpisah.
 import { aboutMessages } from "@/lib/content/about";
-import { contactMessages } from "@/lib/contact";
+import { contactMessages } from "@/lib/content/contact";
 import { messages } from "@/lib/messages";
 import { servicesMessages } from "@/lib/content/services";
 import { ORG, SITE } from "@/lib/site";
