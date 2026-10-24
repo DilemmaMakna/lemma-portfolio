@@ -4,7 +4,7 @@
 import { aboutMessages } from "@/lib/content/about";
 import { contactMessages } from "@/lib/contact";
 import { messages } from "@/lib/messages";
-import { servicesMessages } from "@/lib/services";
+import { servicesMessages } from "@/lib/content/services";
 import { ORG, SITE } from "@/lib/site";
 import { socials } from "@/lib/socials";
 import { projects, studioStats, type Project } from "@/lib/work";
