@@ -51,7 +51,7 @@ export default function WorkExplorer() {
       <section id="work" className="bg-bg" aria-label={w.hero.eyebrow}>
         <div className="wrap">
           <div
-            className="mb-6 flex flex-col gap-4 border-t border-line pt-6 md:flex-row md:items-center md:justify-between"
+            className="relative z-10 mb-6 flex flex-col gap-4 border-t border-line pt-6 md:flex-row md:items-center md:justify-between"
             data-reveal
           >
             <div className="relative z-10 flex flex-wrap gap-2" role="group" aria-label={w.index.cols.category}>
