@@ -217,7 +217,7 @@ Mobile LCP is the gap: 3.41s to 4.26s against 0.80s to 1.03s on desktop. The LCP
 - **Sitemap**: `app/sitemap.ts`, served at `/sitemap.xml`.
 - **Robots**: `app/robots.ts`, which allows `/`, disallows `/api/` and points to the sitemap.
 - **Manifest**: `app/manifest.ts`.
-- **Open Graph and Twitter images**: `public/brand/twitter-card.png`, set by `SHARE_IMAGE` in `lib/seo/site.ts`.
+- **Open Graph and Twitter images**: `public/brand/share-card.jpg` (1200x630), set by `SHARE_IMAGE` in `lib/seo/site.ts`.
 - **JSON-LD**: `siteJsonLd` and `pageJsonLd` in `lib/seo/site.ts`, rendered by `components/layout/JsonLd.tsx`.
 - **LLM routes**: `app/(machine)/llms.txt/route.ts` and `app/(machine)/llms-full.txt/route.ts`.
 - **Markdown index**: `app/(machine)/index.md/route.ts`, with the same content as `llms-full.txt`.
