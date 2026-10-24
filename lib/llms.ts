@@ -1,7 +1,7 @@
 // Generator konten untuk AI/crawler: /llms.txt (ringkas + tautan), /llms-full.txt dan /index.md (lengkap).
 // Semuanya dibangun dari sumber data situs (work, services, about, messages), jadi tidak bisa tertinggal
 // dari isi halaman. Bahasa Inggris (default situs); padanan Indonesia disertakan di bagian terpisah.
-import { aboutMessages } from "@/lib/about";
+import { aboutMessages } from "@/lib/content/about";
 import { contactMessages } from "@/lib/contact";
 import { messages } from "@/lib/messages";
 import { servicesMessages } from "@/lib/services";
