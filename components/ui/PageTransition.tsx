@@ -158,8 +158,8 @@ export default function PageTransition() {
       </div>
       <i
         data-line
-        className="absolute left-0 top-1/2 block h-px w-full bg-accent"
-        style={{ transform: "scaleX(0)" }}
+        className="absolute left-0 block h-px w-full bg-accent"
+        style={{ top: "calc(50% + clamp(1.75rem, 5vw, 4rem) + 1.25rem)", transform: "scaleX(0)" }}
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
         <span
