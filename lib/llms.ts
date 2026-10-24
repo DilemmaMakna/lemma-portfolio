@@ -6,7 +6,7 @@ import { contactMessages } from "@/lib/content/contact";
 import { messages } from "@/lib/content/messages";
 import { servicesMessages } from "@/lib/content/services";
 import { ORG, SITE } from "@/lib/site";
-import { socials } from "@/lib/socials";
+import { socials } from "@/lib/content/socials";
 import { projects, studioStats, type Project } from "@/lib/content/work";
 
 const en = messages.en;

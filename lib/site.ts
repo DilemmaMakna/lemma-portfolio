@@ -1,8 +1,8 @@
 // Identitas situs untuk SEO: URL kanonik, data organisasi, dan JSON-LD. Satu sumber untuk
-// layout, sitemap, robots, dan halaman. Akun sosial diambil dari lib/socials.ts.
+// layout, sitemap, robots, dan halaman. Akun sosial diambil dari lib/content/socials.ts.
 import type { Metadata } from "next";
 import { env } from "@/lib/env";
-import { socials } from "@/lib/socials";
+import { socials } from "@/lib/content/socials";
 
 // Domain produksi. Ganti lewat NEXT_PUBLIC_SITE_URL di Vercel bila domainnya berbeda.
 export const SITE = env.siteUrl;

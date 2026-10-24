@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "@/components/LocaleProvider";
-import { socials, type SocialKey } from "@/lib/socials";
+import { socials, type SocialKey } from "@/lib/content/socials";
 
 const LABEL = { id: "Ikuti kami", en: "Follow us" } as const;
 
@@ -57,7 +57,7 @@ type Props = {
   className?: string;
 };
 
-// Deretan ikon media sosial (Instagram, LinkedIn, Threads, X). Akun diatur di lib/socials.ts.
+// Deretan ikon media sosial (Instagram, LinkedIn, Threads, X). Akun diatur di lib/content/socials.ts.
 export default function SocialLinks({ label = false, size = "md", className = "" }: Props) {
   const { locale } = useLocale();
   const items = socials.filter((s) => s.href);
