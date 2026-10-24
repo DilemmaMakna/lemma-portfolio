@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Lemma", url: SITE }],
   creator: "Lemma",
   publisher: "PT Masih Dilemma Makna",
+  icons: { icon: [{ url: "/brand/icon.svg", sizes: "any", type: "image/svg+xml" }] },
   alternates: { canonical: "/" },
   robots: {
     index: true,
