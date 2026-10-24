@@ -67,6 +67,11 @@ export default function ServicesIntro() {
           onSplit: (self) => {
             measure();
             const annos = box.querySelectorAll("[data-anno]");
+            // Redup lewat warna, bukan opacity: teks tetap 100% opak dan lolos 4.5:1 di kedua tema.
+            for (const line of self.lines as HTMLElement[]) {
+              line.style.color =
+                "color-mix(in srgb, var(--fg-dim) calc((1 - var(--intro-c, 1)) * 100%), var(--fg-muted))";
+            }
             return gsap
               .timeline({
                 scrollTrigger: {
@@ -78,8 +83,8 @@ export default function ServicesIntro() {
               })
               .fromTo(
                 self.lines,
-                { opacity: 0.1, filter: "blur(12px)", y: 20 },
-                { opacity: 1, filter: "blur(0px)", y: 0, ease: "none", stagger: 1, duration: 1 },
+                { "--intro-c": 0, filter: "blur(12px)", y: 20 },
+                { "--intro-c": 1, filter: "blur(0px)", y: 0, ease: "none", stagger: 1, duration: 1 },
               )
               .fromTo(
                 annos,
@@ -129,10 +134,11 @@ export default function ServicesIntro() {
                 return (
                   <span
                     key={idx}
-                    className="relative inline-block whitespace-nowrap text-fg"
+                    className="relative inline-block whitespace-nowrap"
                     style={{
                       fontFamily: MONO,
                       letterSpacing: "-0.025em",
+                      color: "color-mix(in srgb, var(--fg-dim) calc((1 - var(--intro-c, 1)) * 100%), var(--fg))",
                     }}
                   >
                     {/* Top inspector pin: font-geist-mono */}
@@ -172,7 +178,7 @@ export default function ServicesIntro() {
                   <span
                     key={idx}
                     data-phrase={k}
-                    className="relative inline-block whitespace-nowrap text-fg"
+                    className="relative inline-block whitespace-nowrap"
                     style={{
                       fontFamily: SERIF,
                       fontStyle: "italic",
@@ -180,6 +186,7 @@ export default function ServicesIntro() {
                       fontSize: "1.14em",
                       lineHeight: 1,
                       letterSpacing: "-0.015em",
+                      color: "color-mix(in srgb, var(--fg-dim) calc((1 - var(--intro-c, 1)) * 100%), var(--fg))",
                     }}
                   >
                     {part}
