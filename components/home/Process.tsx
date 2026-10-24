@@ -1,22 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
-
-// Client-only: the ASCII box is empty in SSR. The placeholder reserves the same desktop height
-// (22 rows x 1.15 line-height x scale 1) so the step numbers below do not move on mount.
-const AsciiProcess = dynamic(() => import("./AsciiProcess"), {
-  ssr: false,
-  loading: () => (
-    <div
-      aria-hidden="true"
-      className="mt-6 hidden font-mono leading-[1.15] text-[9px] min-[400px]:text-[10px] xl:text-[11px] lg:block"
-      style={{ height: "25.3em" }}
-    />
-  ),
-});
+import AsciiProcess from "./AsciiProcess";
 
 export default function Process() {
   const { t } = useLocale();
