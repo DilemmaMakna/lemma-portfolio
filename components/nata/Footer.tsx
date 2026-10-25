@@ -1,4 +1,5 @@
 'use client';
+import ProtectedContact from '@/components/ui/ProtectedContact';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -136,12 +137,8 @@ export default function Footer() {
                 Lemma merancang dan membangun produk digital yang bermakna.
               </p>
               <div className="mt-4 flex flex-col gap-2 font-satoshi text-[14px] text-[#44403C]">
-                <a href="mailto:marketing@dilemma-makna.com" className={linkCls}>
-                  marketing@dilemma-makna.com <span aria-hidden="true">↗</span>
-                </a>
-                <a href="https://wa.me/6281383600844" target="_blank" rel="noopener noreferrer" className={linkCls}>
-                  +62 813-8360-0844
-                </a>
+                <ProtectedContact channel="business" className={linkCls} />
+                <ProtectedContact channel="nataku" className={linkCls} />
               </div>
             </div>
 
@@ -158,9 +155,7 @@ export default function Footer() {
                 <button type="button" onClick={() => setLegalDoc('security')} className={`${linkCls} text-left`}>
                   Keamanan Data
                 </button>
-                <a href="https://wa.me/6281383600844" target="_blank" rel="noopener noreferrer" className={linkCls}>
-                  Hubungi Tim Nataku <span aria-hidden="true">↗</span>
-                </a>
+                <ProtectedContact channel="nataku" className={linkCls} />
               </div>
             </div>
           </div>

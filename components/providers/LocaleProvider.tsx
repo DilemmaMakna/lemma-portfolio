@@ -31,10 +31,6 @@ function apply(l: Locale) {
   d.lang = l;
   d.setAttribute("data-locale", l);
   document.cookie = `NEXT_LOCALE=${l}; path=/; max-age=31536000; samesite=lax`;
-  document.title = messages[l].meta.title;
-  document
-    .querySelector('meta[name="description"]')
-    ?.setAttribute("content", messages[l].meta.description);
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
@@ -46,7 +42,6 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     const l = (document.documentElement.getAttribute("data-locale") as Locale) || "en";
     // eslint-disable-next-line react-hooks/set-state-in-effect -- locale harus diketahui sebelum paint
     setLocaleState(l);
-    document.title = messages[l].meta.title;
     setReady(true);
   }, []);
 

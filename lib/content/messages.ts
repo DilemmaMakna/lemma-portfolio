@@ -69,7 +69,7 @@ export const messages = {
       items: [
         { name: "Brand & Visual Identity", summary: "Identitas yang tahan diuji argumen.", proof: "Gumatika, BEM FAHUTAN" },
         { name: "UX, HCI & Product Design", summary: "Dari riset perilaku pengguna sampai design system.", proof: "LPJ Ormawa IPB, NATA" },
-        { name: "Engineering & Technology", summary: "Sistem yang andal saat dipakai banyak pihak.", proof: "CRL Consulting" },
+        { name: "Engineering & Technology", summary: "Sistem yang andal saat dipakai banyak pihak.", proof: "NATA, Lemma Website" },
         { name: "AI & Data", summary: "AI yang bisa menjelaskan jawabannya.", proof: "" },
         { name: "Strategy & Systems", summary: "Kerangka untuk ide yang masih intuisi.", proof: "" },
       ],
@@ -93,14 +93,6 @@ export const messages = {
           tags: ["EdTech", "B2C", "Indonesia"],
           cta: "Pelajari",
         },
-        {
-          name: "████ ██████",
-          badge: "Stealth",
-          status: "idle",
-          desc: "########.",
-          tags: ["AI", "B2B SaaS", "EdTech"],
-          cta: "Segera hadir",
-        },
       ],
     },
     about: {
@@ -114,7 +106,6 @@ export const messages = {
       label: "07 / Kontak",
       title: "Ada masalah yang layak dipecahkan?",
       sub: "Mulai dari satu pertanyaan: apa yang ingin kamu buktikan?",
-      email: "hello@dilemma-makna.com",
       cta: "Mulai proyek",
       profile: "Unduh company profile",
     },
@@ -213,7 +204,7 @@ export const messages = {
       items: [
         { name: "Brand & Visual Identity", summary: "Identity that survives scrutiny.", proof: "Gumatika, BEM FAHUTAN" },
         { name: "UX, HCI & Product Design", summary: "From human-centred research to design system.", proof: "LPJ Ormawa IPB, NATA" },
-        { name: "Engineering & Technology", summary: "Systems that hold under many hands.", proof: "CRL Consulting" },
+        { name: "Engineering & Technology", summary: "Systems that hold under many hands.", proof: "NATA, Lemma Website" },
         { name: "AI & Data", summary: "AI that can explain itself.", proof: "" },
         { name: "Strategy & Systems", summary: "A frame for ideas still in instinct.", proof: "" },
       ],
@@ -237,14 +228,6 @@ export const messages = {
           tags: ["EdTech", "B2C", "Indonesia"],
           cta: "Learn more",
         },
-        {
-          name: "████ ██████",
-          badge: "Stealth",
-          status: "idle",
-          desc: "████ ██████ ████ ██████████ ██████.",
-          tags: ["████", "████ ██████", "████"],
-          cta: "Coming soon",
-        },
       ],
     },
     about: {
@@ -258,7 +241,6 @@ export const messages = {
       label: "07 / Contact",
       title: "Got a problem worth solving?",
       sub: "Start with one question: what do you want to prove?",
-      email: "hello@dilemma-makna.com",
       cta: "Start a project",
       profile: "Download company profile",
     },

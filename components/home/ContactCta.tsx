@@ -1,4 +1,5 @@
 "use client";
+import ProtectedContact from "@/components/ui/ProtectedContact";
 
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
@@ -27,14 +28,12 @@ export default function ContactCta() {
         </h2>
         <p data-reveal className="lead mt-8 max-w-[44ch]">{c.sub}</p>
 
-        <a
+        <ProtectedContact
+          channel="email"
           id="contact-email"
-          data-reveal
-          href={`mailto:${c.email}`}
           className="mono mt-14 inline-block !normal-case text-[clamp(1.125rem,3.2vw,1.5625rem)] tracking-[-0.02em] underline decoration-transparent decoration-2 underline-offset-8 transition-[text-decoration-color,color] duration-300 hover:text-accent hover:decoration-accent"
         >
-          {c.email}
-        </a>
+        </ProtectedContact>
 
         <div className="mt-10 flex flex-wrap items-center gap-3" data-reveal>
           <Button id="contact-cta" onClick={() => openContact("contact")}>{c.cta}</Button>

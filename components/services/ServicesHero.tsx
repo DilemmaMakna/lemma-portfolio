@@ -118,6 +118,7 @@ export default function ServicesHero() {
     let raf = 0;
     let wait = 0;
     let cancelled = false;
+    let typed = 0;
 
     const finish = () => {
       setDone(true);
@@ -125,7 +126,9 @@ export default function ServicesHero() {
     const tick = () => {
       if (cancelled) return;
       if (reducedMotion()) return finish();
-      setShown((s) => s + CHARS_PER_FRAME);
+      typed += CHARS_PER_FRAME;
+      if (typed >= total) return finish();
+      setShown(typed);
       raf = requestAnimationFrame(tick);
     };
     // Tunggu intro (preloader) selesai sebelum mulai mengetik.
@@ -145,7 +148,7 @@ export default function ServicesHero() {
       clearTimeout(wait);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [total]);
 
   useEffect(() => {
     if (!done && shown >= total) {

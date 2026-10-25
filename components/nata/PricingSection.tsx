@@ -1,7 +1,7 @@
 'use client';
+import ProtectedContact from '@/components/ui/ProtectedContact';
 
 import React, { useState } from 'react';
-import { NATA_CTA_URL } from '@/lib/nata/site';
 
 export default function PricingSection({ className = '' }: { className?: string } = {}) {
   const [selectedTier, setSelectedTier] = useState<'mulai-dulu' | 'on-track'>('mulai-dulu');
@@ -35,8 +35,7 @@ export default function PricingSection({ className = '' }: { className?: string 
           {/* CARD 1: Paket Mulai Dulu (Frame 2) */}
           <div
             id="pricingCardMulai"
-            onClick={() => setSelectedTier('mulai-dulu')}
-            className={`rounded-[28px] p-6 sm:p-8 lg:p-[32px] flex flex-col justify-between transition-all duration-300 cursor-pointer ${isMulaiActive
+            className={`rounded-[28px] p-6 sm:p-8 lg:p-[32px] flex flex-col justify-between transition-all duration-300 ${isMulaiActive
               ? 'bg-[#F0441E] text-white shadow-xl scale-[1.01]'
               : 'bg-transparent text-[#57534E] hover:bg-stone-200/40'
               }`}
@@ -62,7 +61,7 @@ export default function PricingSection({ className = '' }: { className?: string 
                   className={`font-satoshi font-medium text-3xl sm:text-[40px] leading-[1.2] tracking-[-0.03em] mb-1 ${isMulaiActive ? 'text-white' : 'text-[#44403C]'
                     }`}
                 >
-                  Paket Mulai Dulu
+                  <button type="button" className="cursor-pointer text-left" aria-pressed={isMulaiActive} onClick={() => setSelectedTier('mulai-dulu')}>Paket Mulai Dulu</button>
                 </h3>
 
                 <p
@@ -150,25 +149,24 @@ export default function PricingSection({ className = '' }: { className?: string 
             </div>
 
             {/* CTA Button (Frame 62) */}
-            <a
+            <ProtectedContact
               id="btnCtaMulai"
-              href={NATA_CTA_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              channel="nataku" navigate
+
+
               className={`w-full py-4 px-6 rounded-[8px] flex items-center justify-center font-inter font-semibold text-lg sm:text-[22px] lg:text-[24px] leading-[30px] tracking-[-0.02em] transition-all select-none ${isMulaiActive
                 ? 'bg-[#FFE4DE] text-[#F0441E] hover:bg-white shadow-sm'
                 : 'bg-[#E7E5E4] text-[#57534E] hover:bg-stone-300'
                 }`}
             >
               Coba Paket Dasar
-            </a>
+            </ProtectedContact>
           </div>
 
           {/* CARD 2: Paket On Track (Frame 5) */}
           <div
             id="pricingCardOnTrack"
-            onClick={() => setSelectedTier('on-track')}
-            className={`rounded-[28px] p-6 sm:p-8 lg:p-[32px] flex flex-col justify-between transition-all duration-300 cursor-pointer ${isOnTrackActive
+            className={`rounded-[28px] p-6 sm:p-8 lg:p-[32px] flex flex-col justify-between transition-all duration-300 ${isOnTrackActive
               ? 'bg-[#F0441E] text-white shadow-xl scale-[1.01]'
               : 'bg-transparent text-[#57534E] hover:bg-stone-200/40'
               }`}
@@ -194,7 +192,7 @@ export default function PricingSection({ className = '' }: { className?: string 
                   className={`font-satoshi font-medium text-3xl sm:text-[40px] leading-[1.2] tracking-[-0.03em] mb-1 ${isOnTrackActive ? 'text-white' : 'text-[#44403C]'
                     }`}
                 >
-                  Paket On Track
+                  <button type="button" className="cursor-pointer text-left" aria-pressed={isOnTrackActive} onClick={() => setSelectedTier('on-track')}>Paket On Track</button>
                 </h3>
 
                 <p
@@ -265,11 +263,11 @@ export default function PricingSection({ className = '' }: { className?: string 
             </div>
 
             {/* CTA Button (Frame 62) */}
-            <a
+            <ProtectedContact
               id="btnCtaOnTrack"
-              href={NATA_CTA_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              channel="nataku" navigate
+
+
               aria-label="Tanya paket On Track via WhatsApp"
               className={`w-full py-4 px-6 rounded-[8px] flex items-center justify-center font-inter font-semibold text-lg sm:text-[22px] lg:text-[24px] leading-[30px] tracking-[-0.02em] transition-all select-none ${isOnTrackActive
                 ? 'bg-[#FFE4DE] text-[#F0441E] hover:bg-white shadow-sm'
@@ -277,7 +275,7 @@ export default function PricingSection({ className = '' }: { className?: string 
                 }`}
             >
               Tanya On Track
-            </a>
+            </ProtectedContact>
           </div>
 
         </div>

@@ -1,4 +1,5 @@
 "use client";
+import ProtectedContact from "@/components/ui/ProtectedContact";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocale } from "@/components/providers/LocaleProvider";
@@ -14,7 +15,7 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
   const { t, locale } = useLocale();
   const m = t.contactModal;
   const [status, setStatus] = useState<Status>("idle");
-  const [mailto, setMailto] = useState("");
+  const [emailDraft, setEmailDraft] = useState<{ subject: string; body: string }>();
   const firstField = useRef<HTMLInputElement>(null);
   const mountedAt = useRef(0);
 
@@ -53,7 +54,7 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
       // Cadangan: pesan yang sama disiapkan sebagai email supaya tidak hilang.
       const subject = `[Lemma] ${v("name")}${v("company") ? ` / ${v("company")}` : ""}`;
       const body = `${v("message")}\n\n${v("name")}\n${v("email")}`;
-      setMailto(`mailto:${t.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+      setEmailDraft({ subject, body });
       setStatus("error");
     }
   }
@@ -91,12 +92,13 @@ export default function ContactForm({ source, autoFocus = false }: { source: str
       {status === "error" && (
         <div role="alert" className="flex flex-col gap-2">
           <p className="mono text-sm text-accent">{m.error}</p>
-          <a
-            href={mailto}
+          <ProtectedContact
+            channel="email"
+            query={emailDraft}
             className="mono !normal-case text-sm text-fg underline decoration-line-strong underline-offset-4 hover:decoration-accent"
           >
-            {m.fallback} {t.contact.email} ↗
-          </a>
+            {m.fallback}
+          </ProtectedContact>
         </div>
       )}
 

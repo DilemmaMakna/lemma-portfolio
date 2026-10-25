@@ -16,6 +16,20 @@ function Shell({ children }: { children: React.ReactNode }) {
   const started = useRef(false);
 
   useEffect(() => {
+    const protect = (event: Event) => {
+      if (event.target instanceof Element && event.target.closest("img, picture, svg, canvas")) event.preventDefault();
+    };
+    document.addEventListener("contextmenu", protect);
+    document.addEventListener("dragstart", protect);
+    document.addEventListener("copy", protect);
+    return () => {
+      document.removeEventListener("contextmenu", protect);
+      document.removeEventListener("dragstart", protect);
+      document.removeEventListener("copy", protect);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!ready || started.current) return;
     started.current = true;
     const root = document.documentElement;

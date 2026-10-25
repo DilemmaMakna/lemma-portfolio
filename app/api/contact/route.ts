@@ -4,7 +4,7 @@ import { env } from "@/lib/env";
 // Form kontak -> webhook (CONTACT_WEBHOOK_URL, mis. Make/Zapier/n8n/Formspree yang meneruskan ke email).
 // Lapisan perlindungan, semuanya tanpa dependensi tambahan:
 // 1. Hanya JSON dari origin situs sendiri, ukuran body dibatasi.
-// 2. Honeypot + jebakan waktu (bot mengisi form dalam < MIN_FILL_MS) dibalas "ok" palsu.
+// 2. Honeypot submissions receive a generic success response.
 // 3. Rate limit per IP (best effort: per instance serverless, cukup untuk meredam spam beruntun).
 // 4. Validasi dan pembersihan isi; URL webhook tidak pernah dikirim ke klien.
 // Bila webhook belum diatur, balas 503 + fallback "email" supaya klien menawarkan mailto, bukan
@@ -12,7 +12,6 @@ import { env } from "@/lib/env";
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX = { name: 100, email: 200, company: 150, message: 2000, source: 60 } as const;
 const MAX_BODY = 10_000; // byte
-const MIN_FILL_MS = 2500;
 const RATE = { limit: 5, windowMs: 10 * 60_000 };
 
 const hits = new Map<string, number[]>();
@@ -63,9 +62,10 @@ export async function POST(request: Request) {
     return fail(400);
   }
 
-  // Honeypot terisi atau form diisi terlalu cepat berarti bot. Pura-pura berhasil.
-  const elapsed = Number(body.elapsed);
-  if (clean(body.website) || !Number.isFinite(elapsed) || elapsed < MIN_FILL_MS) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) return fail(400);
+
+  // A filled honeypot is discarded without exposing the bot check.
+  if (clean(body.website)) {
     return NextResponse.json({ ok: true });
   }
 

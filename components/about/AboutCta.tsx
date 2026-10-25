@@ -1,6 +1,6 @@
 "use client";
+import ProtectedContact from "@/components/ui/ProtectedContact";
 
-import { useLocale } from "@/components/providers/LocaleProvider";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
@@ -8,9 +8,7 @@ import { useAboutCopy } from "./useAboutCopy";
 
 export default function AboutCta() {
   const c = useAboutCopy().cta;
-  const { t } = useLocale();
   const { open: openContact } = useContactModal();
-  const email = t.contact.email;
 
   return (
     <section id="contact" className="section bg-bg" aria-labelledby="about-cta-title">
@@ -40,13 +38,12 @@ export default function AboutCta() {
                 {c.secondary}
               </Button>
               <p className="mono mono-2xs mt-4 text-fg-dim !normal-case">{c.or}</p>
-              <a
+              <ProtectedContact
+                channel="email"
                 id="about-cta-email"
-                href={`mailto:${email}`}
                 className="mono !normal-case text-fg underline decoration-line-strong decoration-1 underline-offset-8 transition-colors hover:decoration-accent"
               >
-                {email}
-              </a>
+              </ProtectedContact>
               <SocialLinks label size="sm" className="mt-6" />
             </div>
           </div>

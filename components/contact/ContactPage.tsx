@@ -1,18 +1,17 @@
 "use client";
+import ProtectedContact from "@/components/ui/ProtectedContact";
 
 import { useLocale } from "@/components/providers/LocaleProvider";
 import ContactForm from "@/components/ui/ContactForm";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ProfileDownload from "@/components/ui/ProfileDownload";
 import { contactMessages } from "@/lib/content/contact";
-import { ORG } from "@/lib/seo/site";
 
-const WHATSAPP = { href: "https://wa.me/6285144922167", label: "+62 (851) 4492 2167" };
 
 // Halaman kontak: kiri pernyataan + kanal langsung + langkah berikutnya, kanan form dalam panel.
 // Form yang sama dengan modal (ContactForm), tetapi `source` "contact-page" untuk pelacakan.
 export default function ContactPage() {
-  const { t, locale } = useLocale();
+  const { locale } = useLocale();
   const c = contactMessages[locale];
   const ch = c.channels;
 
@@ -47,25 +46,19 @@ export default function ContactPage() {
             <div>
               <dt className="mono mono-2xs text-fg-dim">{ch.email}</dt>
               <dd className="mt-2">
-                <a id="contact-page-email" href={`mailto:${t.contact.email}`} className="mono !normal-case text-fg transition-colors hover:text-accent">
-                  {t.contact.email}
-                </a>
+                <ProtectedContact id="contact-page-email" channel="email" className="mono !normal-case text-fg transition-colors hover:text-accent" />
               </dd>
             </div>
             <div>
               <dt className="mono mono-2xs text-fg-dim">{ch.business}</dt>
               <dd className="mt-2">
-                <a id="contact-page-business" href={`mailto:${ORG.marketingEmail}`} className="mono !normal-case text-fg transition-colors hover:text-accent">
-                  {ORG.marketingEmail}
-                </a>
+                <ProtectedContact id="contact-page-business" channel="business" className="mono !normal-case text-fg transition-colors hover:text-accent" />
               </dd>
             </div>
             <div>
               <dt className="mono mono-2xs text-fg-dim">{ch.whatsapp}</dt>
               <dd className="mt-2">
-                <a id="contact-page-whatsapp" href={WHATSAPP.href} target="_blank" rel="noopener noreferrer" className="mono !normal-case text-fg transition-colors hover:text-accent">
-                  {WHATSAPP.label}
-                </a>
+                <ProtectedContact id="contact-page-whatsapp" channel="whatsapp" className="mono !normal-case text-fg transition-colors hover:text-accent" />
               </dd>
             </div>
             <div>

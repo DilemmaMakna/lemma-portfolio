@@ -67,7 +67,7 @@ const FRAME_SIZES = "(min-width: 1024px) 33vw, 50vw";
 function Frame({
   p,
   pick,
-  view,
+  view: _view,
   aspect = "aspect-[16/10]",
 }: {
   p: Project;

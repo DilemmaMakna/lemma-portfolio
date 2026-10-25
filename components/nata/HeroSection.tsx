@@ -1,8 +1,8 @@
 'use client';
+import ProtectedContact from '@/components/ui/ProtectedContact';
 
 import React from 'react';
 import Image from 'next/image';
-import { NATA_CTA_URL } from '@/lib/nata/site';
 
 export default function HeroSection() {
   return (
@@ -43,14 +43,14 @@ export default function HeroSection() {
 
             {/* CTA Button (Figma Frame 3 42:9091: 176x36px, rounded-[6px], bg-white/10, NO SHADOW) */}
             <div>
-              <a
-                href={NATA_CTA_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <ProtectedContact
+                channel="nataku" navigate
+
+
                 className="inline-flex items-center justify-center px-4 py-2 rounded-[6px] bg-white/10 hover:bg-white/20 border border-white/20 text-white font-satoshi font-medium text-[16px] leading-[24px] tracking-[-0.01em] transition-colors select-none no-underline shadow-none"
               >
                 Coba Nataku
-              </a>
+              </ProtectedContact>
             </div>
           </div>
 

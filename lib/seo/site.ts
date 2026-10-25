@@ -11,9 +11,6 @@ export const ORG = {
   name: "Lemma",
   legalName: "PT Masih Dilemma Makna",
   tagline: "The work before the work.",
-  email: "hello@dilemma-makna.com",
-  marketingEmail: "marketing@dilemma-makna.com",
-  phone: "+62 851 4492 2167",
   city: "Jakarta",
   country: "ID",
 } as const;
@@ -34,8 +31,8 @@ export const siteJsonLd = {
       slogan: ORG.tagline,
       url: SITE,
       logo: `${SITE}/brand/lemma-logo-hero.svg`,
-      email: ORG.email,
-      telephone: ORG.phone,
+
+
       description:
         "Lemma is a venture studio in Jakarta, Indonesia. It combines UX, HCI, data, and technology to build brands, digital products, and systems that mean something.",
       address: { "@type": "PostalAddress", addressLocality: ORG.city, addressCountry: ORG.country },
@@ -46,8 +43,8 @@ export const siteJsonLd = {
         {
           "@type": "ContactPoint",
           contactType: "sales",
-          email: ORG.email,
-          telephone: ORG.phone,
+
+
           availableLanguage: ["English", "Indonesian"],
           url: `${SITE}/contact`,
         },

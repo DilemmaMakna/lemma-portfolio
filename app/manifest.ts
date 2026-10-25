@@ -4,6 +4,9 @@ import { messages } from "@/lib/content/messages";
 // Warna tema gelap (--bg di app/globals.css dan viewport themeColor di layout).
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: "/",
+    scope: "/",
+    lang: "en",
     name: "Lemma",
     short_name: "Lemma",
     description: messages.en.meta.description,

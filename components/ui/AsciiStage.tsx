@@ -138,7 +138,7 @@ export default function AsciiStage({
     const start = performance.now();
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
-      if (!visible || now - last < FRAME_MS) return;
+      if (!visible || document.hidden || now - last < FRAME_MS) return;
       last = now;
       // Timestamp rAF bisa sedikit lebih awal dari `start`; jangan sampai negatif (indeks -1).
       const elapsed = Math.max(0, now - start);

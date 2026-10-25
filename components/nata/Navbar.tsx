@@ -1,8 +1,8 @@
 'use client';
+import ProtectedContact from '@/components/ui/ProtectedContact';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { NATA_CTA_URL } from '@/lib/nata/site';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -56,10 +56,10 @@ export default function Navbar() {
         </nav>
 
         {/* CTA Button (Figma 42:10369: rounded-[6px], bg-white/10, NO SHADOW, NOT full rounded) */}
-        <Link
-          href={NATA_CTA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <ProtectedContact
+          channel="nataku" navigate
+
+
           className={`h-9 px-4 rounded-[6px] font-satoshi font-medium text-[15px] tracking-[-0.01em] transition-all duration-200 flex items-center justify-center whitespace-nowrap shadow-none ${
             scrolled
               ? 'bg-[#F0441E] hover:bg-[#D93815] text-white'
@@ -67,7 +67,7 @@ export default function Navbar() {
           }`}
         >
           Coba Nataku
-        </Link>
+        </ProtectedContact>
       </div>
     </header>
   );

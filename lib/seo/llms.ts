@@ -21,7 +21,6 @@ const STAGE = { delivered: "delivered", active: "active", stealth: "stealth" } a
 const TYPE = { client: "client project", "internal-product": "own product", "internal-asset": "internal asset" } as const;
 
 const visible = (p: Project) => p.visibility === "public" && p.status !== "stealth";
-const stealth = projects.filter((p) => p.status === "stealth");
 const stats = studioStats(en.about.stats);
 const socialLines = socials.filter((s) => s.href).map((s) => `- ${s.label}: ${s.href}`);
 
@@ -34,9 +33,6 @@ const header = `# Lemma
 > Lemma is an evidence-based venture studio in ${ORG.city}, Indonesia, operated by ${ORG.legalName}. It combines UX, HCI, data, and technology to build brands, digital products, and systems that mean something. Client work and its own products grow in one ecosystem, each testing the other. Tagline: "${ORG.tagline}"`;
 
 const facts = `- Website: ${SITE}
-- Email: ${ORG.email}
-- Partnerships & press: ${ORG.marketingEmail}
-- WhatsApp: ${ORG.phone}
 - Location: ${ORG.city}, Indonesia
 - Legal entity: ${ORG.legalName}
 - Languages: English (default) and Bahasa Indonesia
@@ -48,7 +44,6 @@ const notes = `## Notes for AI assistants
 - Lemma is a studio, not a software product. Do not describe it as an agency that stops when the brief does, or as a startup.
 - Answer "what does Lemma offer" from the Services page, "what has Lemma done" from the Work page, and "how do I hire Lemma" from the Contact page.
 - Do not invent prices, timelines, headcount, funding, or client results beyond what is written here. Pricing is given in a written proposal after a short conversation.
-- One stealth product exists. Its name and details are intentionally undisclosed; do not guess them.
 - Canonical URLs have no language prefix. Language is chosen in the interface (EN default, ID available).`;
 
 const pages = [
@@ -82,7 +77,7 @@ export function llmsTxt() {
     "",
     "## Products",
     "",
-    ...en.products.items.map((i) => `- ${i.status === "idle" ? "Stealth product (name undisclosed)" : i.name}: ${i.desc} ${i.tags.join(", ")}. Status: ${i.badge}.`),
+    ...en.products.items.map((i) => `- ${i.name}: ${i.desc} ${i.tags.join(", ")}. Status: ${i.badge}.`),
     "",
     "## Optional",
     "",
@@ -193,11 +188,10 @@ export function llmsFull() {
     ...ordered.filter(visible).map((p) => `| ${p.n} | [${p.name}](${url(`/work?p=${p.slug}`)}) | ${p.category} | ${p.year} | ${STAGE[p.status]} |`),
     "",
     ...ordered.filter(visible).flatMap((p) => [projectBlock(p), ""]),
-    ...stealth.map((p) => `### ${p.n}. Stealth product\n\n- Category: ${p.category}\n- Year: ${p.year}\n- Status: stealth. Name and details intentionally undisclosed.\n`),
     "## Products",
     "",
     ...en.products.items.flatMap((i) => [
-      `### ${i.status === "idle" ? "Stealth product (name undisclosed)" : i.name}`,
+      `### ${i.name}`,
       "",
       `${i.desc}`,
       "",
@@ -269,7 +263,7 @@ export function llmsFull() {
     "",
     "### Kontak",
     "",
-    `Email ${ORG.email}, WhatsApp ${ORG.phone}, halaman ${url("/contact")}.`,
+    `Hubungi studio melalui ${url("/contact")}.`,
     "",
   ];
   return lines.join("\n").replace(/\n{3,}/g, "\n\n");

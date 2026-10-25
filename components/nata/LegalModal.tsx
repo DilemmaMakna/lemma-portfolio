@@ -92,10 +92,10 @@ function Markdown({ source, onNavigate }: { source: string; onNavigate: (id: Leg
           </table>
         </div>,
       );
-    } else if (/^- /.test(line) || /^\d+\. /.test(line)) {
+    } else if (line.startsWith('- ') || /^\d+\. /.test(line)) {
       const ordered = /^\d+\. /.test(line);
       const items: string[] = [];
-      while (i < lines.length && (ordered ? /^\d+\. /.test(lines[i]) : /^- /.test(lines[i]))) {
+      while (i < lines.length && (ordered ? /^\d+\. /.test(lines[i]) : lines[i].startsWith('- '))) {
         items.push(lines[i].replace(/^(- |\d+\. )/, ''));
         i++;
       }

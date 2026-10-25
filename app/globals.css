@@ -359,3 +359,10 @@ html.is-loading .preloader {
     animation: none;
   }
 }
+
+/* Discourage saving/dragging visual assets while keeping normal text selection. */
+img, picture, svg, canvas {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}

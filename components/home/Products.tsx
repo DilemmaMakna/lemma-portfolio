@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useLocale } from "@/components/providers/LocaleProvider";
 import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
-import Redacted from "@/components/ui/Redacted";
 
 export default function Products() {
   const { t } = useLocale();
@@ -17,25 +16,23 @@ export default function Products() {
           {p.title}
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6">
           {p.items.map((it, i) => {
-            const stealth = it.status === "idle";
             return (
               <article
                 key={i}
                 data-reveal
-                className={`group @container relative flex min-h-[22rem] flex-col justify-between overflow-hidden rounded-[4px] border border-line bg-surface p-6 transition-colors duration-500 md:p-8 ${stealth ? "" : "hover:border-line-strong hover:bg-surface-2"
-                  }`}
+                className={`group @container relative flex min-h-[22rem] flex-col justify-between overflow-hidden rounded-[4px] border border-line bg-surface p-6 transition-colors duration-500 md:p-8 hover:border-line-strong hover:bg-surface-2`}
               >
                 <div className="relative z-10 flex flex-wrap items-center gap-3">
                   <span className="mono text-fg-dim">0{i + 1}</span>
-                  <span className={`badge ${stealth ? "" : "is-active"}`}>
+                  <span className="badge is-active">
                     <i />
                     {it.badge}
                   </span>
                 </div>
 
-                {!stealth && (
+                {(
                   // Dekoratif: seluruh kartu adalah pemicu hover (group). Di kartu sempit (mobile) gambar dipotong rapat ke
                   // ponselnya (PNG aslinya punya tepi transparan lebar), tampil di alur normal, tanpa gerak hover.
                   // Di kartu lebar (>= 28rem) menempel di kanan; skala/rotasi/hover di sana disetel manual.
@@ -55,14 +52,14 @@ export default function Products() {
                   </div>
                 )}
 
-                <div className={`relative z-10 my-4 ${stealth ? "" : "@md:max-w-[55%]"}`}>
+                <div className={`relative z-10 my-4 @md:max-w-[55%]`}>
                   <h3 className="text-[clamp(2.5rem,6vw,4.5rem)] font-medium leading-none tracking-[-0.04em]">
-                    {stealth ? <Redacted className="text-fg-dim" /> : it.name}
+                    {it.name}
                   </h3>
                   <p className="mt-5 max-w-[24ch] text-fg-muted">{it.desc}</p>
                 </div>
 
-                <div className={`relative z-10 flex flex-wrap items-center gap-8 ${stealth ? "" : "@md:max-w-[55%]"}`}>
+                <div className={`relative z-10 flex flex-wrap items-center gap-8 @md:max-w-[55%]`}>
                   <div className="flex flex-wrap gap-2">
                     {it.tags.map((tg, j) => (
                       <span key={`${tg}-${j}`} className="tag">
@@ -71,10 +68,9 @@ export default function Products() {
                     ))}
                   </div>
                   <Button
-                    id={stealth ? "product-arah" : "product-nata"}
-                    variant={stealth ? "ghost" : "primary"}
-                    disabled={stealth}
-                    href={stealth ? undefined : "/nataku"}
+                    id="product-nata"
+                    variant="primary"
+                    href="/nataku"
                   >
                     {it.cta}
                   </Button>

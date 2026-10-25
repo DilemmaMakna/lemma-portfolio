@@ -1,4 +1,5 @@
 "use client";
+import ProtectedContact from "@/components/ui/ProtectedContact";
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
@@ -205,39 +206,20 @@ export default function Footer() {
             <ul className="mt-6 flex flex-col gap-3">
               <li>
                 <Link
-                  href="/#products"
-                  onClick={goHome("/#products")}
+                  href="/nataku"
                   className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
                 >
                   <span>NATA</span>
                   <span className="mono text-[10px] text-ok border border-ok/30 rounded-full px-2 py-0.5">ACTIVE</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/#products"
-                  onClick={goHome("/#products")}
-                  className="group flex items-center justify-between text-sm text-fg-muted hover:text-fg"
-                >
-                  <span>██████</span>
-                  <span className="mono text-[10px] text-fg-dim border border-line-strong rounded-full px-2 py-0.5">
-                    STEALTH
-                  </span>
-                </Link>
-              </li>
             </ul>
 
             {/* Kontak langsung, di bawah daftar produk. */}
             <div className="mt-10">
-              <a
-                href="mailto:marketing@dilemma-makna.com"
-                className="mono text-fg hover:text-accent transition-colors !normal-case text-[13px] leading-snug tracking-[-0.01em]"
-              >
-                marketing@<wbr />
-                <span className="whitespace-nowrap">dilemma-makna.com↗</span>
-              </a>
+              <ProtectedContact channel="business" className="mono text-fg hover:text-accent transition-colors !normal-case text-[13px] leading-snug" />
               <div className="mono mt-2 text-xs text-fg-dim">
-                <a href="https://wa.me/6285144922167">+62 (851) 4492 2167</a>
+                <ProtectedContact channel="whatsapp" />
               </div>
             </div>
           </div>
