@@ -324,6 +324,12 @@ export default function ProjectModal({
               <p data-stagger className="lead mt-6 max-w-[58ch]">
                 {p.summary[locale]}
               </p>
+              {p.links?.map((link) => (
+                <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
+                  className="mt-5 inline-block text-sm text-accent underline underline-offset-4">
+                  {link.label} ↗
+                </a>
+              ))}
 
               <div data-stagger>
                 {p.photos.length ? (

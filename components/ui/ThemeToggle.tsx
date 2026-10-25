@@ -5,7 +5,7 @@ import { useLocale } from "@/components/providers/LocaleProvider";
 import { getTheme, onThemeChange, setTheme, type Theme } from "@/lib/ui/theme";
 
 // Tombol bulat tema gelap/terang. Ikon menunjukkan tema TUJUAN (bulan = ke gelap, matahari = ke terang).
-export default function ThemeToggle({ className = "" }: { className?: string }) {
+export default function ThemeToggle({ className = "", id = "theme-toggle" }: { className?: string; id?: string }) {
   const { locale } = useLocale();
   const [theme, setState] = useState<Theme>("dark");
 
@@ -24,7 +24,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
   return (
     <button
       type="button"
-      id="theme-toggle"
+      id={id}
       onClick={() => setTheme(next)}
       aria-label={label}
       title={label}

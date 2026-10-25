@@ -2,6 +2,7 @@
 
 import SectionLabel from "@/components/ui/SectionLabel";
 import { useAboutCopy } from "./useAboutCopy";
+import LayerStudy from "./LayerStudy";
 
 const SERIF = 'var(--font-serif), "Instrument Serif", Georgia, serif';
 
@@ -15,20 +16,23 @@ export default function Name() {
         <SectionLabel>{n.label}</SectionLabel>
 
         <div className="grid12 mt-12 items-center gap-y-12 md:mt-16">
-          <p
-            aria-hidden="true"
-            data-reveal
-            className="col-span-full text-accent lg:col-span-6"
-            style={{
-              fontFamily: SERIF,
-              fontStyle: "italic",
-              fontSize: "clamp(5rem, 15vw, 13rem)",
-              lineHeight: 0.9,
-              letterSpacing: "-0.03em",
-            }}
-          >
-            lemma
-          </p>
+          <div className="col-span-full lg:col-span-6">
+            <p
+              aria-hidden="true"
+              data-reveal
+              className="text-accent"
+              style={{
+                fontFamily: SERIF,
+                fontStyle: "italic",
+                fontSize: "clamp(4.5rem, 9vw, 8rem)",
+                lineHeight: 0.9,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              lemma
+            </p>
+            <LayerStudy />
+          </div>
 
           <div className="col-span-full lg:col-span-5 lg:col-start-8">
             <p data-reveal className="lead max-w-[44ch]">

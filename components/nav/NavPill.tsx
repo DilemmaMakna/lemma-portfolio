@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/components/providers/LocaleProvider";
@@ -23,7 +23,7 @@ const hrefOf = (l: (typeof LINKS)[number]) => ("href" in l ? l.href : `/#${l.id}
 const isCurrent = (l: (typeof LINKS)[number], pathname: string, active: string) =>
   "href" in l ? pathname === l.href : pathname === "/" && active === l.id;
 
-function LangToggle({ className = "" }: { className?: string }) {
+function LangToggle({ className = "", prefix = "lang" }: { className?: string; prefix?: string }) {
   const { locale, setLocale } = useLocale();
   return (
     <div className={`mono flex items-center gap-1 ${className}`} role="group" aria-label="Language">
@@ -31,7 +31,7 @@ function LangToggle({ className = "" }: { className?: string }) {
         <span key={l} className="flex items-center gap-1">
           {i > 0 && <span className="text-fg-dim">/</span>}
           <button
-            id={`lang-${l}`}
+            id={`${prefix}-${l}`}
             type="button"
             aria-pressed={locale === l}
             onClick={() => setLocale(l)}
@@ -53,6 +53,7 @@ export default function NavPill() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -79,13 +80,29 @@ export default function NavPill() {
   }, []);
 
   useEffect(() => {
-    const l = getLenis();
-    if (open) l?.stop();
-    else if (!document.documentElement.classList.contains("is-loading")) l?.start();
-    document.body.style.overflow = open && !l ? "hidden" : "";
-    const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", esc);
-    return () => window.removeEventListener("keydown", esc);
+    if (!open) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const previousOverflow = document.body.style.overflow;
+    const trigger = document.getElementById("nav-menu");
+    const lenis = getLenis();
+    lenis?.stop();
+    document.body.style.overflow = "hidden";
+    dialog.showModal();
+    const animation = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? null
+      : dialog.animate([{ opacity: 0, transform: "translateY(-8px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 180, easing: "ease-out" });
+    const desktop = window.matchMedia("(min-width: 1200px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      animation?.cancel();
+      desktop.removeEventListener("change", closeOnDesktop);
+      dialog.close();
+      trigger?.focus({ preventScroll: true });
+      document.body.style.overflow = previousOverflow;
+      if (!document.documentElement.classList.contains("is-loading")) lenis?.start();
+    };
   }, [open]);
 
   // On the home page, section links scroll in place; everywhere else the Link navigates.
@@ -112,10 +129,10 @@ export default function NavPill() {
         <nav
           aria-label="Primary"
           data-intro="fade"
-          className="pointer-events-auto hidden items-center gap-1 rounded-full border border-line px-2 backdrop-blur-[12px] transition-all duration-500 md:flex"
+          className="pointer-events-auto hidden h-[54px] items-center gap-1 whitespace-nowrap rounded-full border border-line px-2 backdrop-blur-[12px] transition-shadow duration-200 motion-reduce:transition-none min-[1200px]:flex"
           style={{
             background: "var(--glass)",
-            height: scrolled ? 44 : 52,
+            boxShadow: scrolled ? "0 4px 20px rgb(0 0 0 / 0.08)" : "none",
           }}
         >
           {LINKS.map((l) => (
@@ -123,6 +140,7 @@ export default function NavPill() {
               key={l.key}
               id={`nav-${l.key}`}
               href={hrefOf(l)}
+              aria-current={isCurrent(l, pathname, active) ? ("href" in l ? "page" : "location") : undefined}
               onClick={go("id" in l ? l.id : undefined)}
               className={`mono relative px-4 py-2 transition-colors ${isCurrent(l, pathname, active) ? "text-accent" : "text-fg-muted hover:text-fg"
                 }`}
@@ -139,21 +157,21 @@ export default function NavPill() {
         {/* md+: latar kaca seperti pil tengah, supaya konten di belakangnya (mis. ASCII hero /about) tidak bertabrakan. */}
         <div
           data-intro="fade"
-          className={`pointer-events-auto flex items-center gap-3 transition-all duration-500 md:rounded-full md:border md:border-line md:pl-4 md:backdrop-blur-[12px] md:[background:var(--glass)] ${
-            scrolled ? "md:py-0.5 md:pr-0.5" : "md:py-1.5 md:pr-1.5"
-          }`}
+          className="pointer-events-auto flex items-center gap-3 sm:rounded-full sm:border sm:border-line sm:py-1.5 sm:pl-4 sm:pr-1.5 sm:backdrop-blur-[12px] sm:[background:var(--glass)]"
         >
           <LangToggle className="hidden sm:flex" />
           <ThemeToggle className="hidden sm:grid" />
-          <Button id="nav-cta" onClick={() => openContact("nav")} className="hidden !h-10 md:inline-flex">
+          <Button id="nav-cta" onClick={() => openContact("nav")} className="!hidden !h-10 whitespace-nowrap min-[1200px]:!inline-flex">
             {t.nav.cta}
           </Button>
           <button
             id="nav-menu"
             type="button"
             aria-expanded={open}
+            aria-haspopup="dialog"
+            aria-controls="navigation-menu"
             onClick={() => setOpen(true)}
-            className="btn btn-ghost relative !h-10 after:absolute after:-inset-0.5 after:content-['']"
+            className="btn btn-ghost relative !h-10 min-[1200px]:!hidden after:absolute after:-inset-0.5 after:content-['']"
           >
             {t.nav.menu}
           </button>
@@ -161,10 +179,25 @@ export default function NavPill() {
       </div>
 
       {open && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="pointer-events-auto fixed inset-0 z-overlay flex flex-col overflow-y-auto bg-bg px-[var(--grid-margin)] pb-8 pt-5"
+        <dialog
+          ref={dialogRef}
+          id="navigation-menu"
+          aria-label={t.nav.menu}
+          onCancel={() => setOpen(false)}
+          onKeyDown={(event) => {
+            if (event.key !== "Tab") return;
+            const controls = event.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+            const first = controls[0];
+            const last = controls[controls.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first?.focus();
+            }
+          }}
+          className="pointer-events-auto fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto border-0 bg-bg px-[var(--grid-margin)] pb-8 pt-5 text-fg open:flex backdrop:bg-black/30"
         >
           <div className="flex items-center justify-between">
             <span className="text-[15px] font-semibold uppercase tracking-[0.18em]">LEMMA</span>
@@ -180,6 +213,7 @@ export default function NavPill() {
                 <li key={l.key} className="border-b border-line">
                   <Link
                     href={hrefOf(l)}
+                    aria-current={current ? ("href" in l ? "page" : "location") : undefined}
                     onClick={go("id" in l ? l.id : undefined)}
                     className={`flex items-baseline gap-4 py-3 text-[clamp(2.25rem,10vw,3.5rem)] font-medium leading-tight tracking-[-0.03em] transition-colors hover:text-accent ${
                       current ? "text-accent" : "text-fg"
@@ -200,20 +234,20 @@ export default function NavPill() {
             <SocialLinks label size="sm" />
             <div className="flex items-center justify-between gap-4 border-t border-line pt-6">
               <div className="flex items-center gap-4">
-                <LangToggle />
-                <ThemeToggle />
+                <LangToggle prefix="menu-lang" />
+                <ThemeToggle id="menu-theme-toggle" />
               </div>
               <Button
                 onClick={() => {
                   setOpen(false);
-                  openContact("nav-mobile");
+                  requestAnimationFrame(() => openContact("nav-mobile"));
                 }}
               >
                 {t.nav.cta}
               </Button>
             </div>
           </div>
-        </div>
+        </dialog>
       )}
     </header>
   );

@@ -64,6 +64,14 @@ export const workPhotos: Record<string, WorkPhoto[]> = {
       "color": "#e8e8e8"
     }
   ],
+  "gumatika": [
+    {
+      "src": "/images/work-photos/gumatika/01.webp",
+      "w": 880,
+      "h": 1217,
+      "color": "#f8f8f8"
+    }
+  ],
   "himpro-hksa-serenata": [
     {
       "src": "/images/work-photos/himpro-hksa-serenata/01.webp",

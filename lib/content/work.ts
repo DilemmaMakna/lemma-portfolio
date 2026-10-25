@@ -53,6 +53,7 @@ const raw: Omit<Project, "photos" | "n">[] = [
   {
     slug: "lpj-ormawa-ipb-2025",
     name: "LPJ Ormawa IPB 2025",
+    links: [{ label: "LPJ Ormawa IPB 2025", href: "https://ipb.link/lpjormawa2025" }],
     client: { id: "Direktorat Kemahasiswaan IPB University", en: "Directorate of Student Affairs, IPB University" },
     type: "client",
     category: "UX, HCI & Product Design",
@@ -81,6 +82,10 @@ const raw: Omit<Project, "photos" | "n">[] = [
         {
           id: "Satu sistem desain menyatukan ilustrasi, grafik, dan tipografi, sehingga laporan cetak dan website interaktif terasa sebagai satu karya.",
           en: "One design system ties illustration, charts, and typography together, so the printed report and the interactive website read as one piece.",
+        },
+        {
+          id: "Serah-terima mencakup laporan visual PDF, sistem desain Figma, dan master copywriting agar tim bisa melanjutkannya untuk tahun berikutnya.",
+          en: "The handover includes the visual report PDF, the Figma design system, and master copywriting so the team can continue the work the following year.",
         },
       ],
       proof: [
