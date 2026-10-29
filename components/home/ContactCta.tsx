@@ -2,7 +2,6 @@
 import ProtectedContact from "@/components/ui/ProtectedContact";
 
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
@@ -18,7 +17,6 @@ export default function ContactCta() {
       <div className="wrap relative">
         {/* Variasi: animasi prompt ASCII di sisi kanan (desktop saja; tampilan mobile tidak berubah). */}
         <AsciiPrompt className="pointer-events-none absolute bottom-0 right-[var(--grid-margin)] hidden w-[420px] lg:block" />
-        <SectionLabel>{c.label}</SectionLabel>
         <h2
           id="contact-title"
           data-reveal="title"

@@ -1,6 +1,5 @@
 "use client";
 
-import SectionLabel from "@/components/ui/SectionLabel";
 import { useAboutCopy } from "./useAboutCopy";
 import LayerStudy from "./LayerStudy";
 
@@ -13,7 +12,6 @@ export default function Name() {
   return (
     <section className="section section-raised overflow-hidden" aria-label={n.label}>
       <div className="wrap">
-        <SectionLabel>{n.label}</SectionLabel>
 
         <div className="grid12 mt-12 items-center gap-y-12 md:mt-16">
           <div className="col-span-full lg:col-span-6">

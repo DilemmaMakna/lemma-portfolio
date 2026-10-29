@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import SectionLabel from "@/components/ui/SectionLabel";
 import { useContactModal } from "@/components/ui/ContactModal";
 import AsciiCycle from "./AsciiCycle";
 import { useAboutCopy } from "./useAboutCopy";
@@ -14,7 +13,6 @@ export default function Model() {
   return (
     <section className="section bg-bg" aria-label={m.label}>
       <div className="wrap">
-        <SectionLabel>{m.label}</SectionLabel>
 
         <ul className="mt-12 grid gap-px overflow-hidden rounded-[4px] border border-line bg-line md:mt-16 md:grid-cols-2">
           {m.items.map((item, i) => (

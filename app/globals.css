@@ -366,3 +366,19 @@ img, picture, svg, canvas {
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
 }
+
+/* Panel megamenu navbar (components/nav/NavPill.tsx): muncul halus, tanpa gerak untuk reduced motion. */
+.lm-mega {
+  animation: lm-mega-in 160ms ease-out;
+}
+@keyframes lm-mega-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-mega {
+    animation: none;
+  }
+}

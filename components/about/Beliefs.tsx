@@ -1,6 +1,5 @@
 "use client";
 
-import SectionLabel from "@/components/ui/SectionLabel";
 import { useAboutCopy } from "./useAboutCopy";
 
 const AXIOMS = ["I", "II", "III", "IV", "V"];
@@ -12,7 +11,6 @@ export default function Beliefs() {
   return (
     <section className="section section-raised" aria-label={b.label}>
       <div className="wrap">
-        <SectionLabel>{b.label}</SectionLabel>
         <ol className="mt-12 md:mt-16">
           {b.items.map((item, i) => (
             <li

@@ -3,9 +3,9 @@ import type { TechItem } from "@/lib/content/tech-stack";
 // Satu tile logo, selaras dengan kartu situs (Products/Services): datar, sudut --radius-sm, garis tipis, tanpa gradien
 // atau bayangan. Ikon satu warna dari token teks (aman di tema terang/gelap); hover seperti kartu: garis dan latar naik
 // satu tingkat, ikon memakai aksen.
-export default function TechTile({ item, size = "md" }: { item: TechItem; size?: "sm" | "md" }) {
-  const box = size === "sm" ? "h-11 w-11" : "h-14 w-14";
-  const icon = size === "sm" ? "h-5 w-5" : "h-6 w-6";
+export default function TechTile({ item, size = "md" }: { item: TechItem; size?: "sm" | "md" | "lg" }) {
+  const box = size === "sm" ? "h-11 w-11" : size === "lg" ? "h-20 w-20 sm:h-24 sm:w-24" : "h-14 w-14";
+  const icon = size === "sm" ? "h-5 w-5" : size === "lg" ? "h-9 w-9 sm:h-11 sm:w-11" : "h-6 w-6";
   return (
     <span
       role="img"

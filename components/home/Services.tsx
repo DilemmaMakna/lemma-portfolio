@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { gsap, ScrollTrigger, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import TechTile from "@/components/ui/TechTile";
@@ -264,7 +263,6 @@ export default function Services() {
   return (
     <section id="services" className="section bg-bg relative" aria-labelledby="services-title">
       <div className="wrap">
-        <SectionLabel>{s.label}</SectionLabel>
         <div className="grid12 gap-y-8">
           <div className="flex flex-col gap-y-3 w-full col-span-full lg:col-span-6">
             <h2 id="services-title" data-reveal="title" className="h-section">

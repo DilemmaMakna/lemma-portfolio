@@ -1,6 +1,5 @@
 "use client";
 
-import SectionLabel from "@/components/ui/SectionLabel";
 import { useServicesCopy } from "./useServicesCopy";
 
 export default function Engagement() {
@@ -9,7 +8,6 @@ export default function Engagement() {
   return (
     <section className="section section-raised" aria-labelledby="engagement-title">
       <div className="wrap">
-        <SectionLabel rule>{e.label}</SectionLabel>
         <div className="grid12 gap-y-8">
           <h2
             id="engagement-title"

@@ -12,11 +12,13 @@ export default function TechMarquee({
   duration = 60,
   reverse = false,
   label,
+  size = "md",
 }: {
   items: readonly TechItem[];
   duration?: number;
   reverse?: boolean;
   label: string;
+  size?: "sm" | "md" | "lg";
 }) {
   return (
     <div
@@ -32,7 +34,7 @@ export default function TechMarquee({
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 gap-3 pr-3" aria-hidden={copy === 1 ? "true" : undefined}>
             {items.map((it) => (
-              <TechTile key={`${copy}-${it.name}`} item={it} />
+              <TechTile key={`${copy}-${it.name}`} item={it} size={size} />
             ))}
           </div>
         ))}

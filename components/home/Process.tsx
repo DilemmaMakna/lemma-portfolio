@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import TechMarquee from "@/components/ui/TechMarquee";
 import { PROCESS_STACK } from "@/lib/content/tech-stack";
 import AsciiProcess from "./AsciiProcess";
@@ -29,7 +28,6 @@ export default function Process() {
   return (
     <section id="process" className="section section-raised" aria-label={p.label}>
       <div className="wrap">
-        <SectionLabel rule={false}>{p.label}</SectionLabel>
         <div className="grid12 gap-y-12">
           <div className="col-span-full lg:col-span-4">
             <div className="lg:sticky lg:top-[20vh]">
@@ -39,7 +37,7 @@ export default function Process() {
               >
                 0{active + 1}
               </div>
-              {/* Adegan ASCII di bawah angka; berganti mengikuti langkah aktif (desktop saja). */}
+              {/* Adegan ASCII di bawah angka; berganti mengikuti langkah aktif (desktop; di HP tampil per langkah). */}
               <AsciiProcess active={active} className="mt-6 hidden lg:block" />
               <div className="mono mt-4 text-fg-dim">
                 {p.steps.map((_, i) => (
@@ -66,11 +64,11 @@ export default function Process() {
                 </div>
                 <h3
                   data-reveal
-                  className="mt-6 max-w-[22ch] text-[clamp(1.75rem,3.4vw,3rem)] font-medium leading-[1.08] tracking-[-0.03em]"
+                  className="mt-6 max-w-[16ch] text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1.02] tracking-[-0.035em]"
                 >
                   {s.title}
                 </h3>
-                <p data-reveal className="mt-6 max-w-[44ch] text-fg-muted">
+                <p data-reveal className="mt-6 max-w-[44ch] text-fg-muted lg:text-lg">
                   {s.body}
                 </p>
                 <ul data-reveal className="mt-6 flex flex-wrap gap-2">
@@ -83,9 +81,11 @@ export default function Process() {
                     </li>
                   ))}
                 </ul>
+                {/* HP: kolom kiri tidak sticky, jadi adegan ASCII tiap langkah tampil di sini. */}
+                <AsciiProcess active={i} className="mt-8 lg:hidden" />
                 {/* Alat yang relevan dengan langkah ini; bergeser pelan, ujungnya larut lewat mask. */}
                 <div data-reveal className="mt-10">
-                  <TechMarquee items={PROCESS_STACK[i]} duration={[75, 85, 70][i] ?? 75} reverse={i === 1} label={s.title} />
+                  <TechMarquee items={PROCESS_STACK[i]} duration={[75, 85, 70][i] ?? 75} reverse={i === 1} label={s.title} size="lg" />
                 </div>
               </li>
             ))}

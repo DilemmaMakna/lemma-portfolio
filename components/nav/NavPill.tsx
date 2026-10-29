@@ -9,6 +9,7 @@ import { useContactModal } from "@/components/ui/ContactModal";
 import SocialLinks from "@/components/ui/SocialLinks";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { getLenis, scrollToId } from "@/lib/motion/lenis";
+import MegaMenu, { MENU_KEYS, type MenuKey } from "./MegaMenu";
 
 // `id` links scroll to a section on the home page; `href` links open their own page.
 const LINKS = [
@@ -53,6 +54,7 @@ export default function NavPill() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [mega, setMega] = useState<MenuKey | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -113,9 +115,21 @@ export default function NavPill() {
     requestAnimationFrame(() => scrollToId(id));
   };
 
+  // Megamenu: terbuka saat hover/fokus pada tautan yang punya panel, tutup saat pointer keluar atau Escape.
+  const megaOf = (key: string) => (MENU_KEYS.includes(key) ? (key as MenuKey) : null);
+  useEffect(() => {
+    if (!mega) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMega(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mega]);
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-[var(--grid-margin)] pt-4 md:pt-5">
+      <div
+        onMouseLeave={() => setMega(null)}
+        className="relative mx-auto flex max-w-[1440px] items-center justify-between px-[var(--grid-margin)] pt-4 md:pt-5"
+      >
         <Link
           href="/"
           onClick={go("top")}
@@ -141,7 +155,12 @@ export default function NavPill() {
               id={`nav-${l.key}`}
               href={hrefOf(l)}
               aria-current={isCurrent(l, pathname, active) ? ("href" in l ? "page" : "location") : undefined}
-              onClick={go("id" in l ? l.id : undefined)}
+              onClick={(e) => {
+                setMega(null);
+                go("id" in l ? l.id : undefined)(e);
+              }}
+              onMouseEnter={() => setMega(megaOf(l.key))}
+              onFocus={() => setMega(megaOf(l.key))}
               className={`mono relative px-4 py-2 transition-colors ${isCurrent(l, pathname, active) ? "text-accent" : "text-fg-muted hover:text-fg"
                 }`}
             >
@@ -153,6 +172,23 @@ export default function NavPill() {
             </Link>
           ))}
         </nav>
+
+        {mega && (
+          <div className="pointer-events-auto absolute left-1/2 top-full hidden w-[min(860px,calc(100vw-2*var(--grid-margin)))] -translate-x-1/2 pt-2 min-[1200px]:block">
+            <div
+              id="mega-menu"
+              role="region"
+              aria-label={t.nav[mega]}
+              onBlur={(e) => {
+                if (!e.currentTarget.parentElement?.contains(e.relatedTarget as Node)) setMega(null);
+              }}
+              className="lm-mega rounded-[8px] border border-line-strong backdrop-blur-[16px]"
+              style={{ background: "var(--glass)" }}
+            >
+              <MegaMenu key={mega} menu={mega} onNavigate={() => setMega(null)} />
+            </div>
+          </div>
+        )}
 
         {/* md+: latar kaca seperti pil tengah, supaya konten di belakangnya (mis. ASCII hero /about) tidak bertabrakan. */}
         <div

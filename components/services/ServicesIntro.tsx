@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, useRef, useState } from "react";
-import SectionLabel from "@/components/ui/SectionLabel";
 import { gsap, useGSAP } from "@/lib/motion/gsap";
 import { SplitText } from "gsap/SplitText";
 import { useServicesCopy } from "./useServicesCopy";
@@ -119,7 +118,6 @@ export default function ServicesIntro() {
       aria-labelledby="services-intro"
     >
       <div className="wrap w-full">
-        <SectionLabel rule>{i.label}</SectionLabel>
 
         <div ref={wrap} key={i.body} className="relative mt-6">
           <p

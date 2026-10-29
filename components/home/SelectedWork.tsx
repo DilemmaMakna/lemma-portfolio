@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { projects, type Project } from "@/lib/content/work";
 
@@ -106,7 +105,6 @@ export default function SelectedWork() {
   return (
     <section id="work" className="section bg-bg" aria-label={w.label}>
       <div className="wrap">
-        <SectionLabel>{w.label}</SectionLabel>
 
         <div className="flex flex-col gap-20 md:gap-28">
           {/* 01: gambar 7 kolom kiri, meta 5 kolom kanan */}

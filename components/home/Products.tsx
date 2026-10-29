@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 
 export default function Products() {
@@ -11,7 +10,6 @@ export default function Products() {
   return (
     <section id="products" className="section section-raised" aria-labelledby="products-title">
       <div className="wrap">
-        <SectionLabel>{p.label}</SectionLabel>
         <h2 id="products-title" data-reveal="title" className="h-section mb-14 max-w-[16ch] md:mb-20">
           {p.title}
         </h2>

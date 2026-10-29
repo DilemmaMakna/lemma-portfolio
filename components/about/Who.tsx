@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import SectionLabel from "@/components/ui/SectionLabel";
 import { gsap, useGSAP, reducedMotion } from "@/lib/motion/gsap";
 import { studioStats } from "@/lib/content/work";
 import { useAboutCopy } from "./useAboutCopy";
@@ -51,7 +50,6 @@ export default function Who() {
   return (
     <section className="section bg-bg" aria-label={w.label}>
       <div className="wrap">
-        <SectionLabel >{w.label}</SectionLabel>
 
         <div className="mt-12 md:mt-16">
           <h2 data-reveal="title" className="h-section max-w-[24ch]">

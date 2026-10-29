@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "@/components/providers/LocaleProvider";
-import SectionLabel from "@/components/ui/SectionLabel";
 import Button from "@/components/ui/Button";
 import { studioStats } from "@/lib/content/work";
 
@@ -11,7 +10,6 @@ export default function About() {
   return (
     <section id="about" className="section bg-bg" aria-labelledby="about-title">
       <div className="wrap">
-        <SectionLabel>{a.label}</SectionLabel>
         <div className="grid12 gap-y-14">
           <div className="col-span-full lg:col-span-7">
             <h2 id="about-title" data-reveal="title" className="h-section max-w-[18ch]">

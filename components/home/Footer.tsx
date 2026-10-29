@@ -221,6 +221,7 @@ export default function Footer() {
               <div className="mono mt-2 text-xs text-fg-dim">
                 <ProtectedContact channel="whatsapp" />
               </div>
+              <div className="mono mt-2 text-xs text-fg-dim">DUNS 780737376</div>
             </div>
           </div>
         </div>
